@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="GBK"?>
+<PACKET type="REQUEST" version="1.0">
+	<HEAD>
+		<REQUEST_TYPE>10</REQUEST_TYPE>
+		<USER>rwxNew</USER>
+		<PASSWORD>gdrwx123</PASSWORD>
+	</HEAD>
+	<BODY>
+		<RETPLY>
+			<C_PLY_NO></C_PLY_NO>
+			<T_EDR_BGN_TM></T_EDR_BGN_TM>
+		</RETPLY>
+	</BODY>
+</PACKET>

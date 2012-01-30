@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="GBK"?>
+<abbsParamXml>
+  <Header>
+    <documentId>001</documentId>
+    <profileRequest>01</profileRequest>
+    <function>policyIssuing</function>
+    <from>11-24-0001</from>
+    <to>11-11-1111</to>
+  </Header>
+  <Request>
+    <policyIssuing>
+      <paramList>
+        <parameter>
+          <policyNo>GP02000000530744</policyNo>
+          <productNo>P0122A9</productNo>
+          <agencyNo>SHAA-00001</agencyNo>
+          <name>测试</name>
+          <flightNo>CZ6146</flightNo>
+          <idType>9</idType>
+          <idNo>420984198310166032</idNo>
+          <birthDate>19831016</birthDate>
+          <gender>M</gender>
+          <units>1</units>
+          <effDate>20111224113000</effDate>
+          <matuDate>20111229131000</matuDate>
+          <isSendSMS>1</isSendSMS>
+          <businessID></businessID>
+          <billNo></billNo>
+          <mobile>13817650067</mobile>
+          <isSendSMS>1</isSendSMS>
+          <paymentType>C</paymentType>
+        </parameter>
+      </paramList>
+    </policyIssuing>
+  </Request>
+</abbsParamXml>

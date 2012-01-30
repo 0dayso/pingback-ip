@@ -1,0 +1,55 @@
+BODY
+{
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	font-family: "ËÎÌו";
+	font-size: 9pt;
+	line-height: 12pt;
+}
+TABLE {
+	FONT-FAMILY: "ËÎÌו"; FONT-SIZE: 9pt; LINE-HEIGHT: 12pt
+}
+INPUT.smallInput {
+	BACKGROUND-COLOR: #FFFFFF;
+	COLOR: #000000;
+	FONT-SIZE: 9pt;
+	FONT-STYLE: normal;
+	FONT-VARIANT: normal;
+	FONT-WEIGHT: normal;
+	LINE-HEIGHT: normal;
+	border: 1px #000033;
+}
+INPUT.buttonface {
+	BACKGROUND-COLOR: #FFFFFF; BORDER-BOTTOM-COLOR: #000000; BORDER-BOTTOM-WIDTH: 1px; BORDER-LEFT-COLOR: black; BORDER-LEFT-WIDTH: 1px; BORDER-RIGHT-COLOR: #000000; BORDER-RIGHT-WIDTH: 1px; BORDER-TOP-COLOR: black; BORDER-TOP-WIDTH: 1px; FONT-SIZE: 9pt; FONT-STYLE: normal; FONT-VARIANT: normal; FONT-WEIGHT: normal; HEIGHT: 18px; LINE-HEIGHT: normal
+}
+a {  font-size: 12px; color: #000000; text-decoration: none}
+a:hover {  font-size: 12px; color: #FF3300; text-decoration: underline}
+a:hover {  }
+div {  font-size: 12px}
+td {  font-size: 12px; color: #000000; text-decoration: none}
+
+.di {
+	background-image: url(../image/2/04.gif);
+	background-repeat: no-repeat;
+}
+.td {
+	font-size: 12px;
+	color: #466586;
+	text-indent: 18pt;
+}
+.kg {
+	white-space: normal;
+	line-height: 26px;
+	font-size: 14px;
+}
+.bg {
+	line-height: 20px;
+}
+.button {
+	border: 1px solid #034DA2;
+	padding: 1px;
+	margin: 1px;
+	background-color: #DDECFF;
+}

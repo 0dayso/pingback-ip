@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="GBK"?>
+<PACKET type="REQUEST" version="1.0">
+    <HEAD>
+        <REQUEST_TYPE>70</REQUEST_TYPE>
+        <USER>rwxNew</USER>
+		<PASSWORD>gdrwx123</PASSWORD>
+    </HEAD>
+    <BODY>
+        <VCH>
+            <C_PRN_NO></C_PRN_NO>
+            <C_PRN_TYP>P</C_PRN_TYP>
+            <C_DPT_CDE>0407</C_DPT_CDE>
+            <C_HANDLE>10400231X</C_HANDLE>
+            <C_PRN_STATUS>1</C_PRN_STATUS>
+            <C_PROD_NO>0654</C_PROD_NO>
+            <C_SYS_PRN_NO></C_SYS_PRN_NO>
+            <C_REGISTRATION_NUMBER>CX01800342</C_REGISTRATION_NUMBER>
+            <C_VOU_REMARK></C_VOU_REMARK>
+        </VCH>
+    </BODY>
+</PACKET>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="GB2312"?>
+<abbsParamXml>
+	<Header>
+		<documentId>001</documentId>
+		<profileRequest>03</profileRequest>
+		<function>policyIssuing</function>
+		<from>11-24-0001</from>
+		<to>11-11-1111</to>
+	</Header>
+	<Request>
+		<policyWithdraw>
+			<paramList>
+				<parameter>
+					<certNo>PC02000010480336</certNo>
+					<agencyNo>HXDL-00002</agencyNo>
+					<productNo>P10041</productNo>
+				</parameter>
+			</paramList>
+		</policyWithdraw>
+	</Request>
+</abbsParamXml>

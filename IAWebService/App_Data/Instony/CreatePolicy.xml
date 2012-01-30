@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Instony>
+    <PolicyInfo>
+        <PlanCode>DB00003001</PlanCode>
+        <StartTime>2011527132856</StartTime>
+        <EndTime>2011687132856</EndTime>
+        <CreateTime>20110526172248</CreateTime>
+        <NoType>1</NoType>
+        <NoCode>b201105110011</NoCode>
+        <TravelFromAdress />
+        <TravelToAdress/>
+    </PolicyInfo>
+    <Holder>
+        <Name>投保人</Name>
+        <Sex>M</Sex>
+        <Birthday>19900101</Birthday>
+        <IDType>I</IDType>
+        <IDNum>310115198301312518</IDNum>
+        <Mobile>15900000000</Mobile>
+        <Email />
+        <Adress />
+    </Holder>
+    <Insureds>
+        <Insured>
+            <Name>被保人</Name>
+            <Birthday>19830131</Birthday>
+            <IDType>I</IDType>
+            <IDNum>12312123232</IDNum>
+            <Sex>M</Sex>
+            <Mobile>13800000000</Mobile>
+            <Email />
+            <RelaToInsured>00</RelaToInsured>
+            <Beneficiarys />
+        </Insured>
+    </Insureds>
+</Instony>

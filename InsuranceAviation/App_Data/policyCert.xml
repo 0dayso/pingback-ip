@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abbsParamXml>
+	<Header>
+		<documentId>001</documentId>
+		<profileRequest>01</profileRequest>
+		<function>policyIssuing</function>
+		<from>11-24-0001</from>
+		<to>11-11-1111</to>
+	</Header>
+	<Request>
+		<policyIssuing>
+			<paramList>
+				<parameter>
+					<policyNo>GP02009990383187</policyNo>
+					<name>�������88</name>
+					<productNo>246A2</productNo>
+					<agencyNo>SHAA-00009</agencyNo>
+					<idType>9</idType>
+					<idNo>34040319</idNo>
+					<birthDate>19811111</birthDate>
+					<gender>M</gender>
+					<units>10</units>
+					<effDate>20080202</effDate>
+					<matuDate>20081231</matuDate>
+				</parameter>
+			</paramList>
+		</policyIssuing>
+	</Request>
+</abbsParamXml>

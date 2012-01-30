@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="C#" CodeBehind="~/App_Code/egws.asmx.cs" Class="WS4.Service1" %>

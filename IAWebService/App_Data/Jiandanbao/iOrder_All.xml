@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OrderInfo>
+	<OrderNum>X168168</OrderNum>
+	<ParterID>f9851938-5200-4009-9760-7946c52af291</ParterID>
+	<NotifyUrl>0</NotifyUrl>
+	<Product>
+		<ProductID>6551522c-4afb-40e3-9ed5-05335bedcea8</ProductID>
+		<ProductName>简单保 通用航空意外保险（A款）</ProductName>
+		<Argument>
+			<Title>@FN@</Title>
+			<Value>{航班号}</Value>
+		</Argument>
+		<Argument>
+			<Title>@SD@</Title>
+			<Value>{起飞日期}</Value>
+		</Argument>
+	</Product>
+	<Person>
+		<Policy>
+			<UserName>王先生</UserName>
+			<Certificate>1</Certificate>
+			<CertificateNum>11010819800901493x</CertificateNum>
+			<Sex>M</Sex>
+			<Birthday>1980-09-01</Birthday>
+			<Email></Email>
+			<Mobile>13516816888</Mobile>
+		</Policy>
+	</Person>
+</OrderInfo>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<message method="getPolicy" type="request">
+    <batchNo>20090000</batchNo>
+    <infoType>0002</infoType>
+    <transDate>20110915</transDate>
+    <dataSet>
+        <record>
+            <seq>123</seq>
+            <productId>ASXY_6</productId>
+            <effDate>20110918</effDate>
+            <isBaby>N</isBaby>
+            <phFn>林</phFn>
+            <phLn>树军</phLn>
+            <phGender>M</phGender>
+            <phBirth>19630828</phBirth>
+            <phCountry>CN</phCountry>
+            <phIdtype>9</phIdtype>
+            <phId>132425196308284458</phId>
+            <phAdd1>11</phAdd1>
+            <phAdd2>110115</phAdd2>
+            <phAdd3>中辉世纪传媒大厦</phAdd3>
+            <phPost>101750</phPost>
+            <phMobile>18701093010</phMobile>
+            <phEmail>lf1302@sina.cn</phEmail>
+            <rel>SLF</rel>
+            <insOne>Y</insOne>
+            <insFn></insFn>
+            <insLn></insLn>
+            <insGender></insGender>
+            <insBirth></insBirth>
+            <insCountry></insCountry>
+            <insIdtype></insIdtype>
+            <insId></insId>
+            <flyNo>CZ1012</flyNo>
+            <subId></subId>
+            <reserved1>任我行</reserved1>
+            <reserved2></reserved2>
+            <Signature>SEhVH8h2N81POJnEu6xeFIUHsiYxYbzb3OYnBfjY2SV88pudIEVwOJGWSss7ImsoTAcZv5r6AVv+7cmEUZNQTQ==</Signature>
+        </record>
+    </dataSet>
+    <transTime>20110915161616</transTime>
+    <merchantID>jinhang</merchantID>
+    <commentRes>nothing to say</commentRes>
+    <reserved1></reserved1>
+    <reserved2></reserved2>
+</message>

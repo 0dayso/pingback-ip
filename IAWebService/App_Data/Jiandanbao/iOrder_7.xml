@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<OrderInfo>
+    <CustomerOrderNum>O201103241234</CustomerOrderNum>
+    <ParterID>f9851938-5200-4009-9760-7946c52af291</ParterID>
+    <CreationDate>2011-8-18</CreationDate>
+    <Amount>2.48</Amount>
+    <InitPrice>2.48</InitPrice>
+    <Points>0</Points>
+    <ResultUrl>1</ResultUrl>
+    <NotifyUrl />
+    <Product>
+        <ProductID>377a5230-5a39-4d72-86e7-c07d828b6ea5</ProductID>
+        <ProductName>昆仑“吉祥行”航空意外伤害保险 7天 B款</ProductName>
+        <ArgumentCount>1</ArgumentCount>
+        <Argument>
+            <Title>购买份数</Title>
+            <Value>1份</Value>
+            <ArgumentID>6a042490-c6ef-4642-9a42-5e8b64551275</ArgumentID>
+            <ArgumentValue>1</ArgumentValue>
+        </Argument>
+        <Argument>
+            <Title>@SD@</Title>
+            <Value>{起飞日期}</Value>
+            <ArgumentID>@SD@</ArgumentID>
+            <ArgumentValue>{起飞日期}</ArgumentValue>
+        </Argument>
+    </Product>
+    <Person>
+        <Policy>
+            <UserName>
+            </UserName>
+            <Certificate>1</Certificate>
+            <CertificateNum>
+            </CertificateNum>
+            <Sex>F</Sex>
+            <Birthday>2011-7-18</Birthday>
+            <WorkType>1</WorkType>
+            <Email>@</Email>
+            <Mobile>13888888888</Mobile>
+            <Address>
+            </Address>
+            <PostCode>
+            </PostCode>
+        </Policy>
+        <BePolicyCount>1</BePolicyCount>
+        <BePolicy>
+            <UserName>
+            </UserName>
+            <Certificate>1</Certificate>
+            <CertificateNum>
+            </CertificateNum>
+            <Sex>F</Sex>
+            <Birthday>2011-7-18</Birthday>
+            <WorkType>1</WorkType>
+            <Email>@</Email>
+            <Mobile>13888888888</Mobile>
+            <Address>
+            </Address>
+            <PostCode>
+            </PostCode>
+        </BePolicy>
+    </Person>
+</OrderInfo>

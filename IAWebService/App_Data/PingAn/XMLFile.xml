@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Values version="2.0">
+  <array type="record" name="resultDocumentList" depth="0"/>
+  <value name="processFlag"/>
+  <value name="processMessage"/>
+  <value name="interfaceId"/>
+  <value name="abbsDebugInfo"/>
+  <record javaclass="com.wm.util.Values" name="TN_parms">
+    <value name="$contentType">text/xml</value>
+    <null name="$contentEncoding"/>
+    <value name="encoding">encoding="UTF-8"</value>
+  </record>
+</Values>

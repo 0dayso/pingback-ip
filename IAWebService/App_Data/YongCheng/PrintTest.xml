@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="gb2312"?>
+<PACKET type="REQUEST" version="1.0">
+    <HEAD>
+        <REQUEST_TYPE>70</REQUEST_TYPE>
+        <USER>rwxNew</USER>
+        <PASSWORD>gdrwx123</PASSWORD>
+    </HEAD>
+    <BODY>
+        <VCH>
+            <!-- 单证打印基本信息-->
+            <C_PRN_NO></C_PRN_NO>
+            <!--纸质单证印刷号 VARCHAR2(20)-->
+            <C_PRN_TYP></C_PRN_TYP>
+            <!--单证类型 -->
+            <C_DPT_CDE></C_DPT_CDE>
+            <!--机构 VARCHAR2(11)-->
+            <C_HANDLE></C_HANDLE>
+            <!--经手人 VARCHAR2(10)-->
+            <C_PRN_STATUS></C_PRN_STATUS>
+            <!--单证状态 CHAR(1) '1'-->
+            <C_PROD_NO></C_PROD_NO>
+            <!--产品编号  VARCHAR2(4)-->
+            <C_SYS_PRN_NO></C_SYS_PRN_NO>
+            <!--投保接口返回的保单号 VARCHAR2(30)-->
+            <C_REGISTRATION_NUMBER>CX01800342</C_REGISTRATION_NUMBER>
+            <!--中介机构销售人员执业证号-->
+            <C_VOU_REMARK></C_VOU_REMARK>
+            <!--备注  VARCHAR2(100)-->
+        </VCH>
+    </BODY>
+</PACKET>
+
+若失败，返回值如下：
+<?xml version"1.0\" encoding"GBK\"?>
+<PACKET>
+    <!-- HEAD节点部分开始 -->
+    <PersonalPackagePolicyNewResult>
+        <ResponseCompleteMessageStatus>
+            <MessageStatusCode>2</MessageStatusCode>
+            <!-- 返回码 -->
+            <MessageStatusDescription>取USER失败</MessageStatusDescription>
+            <!-- 返回描述 -->
+        </ResponseCompleteMessageStatus>
+    </PersonalPackagePolicyNewResult>
+    <!-- HEAD节点部分结束 -->
+</PACKET>

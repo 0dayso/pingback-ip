@@ -1,0 +1,162 @@
+<!--提取错误-->
+<?xml version="1.0" encoding="gb2312" ?>
+<rt_parse ret_value="0" err_info="该编码不存在" />
+
+<!--多航段PNR-->
+<!--http://www.6jh.com/PIDweb/ScanPnr.asp?u=18611586620&p=123456&pnr=JWVN1H-->
+<?xml version="1.0" encoding="GB2312" ?>
+- <rt_parse ret_value="1">
+    <pnr>JWVN1H</pnr>
+    <b_pnr>MZDZ10</b_pnr>
+    <is_team>0</is_team>
+    <HasNI>1</HasNI>
+    <HasINF>1</HasINF>
+    <IsCHD>0</IsCHD>
+    <remark>RMK CA/MZDZ10|RMK AUTOMATIC FARE QUOTE |RMK AUTOMATIC FARE QUOTE</remark>
+    <osi>OSI YY 1INF LIUKUNYU/P1</osi>
+    - <passengers count="2">
+        - <passenger>
+            <Name>黄凤娇</Name>
+            <Ticket>4795583182486</Ticket>
+            <NI />
+        </passenger>
+        - <passenger>
+            <Name>刘松涛</Name>
+            <Ticket>4795583182487</Ticket>
+            <NI />
+        </passenger>
+    </passengers>
+    - <lines count="2">
+        - <Line>
+            <AirLine>ZH9943</AirLine>
+            <Cabin>Y</Cabin>
+            <Discount>100</Discount>
+            <DepartureCity>SZX</DepartureCity>
+            <DestinationCity>YIH</DestinationCity>
+            <DepartureAirPort>深圳宝安机场</DepartureAirPort>
+            <DestinationAirPort>宜昌三峡机场</DestinationAirPort>
+            <Date>13JAN</Date>
+            <State>RR</State>
+            <StartTime>07:30</StartTime>
+            <ArriveTime>09:20</ArriveTime>
+        </Line>
+        - <Line>
+            <AirLine>ZH9944</AirLine>
+            <Cabin>Y</Cabin>
+            <Discount>100</Discount>
+            <DepartureCity>YIH</DepartureCity>
+            <DestinationCity>SZX</DestinationCity>
+            <DepartureAirPort>宜昌三峡机场</DepartureAirPort>
+            <DestinationAirPort>深圳宝安机场</DestinationAirPort>
+            <Date>01FEB</Date>
+            <State>RR</State>
+            <StartTime>10:10</StartTime>
+            <ArriveTime>11:50</ArriveTime>
+        </Line>
+    </lines>
+    - <tickets count="3">
+        <ticket>4795583182487</ticket>
+        <ticket>4795583182485</ticket>
+        <ticket>4795583182486</ticket>
+    </tickets>
+</rt_parse>
+
+<!--DETR取证件号码-->
+<!--http://www.6jh.com/PIDweb/ScanDetr.asp?u=18611586620&p=123456&str=4795583182487-->
+<?xml version="1.0" encoding="GB2312" ?>
+- <cmd ret_value="1">
+    - <ticket no="4795583182487">
+        <ACCESS_TKT>0</ACCESS_TKT>
+        <NAME>刘松涛</NAME>
+        <NI>420582198101266673</NI>
+        <RP>RP4349877040</RP>
+        <VOID>1</VOID>
+        <ISSUEDATE>2011-12-09</ISSUEDATE>
+        <OFFICECODE>CAN189</OFFICECODE>
+        <CATACODE>08300935</CATACODE>
+        <CNY>1980.00</CNY>
+        <TCNYCN>100.00</TCNYCN>
+        <TCNYYQ>280.00</TCNYYQ>
+        <TKTYPE>ET</TKTYPE>
+        <EI>往返程优不签转</EI>
+        <PNR>JWVN1H</PNR>
+        <TKTSTATE>OPEN</TKTSTATE>
+        <PRINTDEV>0</PRINTDEV>
+        - <VOYAGES count="2">
+            - <VOYAGE index="0">
+                <CITYSTART code="SZX">深圳</CITYSTART>
+                <CITYARRIVE code="YIH">宜昌</CITYARRIVE>
+                <AIRPORTSTART code="SZX">深圳宝安机场</AIRPORTSTART>
+                <AIRPORTARRIVE code="YIH">宜昌三峡机场</AIRPORTARRIVE>
+                <CARRIER>ZH</CARRIER>
+                <FLIGHT>9943</FLIGHT>
+                <CLASS>Y</CLASS>
+                <CLASSDISCOUNT />
+                <FAREBASIS>YRT100</FAREBASIS>
+                <DATE>13JAN</DATE>
+                <TIME>0730</TIME>
+                <ALLOW>20K</ALLOW>
+            </VOYAGE>
+            - <VOYAGE index="1">
+                <CITYSTART code="YIH">宜昌</CITYSTART>
+                <CITYARRIVE code="SZX">深圳</CITYARRIVE>
+                <AIRPORTSTART code="YIH">宜昌三峡机场</AIRPORTSTART>
+                <AIRPORTARRIVE code="SZX">深圳宝安机场</AIRPORTARRIVE>
+                <CARRIER>ZH</CARRIER>
+                <FLIGHT>9944</FLIGHT>
+                <CLASS>Y</CLASS>
+                <CLASSDISCOUNT />
+                <FAREBASIS>YRT100</FAREBASIS>
+                <DATE>01FEB</DATE>
+                <TIME>1010</TIME>
+                <ALLOW>20K</ALLOW>
+            </VOYAGE>
+        </VOYAGES>
+    </ticket>
+</cmd>
+
+<!--单航段PNR-->
+<?xml version="1.0" encoding="GB2312" ?>
+- <rt_parse ret_value="1">
+    <pnr>HPVMMF</pnr>
+    <b_pnr />
+    <is_team>0</is_team>
+    <HasNI>1</HasNI>
+    <HasINF>0</HasINF>
+    <IsCHD>0</IsCHD>
+    <remark>RMK</remark>
+    <osi>OSI CTC</osi>
+    - <passengers count="3">
+        - <passenger>
+            <Name>陈福民</Name>
+            <Ticket />
+            <NI />
+        </passenger>
+        - <passenger>
+            <Name>伍尚其</Name>
+            <Ticket />
+            <NI />
+        </passenger>
+        + <passenger>
+            <Name>钟卓锋</Name>
+            <Ticket />
+            <NI />
+        </passenger>
+    </passengers>
+    - <lines count="1">
+        - <Line>
+            <AirLine>ZH9550</AirLine>
+            <Cabin>E</Cabin>
+            <Discount />
+            <DepartureCity>CAN</DepartureCity>
+            <DestinationCity>WUX</DestinationCity>
+            <DepartureAirPort>广州白云机场</DepartureAirPort>
+            <DestinationAirPort>无锡硕放机场</DestinationAirPort>
+            <Date>15DEC</Date>
+            <State>HK</State>
+            <StartTime>11:25</StartTime>
+            <ArriveTime>13:50</ArriveTime>
+        </Line>
+    </lines>
+    <tickets count="0" />
+</rt_parse>

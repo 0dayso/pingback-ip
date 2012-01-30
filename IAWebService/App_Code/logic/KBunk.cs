@@ -1,0 +1,250 @@
+﻿//======================================================================
+//
+//        Copyright (C) 2008-2018
+//        All rights reserved 易格网科技
+//
+//        filename :KBunk.cs
+//        description :处理K位的类
+//
+//        created by Eric at  2008-12-08
+//        ZSCHL@163.com
+//        http://Ericch.qyun.net
+//
+//======================================================================
+using System;
+using System.Data;
+using System.Configuration;
+using System.Web;
+using System.Web.Security;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
+using gs.DataBase;
+using System.Data;
+using System.Data.OleDb;
+using logic.XmlEntity;
+using System.Xml;
+
+namespace logic
+{
+    public class KBunk
+    {
+        /// <summary>
+        /// 数据访问对象
+        /// </summary>
+        public Conn con;
+        /// <summary>
+        /// 返回的结果
+        /// </summary>
+        public string strRet = string.Empty;
+        /// <summary>
+        /// Sql语句
+        /// </summary>
+        public string strSql = string.Empty;
+        /// <summary>
+        /// 查询参数
+        /// </summary>
+        public OleDbParameter[] olepars;
+        /// <summary>
+        /// 查询返回的结果
+        /// </summary>
+        public DataView dv;
+        /// <summary>
+        /// 查询可以K的舱位
+        /// </summary>
+        /// <param name="strFromTo"></param>
+        /// <param name="strDate"></param>
+        /// <returns></returns>
+        public string QueryBunk(string strFromTo, string strDate)
+        {
+            strSql = "proc_QuerySpecialOffer_select";
+            olepars = new OleDbParameter[2];
+            olepars[0] = new OleDbParameter("@from_to1", OleDbType.VarChar, 6);
+            olepars[0].Value = strFromTo;
+            olepars[1] = new OleDbParameter("@querydate", OleDbType.DBDate);
+            olepars[1].Value = strDate;
+            con = new Conn();
+            dv = con.ProcQuery(strSql, olepars);
+            con.close();
+            string strTemp = string.Empty;
+            //gs.util.func.Write("\r\nEric:" + strSql + "\t" + dv.Table.Rows + "\r\n");
+            if (dv.Table.Rows.Count != 0)
+            {
+                int i = 0;
+                foreach (DataRowView drv in dv)
+                {
+                    strTemp += string.Format(@"<onebunkinfo>
+                                                <kpolicyid>{0}</kpolicyid>
+                                                <fromto>{1}</fromto>
+                                                <airways>{2}</airways>
+                                                <flight>{3}</flight>
+                                                <bunk>{4}</bunk>
+                                                <price>{5}</price>
+                                                <discount>{6}</discount>
+                                                <regain>{7}</regain>
+                                                <date>{8}</date>
+                                                <oprice>{9}</oprice>
+                                                </onebunkinfo>
+                                                ", drv[0], drv[3], drv[5],drv[6], drv[7], drv[8], drv[9],drv[10],strDate,drv[14]);
+                    i++;
+                }
+                strTemp = strTemp.Replace("\r\n", "");
+                //strTemp = strTemp.Replace(" ", "");
+                strTemp = strTemp.Replace("\t", "");
+            }
+            else
+            {
+                strTemp = "No Data!";
+            }
+            strRet = string.Format("<bunkinfo>{0}</bunkinfo>", strTemp);
+            return strRet;
+            //return strTemp;
+        }
+        /// <summary>
+        /// 提交一个K舱申请
+        /// </summary>
+        /// <param name="xmlap"></param>
+        /// <returns></returns>
+        public string AddKOrder(XMLApplyInfo xmlap)
+        {
+            con = new Conn();
+            strSql = "proc_Korder_insert";
+            //@apply_user varchar(20),@apply_date datetime,@product_id integer,@bunk_amount int,@flight_date datetime,@remark nvarchar(100)
+            olepars=new OleDbParameter[7];
+            olepars[0] = new OleDbParameter("@apply_user", OleDbType.VarChar, 20);
+            olepars[0].Value = xmlap.applyuser;
+            olepars[1] = new OleDbParameter("@apply_date", OleDbType.DBTimeStamp);
+            olepars[1].Value = DateTime.Now.ToString();
+            olepars[2] = new OleDbParameter("@product_id", OleDbType.Integer);
+            olepars[2].Value = xmlap.kpolicyid;
+            olepars[3] = new OleDbParameter("@new_bunk", OleDbType.VarChar);
+            olepars[3].Value = xmlap.new_bunk;
+            olepars[4] = new OleDbParameter("@bunk_amount", OleDbType.Integer);
+            olepars[4].Value = xmlap.bunkamount;
+            olepars[5] = new OleDbParameter("@flight_date", OleDbType.DBDate);
+            olepars[5].Value = xmlap.date;
+            olepars[6] = new OleDbParameter("@pnr", OleDbType.Char,5);
+            olepars[6].Value = xmlap.pnr;
+            string strSql1 = "proc_passenger_insert";
+            //@order_id int,@name nvarchar(20),@passport nvarchar(25),@phone nvarchar(18)
+            try
+            {
+                con.beginTrans();
+                string iid = con.ProcExecuteScalar(strSql, olepars);
+                for (int i = 0; i < xmlap.passengerss.Length; i++)
+                {
+                    OleDbParameter[] olepars1 = new OleDbParameter[4];
+                    olepars1[0] = new OleDbParameter("@order_id", OleDbType.Integer);
+                    olepars1[0].Value = iid;
+                    olepars1[1] = new OleDbParameter("@name", OleDbType.VarChar, 20);
+                    olepars1[1].Value = xmlap.passengerss[i].name;
+                    olepars1[2] = new OleDbParameter("@passport", OleDbType.VarChar, 25);
+                    olepars1[2].Value = xmlap.passengerss[i].passport;
+                    olepars1[3] = new OleDbParameter("@phone", OleDbType.VarChar, 18);
+                    olepars1[3].Value = xmlap.passengerss[i].phone;
+                    con.ProcExecuteScalar(strSql1, olepars1);
+                }
+                con.commit();
+                strRet = "Succeed";
+                string strNSql = "proc_getpassport_select";
+                olepars = new OleDbParameter[1];
+                olepars[0] = new OleDbParameter("@username", OleDbType.VarChar, 30);
+                olepars[0].Value = "0";
+                dv=con.ProcQuery(strNSql, olepars);
+                string strPassPort = String.Empty;
+                if (dv.Count > 0)
+                {
+                    
+                    foreach (DataRowView drv in dv)
+                    {
+                        strPassPort += drv[0].ToString().Trim() + "|";
+                    }
+                }
+                strRet = strRet + "," + strPassPort;
+            }
+            catch (Exception e)
+            {
+                con.rollback();
+                strRet = "Failed";
+            }
+            finally
+            {
+                con.close();
+            }
+            return strRet;
+        }
+        public string DisplayUnProcess(string orderid)
+        {
+            Conn con=new Conn();
+            strSql = "proc_displaykorder_select";
+            olepars = new OleDbParameter[1];
+            olepars[0] = new OleDbParameter("@order_id", OleDbType.Integer);
+            olepars[0].Value = Convert.ToInt32(orderid);
+            try
+            {
+                con.beginTrans();
+                this.dv = con.ProcQuery(strSql, olepars);
+                if (dv.Table.Rows.Count > 0)
+                {
+                    int oid = Convert.ToInt32(dv.Table.Rows[0][15]);
+                    strSql = "proc_changeprocessstate_update";
+                    olepars = new OleDbParameter[1];
+                    olepars[0] = new OleDbParameter("@order_id", OleDbType.Integer);
+                    olepars[0].Value = oid;
+                    con.ProcExecuteScalar(strSql, olepars);
+                    con.commit();
+                }
+                else
+                {
+                    throw new Exception();
+                }
+                DataRowView drv = dv[0];
+                for (int i = 0; i < dv.Table.Columns.Count; i++)
+                {
+                    strRet += string.Format("<{0}>{1}</{2}>", dv.Table.Columns[i].Caption, drv[i].ToString(), dv.Table.Columns[i].Caption);
+                }
+                
+            }
+            catch (Exception ea)
+            {
+                strRet = "Error!";
+                con.rollback();
+            }
+            finally
+            {
+                con.close();
+            }
+            return strRet;
+        }
+        public string ProcessKOrder(string strxml)
+        {
+            Conn co=new Conn();
+            strSql = "proc_Korder_update";
+            olepars=new OleDbParameter[10];
+            XmlDocument xmldoc = new XmlDocument();
+            xmldoc.LoadXml(strxml);
+            XmlNode xn = xmldoc.ChildNodes[1];
+            for (int i = 1; i < xn.ChildNodes.Count - 1; i++)//count -1去掉申请人的部分
+            {
+                olepars[i-1] = new OleDbParameter("@" + xn.ChildNodes[i].Name, xn.ChildNodes[i].InnerXml);
+            }
+            try
+            {
+                co.ProcExecuteScalar(strSql, olepars);
+                string strNSql = "proc_getpassport_select";
+                olepars = new OleDbParameter[1];
+                olepars[0] = new OleDbParameter("@username", OleDbType.VarChar, 30);
+                olepars[0].Value = xn.ChildNodes[11].InnerText.Trim();
+                string strPassport=string.Empty;
+                strPassport=co.ProcExecuteScalar(strNSql, olepars);
+                strRet = "<result>Succeed</result><passport>"+strPassport+"</passport>";
+            }
+            catch(Exception ea)
+            {
+                strRet = "<result>Failed</result>";
+            }
+            return strRet;
+        }
+    }
+}

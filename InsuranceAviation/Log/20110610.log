@@ -1,0 +1,24 @@
+17:20:56
+   在 IAClass.Issuing.IssuingFacade..cctor() 位置 C:\Projects\IAClass\Issuing\IssuingFacade.cs:行号 26
+
+17:32:20
+   在 Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 473
+   在 Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 456
+   在 Microsoft.Practices.Unity.UnityContainer.Resolve(Type t, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 155
+   在 Microsoft.Practices.Unity.UnityContainerBase.Resolve[T](String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainerBase.cs:行号 478
+   在 IAClass.Issuing.IssuingFacade.Withdraw(String policyNo, String IOC_TypeName) 位置 C:\Projects\IAClass\Issuing\IssuingFacade.cs:行号 105
+
+17:33:20
+   在 Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 473
+   在 Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 456
+   在 Microsoft.Practices.Unity.UnityContainer.Resolve(Type t, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 155
+   在 Microsoft.Practices.Unity.UnityContainerBase.Resolve[T](String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainerBase.cs:行号 478
+   在 IAClass.Issuing.IssuingFacade.Withdraw(String policyNo, String IOC_TypeName) 位置 C:\Projects\IAClass\Issuing\IssuingFacade.cs:行号 105
+
+17:35:18
+   在 Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, Object existing, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 473
+   在 Microsoft.Practices.Unity.UnityContainer.DoBuildUp(Type t, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 456
+   在 Microsoft.Practices.Unity.UnityContainer.Resolve(Type t, String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainer.cs:行号 155
+   在 Microsoft.Practices.Unity.UnityContainerBase.Resolve[T](String name) 位置 C:\搜狗高速下载\UnitySource\Src\Unity\UnityContainerBase.cs:行号 478
+   在 IAClass.Issuing.IssuingFacade.Withdraw(String policyNo, String IOC_TypeName) 位置 C:\Projects\IAClass\Issuing\IssuingFacade.cs:行号 105
+

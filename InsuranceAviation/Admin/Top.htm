@@ -1,0 +1,203 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <style type="text/css">
+        BODY
+        {
+            margin: 0px;
+        }
+    </style>
+
+    <script>
+<!--
+        function MM_swapImgRestore() { //v3.0
+            var i, x, a = document.MM_sr;
+            for (i = 0; a && i < a.length && (x = a[i]) && x.oSrc; i++) {
+                if (x.flag == null || x.flag == false) {
+                    x.src = x.oSrc;
+                }
+            }
+        }
+
+        function MM_findObj(n, d) { //v4.01
+            var p, i, x; if (!d) d = document; if ((p = n.indexOf("?")) > 0 && parent.frames.length) {
+                d = parent.frames[n.substring(p + 1)].document; n = n.substring(0, p);
+            }
+            if (!(x = d[n]) && d.all) x = d.all[n]; for (i = 0; !x && i < d.forms.length; i++) x = d.forms[i][n];
+            for (i = 0; !x && d.layers && i < d.layers.length; i++) x = MM_findObj(n, d.layers[i].document);
+            if (!x && d.getElementById) x = d.getElementById(n); return x;
+        }
+
+        function MM_swapImage() { //v3.0
+            var i, j = 0, x, a = MM_swapImage.arguments; document.MM_sr = new Array; for (i = 0; i < (a.length - 2); i += 3)
+                if ((x = MM_findObj(a[i])) != null) { document.MM_sr[j++] = x; if (!x.oSrc) x.oSrc = x.src; x.src = a[i + 2]; }
+        }
+
+        function setFocus(imgObj) {
+            if (imgObj != null) {
+                var imgName = imgObj.id;
+                imgObj.flag = true;
+            }
+            for (i = 1; i < 11; i++) {
+                var nObj = eval("document.all.Image" + i);
+                if (nObj != null) {
+                    if (nObj.id != imgName) {
+                        if (nObj.src.indexOf(nObj.selectedimg) != -1) {
+                            nObj.src = nObj.unselectedimg;
+                        }
+                        nObj.flag = false;
+                    }
+                }
+            }
+        }
+
+        var contentFrameName = "contentFrame";
+        var loadTimeout = 0;
+        //stop loading page
+//        parent.frames[contentFrameName].document.onreadystatechange = function() {
+//        if (parent.frames[contentFrameName].document.readyState == "complete") {
+//                parent.frm.rows = "45,*,0,11";
+//            }
+//            else {
+//                parent.frm.rows = "45,0,*,11";
+//            }
+//        }
+
+        function setWaitHintEx() {
+            var stat = parent.frames[contentFrameName].document.readyState;
+            if (stat == "complete") {
+                clearTimeout(loadTimeout);
+                parent.frm.rows = "45,*,0,11";
+            } else {
+                loadTimeout = setTimeout("setWaitHintEx()", 100);
+            }
+        }
+
+        function setRequestUrl(reqeuestUrl) {
+            parent.frames[contentFrameName].location.href = reqeuestUrl;
+            beginLoad();
+        }
+
+        function beginLoad() {
+            parent.frm.rows = "45,0,*,11";
+            setWaitHintEx();
+        }
+//-->
+    </script>
+
+</head>
+<body>
+    <table border="0" cellspacing="0" cellpadding="0" width="100%" background="images/main_menubg01.gif"
+        height="35">
+        <tbody>
+            <tr>
+                <td width="10">
+                    &nbsp;
+                </td>
+                 <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image2','','images/button_cdqk_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("DefaultAdmin.aspx")'>
+                        <img alt="出单情况" id="Image2" onclick="setFocus(this)" border="0" name="Image2" src="images/button_cdqk_a.gif"
+                            width="100" height="34" selectedimg="images/button_cdqk_b.gif" unselectedimg="images/button_cdqk_a.gif">
+                    </a>
+                </td>
+                <td width="2">
+                    <img src="images/main_menu_line01.gif" width="2" height="35">
+                </td>
+                <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image3','','images/button_yhgl_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("UserMng.aspx")'>
+                        <img alt="用户管理" id="Image3" onclick="setFocus(this)" border="0" name="Image3" src="images/button_yhgl_a.gif"
+                            width="100" height="34" selectedimg="images/button_yhgl_b.gif" unselectedimg="images/button_yhgl_a.gif">
+                    </a>
+                </td>
+                <td width="2">
+                    <img src="images/main_menu_line01.gif" width="2" height="35">
+                </td>
+                <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image4','','images/button_bxgs_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("InsurerMng.aspx")'>
+                        <img alt="保险公司" id="Image4" onclick="setFocus(this)" border="0" name="Image4" src="images/button_bxgs_a.gif"
+                            width="100" height="34" selectedimg="images/button_bxgs_b.gif" unselectedimg="images/button_bxgs_a.gif">
+                    </a>
+                </td>
+                <td width="2">
+                    <img src="images/main_menu_line01.gif" width="2" height="35">
+                </td>
+                <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image9','','images/button_dzzf_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("CaseMng.aspx")'>
+                        <img alt="单证作废" id="Image9" onclick="setFocus(this)" border="0" name="Image9" src="images/button_dzzf_a.gif"
+                            width="100" height="34" selectedimg="images/button_dzzf_b.gif" unselectedimg="images/button_dzzf_a.gif">
+                    </a>
+                </td>
+                <td width="2">
+                    <img src="images/main_menu_line01.gif" width="2" height="35">
+                </td>
+                <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image5','','images/button_hdgl_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("SerialMngAdmin.aspx")'>
+                        <img alt="号段管理" id="Image5" onclick="setFocus(this)" border="0" name="Image5" src="images/button_hdgl_a.gif"
+                            width="100" height="34" selectedimg="images/button_hdgl_b.gif" unselectedimg="images/button_hdgl_a.gif">
+                    </a>
+                </td>
+                <td width="2">
+                    <img src="images/main_menu_line01.gif" width="2" height="35">
+                </td>
+                <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image6','','images/button_hdfp_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("SerialAssign.aspx")'>
+                        <img alt="号段分配" id="Image6" onclick="setFocus(this)" border="0" name="Image6" src="images/button_hdfp_a.gif"
+                            width="100" height="34" selectedimg="images/button_hdfp_b.gif" unselectedimg="images/button_hdfp_a.gif">
+                    </a>
+                </td>
+                <td width="2">
+                    <img src="images/main_menu_line01.gif" width="2" height="35">
+                </td>
+                <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image7','','images/button_hdtj_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("Statistics.aspx")'>
+                        <img alt="号段统计" id="Image7" onclick="setFocus(this)" border="0" name="Image7" src="images/button_hdtj_a.gif"
+                            width="100" height="34" selectedimg="images/button_hdtj_b.gif" unselectedimg="images/button_hdtj_a.gif">
+                    </a>
+                </td>
+                <td width="2">
+                    <img src="images/main_menu_line01.gif" width="2" height="35">
+                </td>
+                <td width="110" align="middle">
+                    <a onmouseover="MM_swapImage('Image8','','images/button_mmxg_b.gif',1)" onmouseout="MM_swapImgRestore()"
+                        href="#" onclick='setRequestUrl("passwordChange.aspx")'>
+                        <img alt="密码修改" id="Image8" onclick="setFocus(this)" border="0" name="Image8" src="images/button_mmxg_a.gif"
+                            width="100" height="34" selectedimg="images/button_mmxg_b.gif" unselectedimg="images/button_mmxg_a.gif">
+                    </a>
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td align="right">
+                    <a href="#" onclick='setRequestUrl("download.aspx")' style="font-size: 12px; color: White">客户端下载</a>&nbsp;
+                </td>
+                <td width="40" align="right">
+                    <a href="#" onclick="setRequestUrl('Alipay.aspx');" style="font-size: 12px; color: White">充 值</a>&nbsp;
+                </td>
+                <td width="40" align="right">
+                    <a href="#" onclick="top.location.replace('Logout.aspx');" style="font-size: 12px; color: White">注 销</a>&nbsp;
+                </td>
+                <td width="110" align="right">
+                    <img style="cursor: hand"
+                        border="0" name="tel" alt="在线客服" src="images/button_tel.gif" width="100" height="34">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+
+        MM_swapImage('Image2', '', 'images/button_cdqk_b.gif', 1);
+        setFocus(document.all.Image2);
+        setRequestUrl("DefaultAdmin.aspx")
+    </script>
+
+</body>
+</html>
