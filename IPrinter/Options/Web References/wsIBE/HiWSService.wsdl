@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:tns="http://hi.me.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="HiWSService" targetNamespace="http://hi.me.org/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" schemaLocation="http://www.eg66.com:8080/testWS/HiWSService/__container$publishing$subctx/WEB-INF/wsdl/HiWSService_schema1.xsd" namespace="http://hi.me.org/" />
+    </xsd:schema>
+  </types>
+  <message name="sayHi">
+    <part name="parameters" element="tns:sayHi" />
+  </message>
+  <message name="sayHiResponse">
+    <part name="parameters" element="tns:sayHiResponse" />
+  </message>
+  <message name="wsAV">
+    <part name="parameters" element="tns:wsAV" />
+  </message>
+  <message name="wsAVResponse">
+    <part name="parameters" element="tns:wsAVResponse" />
+  </message>
+  <message name="IBEException">
+    <part name="fault" element="tns:IBEException" />
+  </message>
+  <message name="wsFD">
+    <part name="parameters" element="tns:wsFD" />
+  </message>
+  <message name="wsFDResponse">
+    <part name="parameters" element="tns:wsFDResponse" />
+  </message>
+  <message name="Exception">
+    <part name="fault" element="tns:Exception" />
+  </message>
+  <message name="wsRT">
+    <part name="parameters" element="tns:wsRT" />
+  </message>
+  <message name="wsRTResponse">
+    <part name="parameters" element="tns:wsRTResponse" />
+  </message>
+  <message name="wsXePnr">
+    <part name="parameters" element="tns:wsXePnr" />
+  </message>
+  <message name="wsXePnrResponse">
+    <part name="parameters" element="tns:wsXePnrResponse" />
+  </message>
+  <message name="wsSS">
+    <part name="parameters" element="tns:wsSS" />
+  </message>
+  <message name="wsSSResponse">
+    <part name="parameters" element="tns:wsSSResponse" />
+  </message>
+  <message name="wsRT2">
+    <part name="parameters" element="tns:wsRT2" />
+  </message>
+  <message name="wsRT2Response">
+    <part name="parameters" element="tns:wsRT2Response" />
+  </message>
+  <message name="wsFD2">
+    <part name="parameters" element="tns:wsFD2" />
+  </message>
+  <message name="wsFD2Response">
+    <part name="parameters" element="tns:wsFD2Response" />
+  </message>
+  <message name="wsDSG">
+    <part name="parameters" element="tns:wsDSG" />
+  </message>
+  <message name="wsDSGResponse">
+    <part name="parameters" element="tns:wsDSGResponse" />
+  </message>
+  <message name="wsGetServerTime">
+    <part name="parameters" element="tns:wsGetServerTime" />
+  </message>
+  <message name="wsGetServerTimeResponse">
+    <part name="parameters" element="tns:wsGetServerTimeResponse" />
+  </message>
+  <portType name="HiWS">
+    <operation name="sayHi">
+      <input message="tns:sayHi" />
+      <output message="tns:sayHiResponse" />
+    </operation>
+    <operation name="wsAV">
+      <input message="tns:wsAV" />
+      <output message="tns:wsAVResponse" />
+      <fault name="IBEException" message="tns:IBEException" />
+    </operation>
+    <operation name="wsFD">
+      <input message="tns:wsFD" />
+      <output message="tns:wsFDResponse" />
+      <fault name="IBEException" message="tns:IBEException" />
+      <fault name="Exception" message="tns:Exception" />
+    </operation>
+    <operation name="wsRT">
+      <input message="tns:wsRT" />
+      <output message="tns:wsRTResponse" />
+      <fault name="Exception" message="tns:Exception" />
+    </operation>
+    <operation name="wsXePnr">
+      <input message="tns:wsXePnr" />
+      <output message="tns:wsXePnrResponse" />
+    </operation>
+    <operation name="wsSS">
+      <input message="tns:wsSS" />
+      <output message="tns:wsSSResponse" />
+    </operation>
+    <operation name="wsRT2">
+      <input message="tns:wsRT2" />
+      <output message="tns:wsRT2Response" />
+    </operation>
+    <operation name="wsFD2">
+      <input message="tns:wsFD2" />
+      <output message="tns:wsFD2Response" />
+    </operation>
+    <operation name="wsDSG">
+      <input message="tns:wsDSG" />
+      <output message="tns:wsDSGResponse" />
+    </operation>
+    <operation name="wsGetServerTime">
+      <input message="tns:wsGetServerTime" />
+      <output message="tns:wsGetServerTimeResponse" />
+    </operation>
+  </portType>
+  <binding name="HiWSPortBinding" type="tns:HiWS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="sayHi">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="wsAV">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="IBEException">
+        <soap:fault use="literal" name="IBEException" namespace="" />
+      </fault>
+    </operation>
+    <operation name="wsFD">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="IBEException">
+        <soap:fault use="literal" name="IBEException" namespace="" />
+      </fault>
+      <fault name="Exception">
+        <soap:fault use="literal" name="Exception" namespace="" />
+      </fault>
+    </operation>
+    <operation name="wsRT">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="Exception">
+        <soap:fault use="literal" name="Exception" namespace="" />
+      </fault>
+    </operation>
+    <operation name="wsXePnr">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="wsSS">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="wsRT2">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="wsFD2">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="wsDSG">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="wsGetServerTime">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="HiWSService">
+    <port name="HiWSPort" binding="tns:HiWSPortBinding">
+      <soap:address location="http://www.eg66.com:8080/testWS/HiWSService" />
+    </port>
+  </service>
+</definitions>

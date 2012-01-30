@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D20BDD05-A8CA-4D62-A0A1-8B7E488A5ADD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EagleControls</RootNamespace>
+    <AssemblyName>EagleControls</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <PublishUrl>http://localhost/EagleControls/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BlackWindow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BlackWindow.Designer.cs">
+      <DependentUpon>BlackWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BlackWindowAttri.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BlackWindowAttri.Designer.cs">
+      <DependentUpon>BlackWindowAttri.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BlackWindowHistory.cs">
+    </Compile>
+    <Compile Include="BlackWindowHotKey.cs" />
+    <Compile Include="BlackWindowHotKeySetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BlackWindowHotKeySetup.Designer.cs">
+      <DependentUpon>BlackWindowHotKeySetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingCircle.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LoadingCircle.Designer.cs">
+      <DependentUpon>LoadingCircle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LV_GroupList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LV_GroupList.Designer.cs">
+      <DependentUpon>LV_GroupList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LV_Lowest.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LV_Lowest.Designer.cs">
+      <DependentUpon>LV_Lowest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LV_SpecTicList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="LV_SpecTicList.Designer.cs">
+      <DependentUpon>LV_SpecTicList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainStatusBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainStatusBar.Designer.cs">
+      <DependentUpon>MainStatusBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainToolBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainToolBar.Designer.cs">
+      <DependentUpon>MainToolBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Operators.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ScrollNotice.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ScrollNotice.Designer.cs">
+      <DependentUpon>ScrollNotice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleCtrls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EagleString\EagleString.csproj">
+      <Project>{6C5F9425-1F83-42E7-BCF3-100C2B3F8B83}</Project>
+      <Name>EagleString</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleWebService\EagleWebService.csproj">
+      <Project>{7A147033-6E25-48D8-ADC9-3F2C2B38BDCF}</Project>
+      <Name>EagleWebService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BlackWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BlackWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BlackWindowAttri.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BlackWindowAttri.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BlackWindowHotKeySetup.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BlackWindowHotKeySetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProgressForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LV_GroupList.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LV_GroupList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LV_Lowest.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LV_Lowest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LV_SpecTicList.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LV_SpecTicList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainStatusBar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainStatusBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainToolBar.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainToolBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScrollNotice.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ScrollNotice.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

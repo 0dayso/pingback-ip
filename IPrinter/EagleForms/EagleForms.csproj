@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{805841AD-6955-4D93-A9D8-081473BC43EF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EagleForms</RootNamespace>
+    <AssemblyName>EagleForms</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <PublishUrl>http://localhost/EagleForms/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="EagleForms.cs" />
+    <Compile Include="Easy\AvPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Easy\AvPanel.Designer.cs">
+      <DependentUpon>AvPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Easy\EasyMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Easy\EasyMain.Designer.cs">
+      <DependentUpon>EasyMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Easy\LvPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Easy\LvPanel.Designer.cs">
+      <DependentUpon>LvPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\frmExpireTicketFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\frmExpireTicketFind.Designer.cs">
+      <DependentUpon>frmExpireTicketFind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\GroupAddPassenger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\GroupAddPassenger.Designer.cs">
+      <DependentUpon>GroupAddPassenger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\NoticeScrollPublish.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\NoticeScrollPublish.Designer.cs">
+      <DependentUpon>NoticeScrollPublish.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\PassengerAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\PassengerAdd.Designer.cs">
+      <DependentUpon>PassengerAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\PasswordModifyB2B.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\PasswordModifyB2B.Designer.cs">
+      <DependentUpon>PasswordModifyB2B.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\SpecTickHandle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\SpecTickHandle.Designer.cs">
+      <DependentUpon>SpecTickHandle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="General\SplashMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="General\SplashMessage.Designer.cs">
+      <DependentUpon>SplashMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Primary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Primary.Designer.cs">
+      <DependentUpon>Primary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrimaryHandleResult.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrimaryInitial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrimaryMainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrimaryProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrimaryRightMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrimarySender.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrimarySetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrimaryTimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\Common.cs" />
+    <Compile Include="Printer\Feedback.cs" />
+    <Compile Include="Printer\FrmInsuranceList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\FrmInsuranceList.Designer.cs">
+      <DependentUpon>FrmInsuranceList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Printer\Insurance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\Insurance.Designer.cs">
+      <DependentUpon>Insurance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Printer\PrintIA10.cs" />
+    <Compile Include="Printer\PrintXmlHandle.cs" />
+    <Compile Include="Printer\Receipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\Receipt.Designer.cs">
+      <DependentUpon>Receipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="ToCommand\AirCode2Pnr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToCommand\AirCode2Pnr.Designer.cs">
+      <DependentUpon>AirCode2Pnr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToCommand\EtdzOneKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToCommand\EtdzOneKey.Designer.cs">
+      <DependentUpon>EtdzOneKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToCommand\PnrOrderSubmit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToCommand\PnrOrderSubmit.Designer.cs">
+      <DependentUpon>PnrOrderSubmit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToCommand\QueueClear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToCommand\QueueClear.Designer.cs">
+      <DependentUpon>QueueClear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToCommand\RefundTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToCommand\RefundTicket.Designer.cs">
+      <DependentUpon>RefundTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToCommand\SwitchVisableConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToCommand\SwitchVisableConfig.Designer.cs">
+      <DependentUpon>SwitchVisableConfig.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Easy\AvPanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AvPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Easy\EasyMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EasyMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Easy\LvPanel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LvPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\frmExpireTicketFind.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmExpireTicketFind.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\GroupAddPassenger.resx">
+      <DependentUpon>GroupAddPassenger.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\Login.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\NoticeScrollPublish.resx">
+      <DependentUpon>NoticeScrollPublish.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\PassengerAdd.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PassengerAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\PasswordModifyB2B.resx">
+      <DependentUpon>PasswordModifyB2B.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\SpecTickHandle.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SpecTickHandle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="General\SplashMessage.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SplashMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Primary.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Primary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\FrmInsuranceList.resx">
+      <DependentUpon>FrmInsuranceList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\Insurance.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Insurance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\Receipt.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Receipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToCommand\AirCode2Pnr.resx">
+      <DependentUpon>AirCode2Pnr.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToCommand\EtdzOneKey.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EtdzOneKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToCommand\PnrOrderSubmit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PnrOrderSubmit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToCommand\QueueClear.resx">
+      <DependentUpon>QueueClear.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToCommand\RefundTicket.resx">
+      <DependentUpon>RefundTicket.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToCommand\SwitchVisableConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SwitchVisableConfig.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EagleFinance\EagleFinance.csproj">
+      <Project>{72E82106-8204-42F8-8714-CEA2CBA3152C}</Project>
+      <Name>EagleFinance</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleControls\EagleControls.csproj">
+      <Project>{D20BDD05-A8CA-4D62-A0A1-8B7E488A5ADD}</Project>
+      <Name>EagleControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleDllImport\EagleDllImport.csproj">
+      <Project>{5D2EBC49-4152-4D6E-A7BD-D2574DC88010}</Project>
+      <Name>EagleDllImport</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleExtension\EagleExtension.csproj">
+      <Project>{61CDAD0E-ED34-446A-80F8-3DD5464DA58B}</Project>
+      <Name>EagleExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleNotifyIcon\EagleNotifyIcon.csproj">
+      <Project>{A9ECB6B5-D31C-476D-AB68-7E121425991C}</Project>
+      <Name>EagleNotifyIcon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleProtocal\EagleProtocal.csproj">
+      <Project>{41289AE3-D37C-40AA-86DF-831C21967998}</Project>
+      <Name>EagleProtocal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleString\EagleString.csproj">
+      <Project>{6C5F9425-1F83-42E7-BCF3-100C2B3F8B83}</Project>
+      <Name>EagleString</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleWebService\EagleWebService.csproj">
+      <Project>{7A147033-6E25-48D8-ADC9-3F2C2B38BDCF}</Project>
+      <Name>EagleWebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Options\Options.csproj">
+      <Project>{B39546E6-497F-4002-B3FC-E14767A311BD}</Project>
+      <Name>Options</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FromCommand\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spinnersnake.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

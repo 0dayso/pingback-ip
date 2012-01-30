@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Results>
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.SchemaReference" url="http://www.eg66.com:8080/testWS/HiWSService/__container$publishing$subctx/WEB-INF/wsdl/HiWSService_schema1.xsd" filename="HiWSService_schema1.xsd" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://www.eg66.com:8080/testWS/HiWSService?WSDL" filename="HiWSService.wsdl" />
+  </Results>
+</DiscoveryClientResultsFile>

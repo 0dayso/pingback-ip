@@ -1,0 +1,846 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1EC9EF68-4F16-43F4-A572-1F9605CF1B33}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ePlus</RootNamespace>
+    <AssemblyName>IPrinter</AssemblyName>
+    <ApplicationIcon>Resources\ico.ico</ApplicationIcon>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>A819ECCADB13EF0975239B158E58862CD975C1F6</ManifestCertificateThumbprint>
+    <ManifestKeyFile>Eagle_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <PublishUrl>k:\Eagle\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>2.1.2.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\publish\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;REALIBE,RWY</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\publish\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>
+    </DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.DotNetBar2, Version=7.5.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EgCMM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\EgCMM.dll</HintPath>
+    </Reference>
+    <Reference Include="EgRClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\EgRClient.dll</HintPath>
+    </Reference>
+    <Reference Include="IrisSkin2, Version=2006.3.22.45, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\publish\IrisSkin2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.mshtml, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="SecurityTools, Version=1.0.0.0, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Security\SecurityTools.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TicketSystem.DataAccess, Version=1.0.2774.30795, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Security\TicketSystem.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="WS_XMLSchema, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AutoUpdate\autoupdate.cs" />
+    <Compile Include="AutoUpdate\HttpDownloader.cs" />
+    <Compile Include="BookSimple\AddPassenger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookSimple\AddPassenger.Designer.cs">
+      <DependentUpon>AddPassenger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookSimple\CardIDs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookSimple\CardIDs.Designer.cs">
+      <DependentUpon>CardIDs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookSimple\ListPolicy.cs" />
+    <Compile Include="BookSimple\NoticeScroll.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookSimple\NoticeScroll.Designer.cs">
+      <DependentUpon>NoticeScroll.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookSimple\SubmitPnr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookSimple\SubmitPnr.Designer.cs">
+      <DependentUpon>SubmitPnr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookSimple\ToGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookSimple\ToGroup.Designer.cs">
+      <DependentUpon>ToGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookSimple\CardIDsB2C.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookSimple\CardIDsB2C.Designer.cs">
+      <DependentUpon>CardIDsB2C.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookTicket.Designer.cs">
+      <DependentUpon>BookTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookTicketPart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ButtonEnabledSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckPrint.designer.cs">
+      <DependentUpon>CheckPrint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckPrintObject.cs" />
+    <Compile Include="eTicket\BatchTicket.cs" />
+    <Compile Include="eTicket\etSubmitClass.cs" />
+    <Compile Include="eTicket\MsnPromote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="eTicket\MsnPromote.Designer.cs">
+      <DependentUpon>MsnPromote.cs</DependentUpon>
+    </Compile>
+    <Compile Include="eTicket\NewEticket.cs" />
+    <Compile Include="GlobalAPI\EagleAPI.cs" />
+    <Compile Include="EagleProtocol.cs" />
+    <Compile Include="eTicket\ET.cs" />
+    <Compile Include="FlightInformation.cs" />
+    <Compile Include="GlobalAPI\EagleAPI2.cs" />
+    <Compile Include="GlobalAPI\GlobalVar.cs" />
+    <Compile Include="GlobalAPI\GlobalVar2.cs" />
+    <Compile Include="GlobalAPI\Hook.cs" />
+    <Compile Include="GlobalAPI\Hosts.cs" />
+    <Compile Include="GlobalAPI\LogFont.cs" />
+    <Compile Include="GlobalAPI\mystring.cs" />
+    <Compile Include="GlobalAPI\NotGlobal.cs" />
+    <Compile Include="GlobalAPI\streamctrl.cs" />
+    <Compile Include="LogForPrintReceipt.cs" />
+    <Compile Include="logic.EaglePrintIns.cs" />
+    <Compile Include="LogonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogonForm.Designer.cs">
+      <DependentUpon>LogonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LogoutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LogoutForm.Designer.cs">
+      <DependentUpon>LogoutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainFormParts\Loader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelMangementForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelMangementForm.designer.cs">
+      <DependentUpon>ModelMangementForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CommServer.cs" />
+    <Compile Include="Model\md.cs" />
+    <Compile Include="Model\Tpr.cs" />
+    <Compile Include="Model\TprCmd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model\TprCmd.Designer.cs">
+      <DependentUpon>TprCmd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\BindLocal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\BindLocal.Designer.cs">
+      <DependentUpon>BindLocal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\CommenCmd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\CommenCmd.Designer.cs">
+      <DependentUpon>CommenCmd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\CommenCmdAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\CommenCmdAdd.Designer.cs">
+      <DependentUpon>CommenCmdAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\CreateETicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\CreateETicket.Designer.cs">
+      <DependentUpon>CreateETicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\EditNetworkSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\EditNetworkSetupForm.Designer.cs">
+      <DependentUpon>EditNetworkSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\Eticket2Pnr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\Eticket2Pnr.Designer.cs">
+      <DependentUpon>Eticket2Pnr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\NetworkSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\NetworkSetupForm.Designer.cs">
+      <DependentUpon>NetworkSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\Quenes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\Quenes.Designer.cs">
+      <DependentUpon>Quenes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetworkSetup\RefundTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NetworkSetup\RefundTicket.Designer.cs">
+      <DependentUpon>RefundTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewDecFee.cs" />
+    <Compile Include="NewDecFee2.cs" />
+    <Compile Include="NewOrderWeb.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewOrderWeb.Designer.cs">
+      <DependentUpon>NewOrderWeb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewPara.cs" />
+    <Compile Include="OptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionForm.Designer.cs">
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GetServers.cs" />
+    <Compile Include="PrintHyx\AirCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\AirCode.Designer.cs">
+      <DependentUpon>AirCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\bxLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\bxLogin.Designer.cs">
+      <DependentUpon>bxLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\ChinaLife.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\ChinaLife.Designer.cs">
+      <DependentUpon>ChinaLife.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\ChinaLife2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\ChinaLife2.Designer.cs">
+      <DependentUpon>ChinaLife2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\DuBang01.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\DuBang01.Designer.cs">
+      <DependentUpon>DuBang01.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\DuBang02.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\DuBang02.Designer.cs">
+      <DependentUpon>DuBang02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\EagleAnbang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\EagleAnbang.Designer.cs">
+      <DependentUpon>EagleAnbang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\EagleIns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\EagleIns.Designer.cs">
+      <DependentUpon>EagleIns.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\Hangyiwang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\Hangyiwang.Designer.cs">
+      <DependentUpon>Hangyiwang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\HyxStructs.cs" />
+    <Compile Include="PrintHyx\Insurance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\Insurance.Designer.cs">
+      <DependentUpon>Insurance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\NewChina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\NewChina.Designer.cs">
+      <DependentUpon>NewChina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\Pacific.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\Pacific.Designer.cs">
+      <DependentUpon>Pacific.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\PingAn01.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\PingAn01.Designer.cs">
+      <DependentUpon>PingAn01.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\PrintPICC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\PrintPICC.Designer.cs">
+      <DependentUpon>PrintPICC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\PrintPICC2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\PrintPICC2.Designer.cs">
+      <DependentUpon>PrintPICC2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\SinoSafe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\SinoSafe.Designer.cs">
+      <DependentUpon>SinoSafe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\Sunshine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\Sunshine.Designer.cs">
+      <DependentUpon>Sunshine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\Yongan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\Yongan.Designer.cs">
+      <DependentUpon>Yongan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintHyx\Default.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintHyx\Default.Designer.cs">
+      <DependentUpon>Default.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintReceipt.Designer.cs">
+      <DependentUpon>PrintReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintSetup.Designer.cs">
+      <DependentUpon>PrintSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PrintTicket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintTicket.Designer.cs">
+      <DependentUpon>PrintTicket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookSimple\AddPassenger.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AddPassenger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookSimple\CardIDs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CardIDs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookSimple\NoticeScroll.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NoticeScroll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookSimple\SubmitPnr.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SubmitPnr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookSimple\ToGroup.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookSimple\CardIDsB2C.resx">
+      <DependentUpon>CardIDsB2C.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookTicket.resx">
+      <DependentUpon>BookTicket.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckPrint.resx">
+      <DependentUpon>CheckPrint.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="eTicket\MsnPromote.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MsnPromote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogonForm.resx">
+      <DependentUpon>LogonForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LogoutForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LogoutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelMangementForm.resx">
+      <DependentUpon>ModelMangementForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\TprCmd.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TprCmd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\BindLocal.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BindLocal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\CommenCmd.resx">
+      <DependentUpon>CommenCmd.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\CommenCmdAdd.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CommenCmdAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\CreateETicket.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CreateETicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\EditNetworkSetupForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EditNetworkSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\Eticket2Pnr.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Eticket2Pnr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\NetworkSetupForm.resx">
+      <DependentUpon>NetworkSetupForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\Quenes.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Quenes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NetworkSetup\RefundTicket.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>RefundTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewOrderWeb.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NewOrderWeb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>OptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\AirCode.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AirCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\bxLogin.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>bxLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\ChinaLife.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChinaLife.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\ChinaLife2.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChinaLife2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\DuBang01.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DuBang01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\DuBang02.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DuBang02.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\EagleAnbang.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EagleAnbang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\EagleIns.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EagleIns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\Hangyiwang.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Hangyiwang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\Insurance.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Insurance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\NewChina.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NewChina.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\Pacific.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Pacific.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\PingAn01.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PingAn01.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\PrintPICC.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PrintPICC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\PrintPICC2.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PrintPICC2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\SinoSafe.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SinoSafe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\Sunshine.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Sunshine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\Yongan.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Yongan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintHyx\Default.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Default.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintReceipt.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PrintReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintSetup.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PrintSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintTicket.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PrintTicket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShortCutKeySettingsForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ShortCutKeySettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Splash\frmSplash.resx">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Eagle_TemporaryKey.pfx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="ShortCutHandle.cs" />
+    <Compile Include="ShortCutKeySettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShortCutKeySettingsForm.Designer.cs">
+      <DependentUpon>ShortCutKeySettingsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Splash\frmSplash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Splash\frmSplash.designer.cs">
+      <DependentUpon>frmSplash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Splash\ISplashForm.cs" />
+    <Compile Include="Splash\Splasher.cs" />
+    <Compile Include="tcpListen\definition.cs" />
+    <Compile Include="tcpListen\mylisten.cs">
+    </Compile>
+    <Compile Include="tcpListen\RawThread.cs" />
+    <Compile Include="tcpListen\socketform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tcpListen\TCPThread.cs" />
+    <Compile Include="WindowSwitch.cs" />
+    <None Include="Resources\DeleteFolderHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\NewFolderHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\FormRunHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SearchWebHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\CalculatorHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\CutHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\CopyHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\PasteHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\DeleteHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\ColorHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\NoteHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\eps_closedHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\ProtectFormHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Book_openHS.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="app.config" />
+    <None Include="Resources\VSObject_Event_Protected.bmp">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <None Include="Resources\ico.ico" />
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{096CB295-DFFF-4AE0-9517-CAC1FC8B749B}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleControls\EagleControls.csproj">
+      <Project>{D20BDD05-A8CA-4D62-A0A1-8B7E488A5ADD}</Project>
+      <Name>EagleControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleCTI\EagleCTI.csproj">
+      <Project>{9C348E48-AB52-43B0-A659-3338E1F52B73}</Project>
+      <Name>EagleCTI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleExtension\EagleExtension.csproj">
+      <Project>{61CDAD0E-ED34-446A-80F8-3DD5464DA58B}</Project>
+      <Name>EagleExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleForms\EagleForms.csproj">
+      <Project>{805841AD-6955-4D93-A9D8-081473BC43EF}</Project>
+      <Name>EagleForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleNotifyIcon\EagleNotifyIcon.csproj">
+      <Project>{A9ECB6B5-D31C-476D-AB68-7E121425991C}</Project>
+      <Name>EagleNotifyIcon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleProtocal\EagleProtocal.csproj">
+      <Project>{41289AE3-D37C-40AA-86DF-831C21967998}</Project>
+      <Name>EagleProtocal</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleString\EagleString.csproj">
+      <Project>{6C5F9425-1F83-42E7-BCF3-100C2B3F8B83}</Project>
+      <Name>EagleString</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleWebService\EagleWebService.csproj">
+      <Project>{7A147033-6E25-48D8-ADC9-3F2C2B38BDCF}</Project>
+      <Name>EagleWebService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ErpPlugin\ErpPlugin.csproj">
+      <Project>{D258A2E1-8979-457C-84B5-79B98F48D4CB}</Project>
+      <Name>ErpPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogoPicture\LogoPicture.csproj">
+      <Project>{72A07EFB-166F-4D65-9D6E-06899E0DAE7F}</Project>
+      <Name>LogoPicture</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MovableLabel\MovableLabel.csproj">
+      <Project>{AB324E55-FF9E-4B2D-A69A-D01E745DA40A}</Project>
+      <Name>MovableLabel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Options\Options.csproj">
+      <Project>{B39546E6-497F-4002-B3FC-E14767A311BD}</Project>
+      <Name>Options</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YzpBtoC\YzpBtoC.csproj">
+      <Project>{1DECCF7A-0087-4C51-8EBE-A7E6CE7664C9}</Project>
+      <Name>YzpBtoC</Name>
+    </ProjectReference>
+    <Content Include="eagle.ico" />
+    <Content Include="Resources\FIND.ico" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Resources\note.png" />
+    <None Include="Resources\loading01.gif" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B39546E6-497F-4002-B3FC-E14767A311BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Options</RootNamespace>
+    <AssemblyName>Options</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <PublishUrl>http://localhost/Options/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Publish\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Publish\</OutputPath>
+    <DefineConstants>TRACE;REALIBE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.GENCOMMLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Interop.GENCOMMLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="A4ReceiptPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="A4ReceiptPrint.Designer.cs">
+      <DependentUpon>A4ReceiptPrint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BatReceipt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BatReceipt.Designer.cs">
+      <DependentUpon>BatReceipt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BookSimpleRemark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookSimpleRemark.Designer.cs">
+      <DependentUpon>BookSimpleRemark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChildBirth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChildBirth.Designer.cs">
+      <DependentUpon>ChildBirth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CommenCmd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommenCmd.Designer.cs">
+      <DependentUpon>CommenCmd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="gbOption.cs" />
+    <Compile Include="GlobalVar.cs" />
+    <Compile Include="ibe\ibeInterface.cs" />
+    <Compile Include="ibe\Working.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ibe\Working.Designer.cs">
+      <DependentUpon>Working.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InterTicketPrint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InterTicketPrint.Designer.cs">
+      <DependentUpon>InterTicketPrint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NoticeDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NoticeDlg.Designer.cs">
+      <DependentUpon>NoticeDlg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Option.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Option.Designer.cs">
+      <DependentUpon>Option.cs</DependentUpon>
+    </Compile>
+    <Compile Include="otherClass\HotKey.cs" />
+    <Compile Include="otherClass\mysms.cs" />
+    <Compile Include="PrintBaoXianLianXu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrintBaoXianLianXu.Designer.cs">
+      <DependentUpon>PrintBaoXianLianXu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SubmitManual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubmitManual.Designer.cs">
+      <DependentUpon>SubmitManual.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolBar\CmdQueryTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ToolBar\CmdQueryTool.Designer.cs">
+      <DependentUpon>CmdQueryTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tpr\tprSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tpr\tprSetup.Designer.cs">
+      <DependentUpon>tprSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="tpr\trpResult.cs" />
+    <Compile Include="Web References\wsIBE\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="XMLConfig.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="A4ReceiptPrint.resx">
+      <DependentUpon>A4ReceiptPrint.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BatReceipt.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BatReceipt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BookSimpleRemark.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BookSimpleRemark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChildBirth.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ChildBirth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CommenCmd.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CommenCmd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ibe\Working.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Working.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InterTicketPrint.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>InterTicketPrint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoticeDlg.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>NoticeDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Option.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Option.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrintBaoXianLianXu.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PrintBaoXianLianXu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubmitManual.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SubmitManual.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ToolBar\CmdQueryTool.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>CmdQueryTool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tpr\tprSetup.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>tprSetup.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://221.123.65.26:8383/testWS/HiWSService%3fWSDL">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\wsIBE\</RelPath>
+      <UpdateFromURL>http://221.123.65.26:8383/testWS/HiWSService%3fWSDL</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>Options_wsIBE_HiWSService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\wsIBE\HiWSService.wsdl" />
+    <None Include="Web References\wsIBE\HiWSService_schema1.xsd">
+      <SubType>
+      </SubType>
+    </None>
+    <None Include="Web References\wsIBE\HiWSService_schema1.xsx">
+      <DependentUpon>HiWSService_schema1.xsd</DependentUpon>
+    </None>
+    <None Include="Web References\wsIBE\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CryptIbe\CryptIbe.csproj">
+      <Project>{65632608-A984-40D1-BC01-A71F4F83CC77}</Project>
+      <Name>CryptIbe</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EagleString\EagleString.csproj">
+      <Project>{6C5F9425-1F83-42E7-BCF3-100C2B3F8B83}</Project>
+      <Name>EagleString</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

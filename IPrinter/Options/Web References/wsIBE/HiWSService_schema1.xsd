@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://hi.me.org/" targetNamespace="http://hi.me.org/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Exception" type="tns:Exception" />
+  <xs:element name="IBEException" type="tns:IBEException" />
+  <xs:element name="sayHi" type="tns:sayHi" />
+  <xs:element name="sayHiResponse" type="tns:sayHiResponse" />
+  <xs:element name="wsAV" type="tns:wsAV" />
+  <xs:element name="wsAVResponse" type="tns:wsAVResponse" />
+  <xs:element name="wsDSG" type="tns:wsDSG" />
+  <xs:element name="wsDSGResponse" type="tns:wsDSGResponse" />
+  <xs:element name="wsFD" type="tns:wsFD" />
+  <xs:element name="wsFD2" type="tns:wsFD2" />
+  <xs:element name="wsFD2Response" type="tns:wsFD2Response" />
+  <xs:element name="wsFDResponse" type="tns:wsFDResponse" />
+  <xs:element name="wsGetServerTime" type="tns:wsGetServerTime" />
+  <xs:element name="wsGetServerTimeResponse" type="tns:wsGetServerTimeResponse" />
+  <xs:element name="wsRT" type="tns:wsRT" />
+  <xs:element name="wsRT2" type="tns:wsRT2" />
+  <xs:element name="wsRT2Response" type="tns:wsRT2Response" />
+  <xs:element name="wsRTResponse" type="tns:wsRTResponse" />
+  <xs:element name="wsSS" type="tns:wsSS" />
+  <xs:element name="wsSSResponse" type="tns:wsSSResponse" />
+  <xs:element name="wsXePnr" type="tns:wsXePnr" />
+  <xs:element name="wsXePnrResponse" type="tns:wsXePnrResponse" />
+  <xs:complexType name="wsRT2">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pnr" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsRT2Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsXePnr">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pnr" type="xs:string" />
+      <xs:element minOccurs="0" name="office" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsXePnrResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsFD">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="org" type="xs:string" />
+      <xs:element minOccurs="0" name="dst" type="xs:string" />
+      <xs:element minOccurs="0" name="date" type="xs:string" />
+      <xs:element minOccurs="0" name="airline" type="xs:string" />
+      <xs:element minOccurs="0" name="planeModel" type="xs:string" />
+      <xs:element minOccurs="0" name="passType" type="xs:string" />
+      <xs:element name="fullFareBasis" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsFDResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IBEException">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Exception">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sayHi">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="s" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sayHiResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsAV">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="orgCity" type="xs:string" />
+      <xs:element minOccurs="0" name="dstCity" type="xs:string" />
+      <xs:element minOccurs="0" name="date" type="xs:string" />
+      <xs:element minOccurs="0" name="airline" type="xs:string" />
+      <xs:element name="direct" type="xs:boolean" />
+      <xs:element name="eticket" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsAVResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsDSG">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pnr" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsDSGResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsSS">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FlightNos" type="xs:string" />
+      <xs:element minOccurs="0" name="ActionCodes" type="xs:string" />
+      <xs:element minOccurs="0" name="FlightDates" type="xs:string" />
+      <xs:element minOccurs="0" name="OrgCitys" type="xs:string" />
+      <xs:element minOccurs="0" name="DestCitys" type="xs:string" />
+      <xs:element minOccurs="0" name="Bunks" type="xs:string" />
+      <xs:element minOccurs="0" name="Names" type="xs:string" />
+      <xs:element minOccurs="0" name="LimitDate" type="xs:string" />
+      <xs:element minOccurs="0" name="Cardids" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsSSResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsFD2">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="org" type="xs:string" />
+      <xs:element minOccurs="0" name="dst" type="xs:string" />
+      <xs:element minOccurs="0" name="date" type="xs:string" />
+      <xs:element minOccurs="0" name="airline" type="xs:string" />
+      <xs:element minOccurs="0" name="planeModel" type="xs:string" />
+      <xs:element minOccurs="0" name="passType" type="xs:string" />
+      <xs:element name="fullFareBasis" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsFD2Response">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsGetServerTime" />
+  <xs:complexType name="wsGetServerTimeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsRT">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pnrno" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="wsRTResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
