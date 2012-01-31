@@ -276,7 +276,8 @@ namespace Pingan
             hwrequest.Accept = "*/*";
             hwrequest.CookieContainer = new CookieContainer();
             System.Net.ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(ValidateServerCertificate);
-            X509Certificate2 cer2 = new X509Certificate2(filename, password);
+            //2012.01.31 新增X509KeyStorageFlags参数，以解决忽然出现的异常“CryptographicException: 出现了内部错误”
+            X509Certificate2 cer2 = new X509Certificate2(filename, password, X509KeyStorageFlags.MachineKeySet);
             hwrequest.ClientCertificates.Add(cer2);
             //获取用于请求的数据流
             using (Stream reqStream = hwrequest.GetRequestStream())
@@ -314,11 +315,11 @@ namespace Pingan
 
             PolicyCert[] cert = new PolicyCert[1];
             cert[0].birthDate = entity.Birthday.ToString("yyyyMMdd");
-            cert[0].effDate = DateTime.Today.ToString("yyyyMMdd");
+            cert[0].effDate = entity.EffectiveDate.ToString("yyyyMMdd");
             cert[0].gender = entity.Gender == Gender.Female ? "F" : "M";
             cert[0].idNo = entity.ID;
             cert[0].idType = GetIdType(entity.IDType);
-            cert[0].matuDate = DateTime.Today.AddDays(1).ToString("yyyyMMdd");
+            cert[0].matuDate = entity.ExpiryDate.ToString("yyyyMMdd");
             cert[0].name = entity.Name;
             cert[0].units = "1";
             string xmlRet = "";
@@ -370,7 +371,51 @@ namespace Pingan
 
         public TraceEntity Withdraw(WithdrawEntity entity)
         {
-            return new TraceEntity();
+            TraceEntity result = new TraceEntity();
+            RevokePolicy[] rp = new RevokePolicy[1];
+            rp[0].certNo = entity.PolicyNo;
+            string xmlRet = "";
+
+            try
+            {
+                xmlRet = Withdraw(rp);
+            }
+            catch
+            {
+                Common.LogIt(url);
+                throw;
+            }
+
+            try
+            {
+                if (string.IsNullOrEmpty(xmlRet))
+                    throw new Exception("平安退保返回为空!");
+
+                XmlDocument xd = new XmlDocument();
+                xd.LoadXml(xmlRet);
+                XmlNodeList nodes = xd.SelectNodes("Values/value");
+
+                if (GetValue(nodes, "processFlag") == "1")
+                {
+                    return result;
+                }
+                else
+                {
+                    Common.LogIt("平安退保返回:" + xmlRet);
+                    string error = GetValue(nodes, "processMessage");
+                    if (string.IsNullOrEmpty(error))
+                        result.ErrorMsg = "未知错误";
+                    else
+                        result.ErrorMsg = error;
+                    return result;
+                }
+            }
+            catch
+            {
+                if (!string.IsNullOrEmpty(xmlRet))
+                    Common.LogIt("平安退保返回:" + xmlRet);
+                throw;
+            }
         }
 
         static string GetValue(XmlNodeList nodes, string attribute)

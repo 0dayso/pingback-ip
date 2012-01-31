@@ -12,6 +12,9 @@
     
         <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Issue" 
             style="height: 21px" />
+        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        <asp:Button ID="Button4" runat="server" onclick="Button4_Click" 
+            Text="withdrawal" />
         <br />
         <br />
         <asp:Button ID="Button2" runat="server" onclick="Button2_Click1" 

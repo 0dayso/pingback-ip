@@ -3,7 +3,7 @@
 	<Header>
 		<documentId>001</documentId>
 		<profileRequest>03</profileRequest>
-		<function>policyIssuing</function>
+		<function>policyWithdraw</function>
 		<from>11-24-0001</from>
 		<to>11-11-1111</to>
 	</Header>
@@ -12,8 +12,8 @@
 			<paramList>
 				<parameter>
 					<certNo>PC02000010480336</certNo>
-					<agencyNo>HXDL-00002</agencyNo>
-					<productNo>P10041</productNo>
+					<agencyNo>SHAA-00001</agencyNo>
+					<productNo>P0122A9</productNo>
 				</parameter>
 			</paramList>
 		</policyWithdraw>
