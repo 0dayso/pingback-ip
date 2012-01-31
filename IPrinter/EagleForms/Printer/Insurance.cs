@@ -724,7 +724,7 @@ namespace EagleForms.Printer
                     //简化指令 by king 2009.12.07
                     string cmd = "detr:tn/" + tktno;
                     m_cmdpool.SetCommandType(cmd);
-                    m_socket.SendCommand(cmd, EagleProtocal.TypeOfCommand.Single);
+                    m_socket.SendCommand(cmd, EagleProtocal.TypeOfCommand.Multi);//改成TypeOfCommand.Single会导致票号不能提取
                 }
                 else if (EagleString.BaseFunc.PnrValidate(input))
                 {
