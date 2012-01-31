@@ -107,7 +107,6 @@ namespace AutoUpdate
             this.txtDownFile.ReadOnly = true;
             this.txtDownFile.Size = new System.Drawing.Size(213, 21);
             this.txtDownFile.TabIndex = 1;
-            this.txtDownFile.Text = "http://www.download.com";
             // 
             // pBar
             // 
@@ -545,8 +544,10 @@ namespace AutoUpdate
             else if(user.SelectedISP == ISP.ChinaUnicom)
                 rbWangt.Checked = true;
 
-            if(user.SelectedISP != ISP.Default)
+            if (user.SelectedISP != ISP.Default)
                 butUpdate_Click(sender, e);
+            else
+                GetRoute();
         }
 
         private string GetURL()
@@ -583,6 +584,8 @@ namespace AutoUpdate
                 this.txtDownFile.Text = global.Website2;
                 user.SelectedISP = ISP.ChinaUnicom;
             }
+            else
+                this.txtDownFile.Text = global.Website;
 
             user.Save();
         }
