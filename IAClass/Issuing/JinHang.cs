@@ -79,13 +79,13 @@ namespace JinHang
                 if (errorCode != "000000")
                 {
                     Common.LogIt("投保参数" + policy.OuterXml + System.Environment.NewLine + "金航网投保：" + ret);
-                    //string error = xml.SelectSingleNode("message/dataSet/record/errMsg").InnerText;
-                    
-                    //if (error.Contains("手机号码已经被多次使用"))
-                    //    result.Trace.ErrorMsg = error;
-                    //else
-                    //    result.Trace.Detail = "错误码" + errorCode + "：" + error;
-                    throw new Exception(errorCode);
+                    string error = xml.SelectSingleNode("message/dataSet/record/errMsg").InnerText;
+
+                    if (!string.IsNullOrEmpty(error))
+                        result.Trace.ErrorMsg = error;
+                    else
+                        result.Trace.ErrorMsg = "错误码" + errorCode;
+                    //throw new Exception(errorCode);
                 }
                 else
                 {
@@ -107,7 +107,7 @@ namespace JinHang
         public TraceEntity Withdraw(WithdrawEntity entity)
         {
             TraceEntity result = new TraceEntity();
-            result.ErrorMsg = "该产品仅支持退单。";
+            //result.ErrorMsg = "该产品仅支持退单。";
             return result;
         }
 

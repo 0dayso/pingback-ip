@@ -7,9 +7,22 @@ using System.Xml.Serialization;
 namespace IAClass.Entity
 {
     /// <summary>
+    /// 消息队列中实体的父类
+    /// </summary>
+    [Serializable]
+    public abstract class MessageEntity
+    {
+        /// <summary>
+        /// 消息被重发的次数
+        /// </summary>
+        public int RedeliveryCount;
+    }
+
+    /// <summary>
     /// 短信队列实体类
     /// </summary>
-    public struct SMSEntity
+    [Serializable]
+    public class SMSEntity : MessageEntity
     {
         public string MobilePhone;
         public string Content;
@@ -19,7 +32,7 @@ namespace IAClass.Entity
     /// 投保信息实体类
     /// </summary>
     [Serializable]
-    public struct IssueEntity
+    public class IssueEntity : MessageEntity
     {
         public string Name;
         public string ID;
@@ -58,10 +71,6 @@ namespace IAClass.Entity
         /// 本系统电子单号
         /// </summary>
         public string CaseNo;
-        /// <summary>
-        /// 重试次数
-        /// </summary>
-        public int RedeliveryCount;
     }
 
     /// <summary>
@@ -82,7 +91,7 @@ namespace IAClass.Entity
     }
 
     [Serializable]
-    public struct WithdrawEntity
+    public class WithdrawEntity : MessageEntity
     {
         /// <summary>
         /// 正式保单号

@@ -117,7 +117,7 @@ namespace IAClass
 
             IObjectMessage msg = producer.CreateObjectMessage(entity);
             if(delay >0)
-                msg.Properties["AMQ_SCHEDULED_DELAY"] = (int)delay;
+                msg.Properties["AMQ_SCHEDULED_DELAY"] = delay;
             producer.Send(msg, Apache.NMS.MsgDeliveryMode.Persistent, Apache.NMS.MsgPriority.Normal, TimeSpan.MinValue);
             //msg.Acknowledge();//不需要??
         }

@@ -253,6 +253,10 @@ namespace Jiandanbao
                 try
                 {
                     result = new IAClass.Issuing.IssuingFacade().Issue(entity);
+                    if (!string.IsNullOrEmpty(result.Trace.ErrorMsg))
+                    {
+                        throw new Exception(result.Trace.ErrorMsg);
+                    }
                 }
                 catch(Exception ee)
                 {

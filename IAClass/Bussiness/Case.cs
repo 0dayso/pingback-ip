@@ -272,7 +272,7 @@ SELECT caseID, customerFlightDate, CertNo,
 
                 if (isIssuingRequired)
                 {
-                    WithdrawEntity entity;
+                    WithdrawEntity entity = new WithdrawEntity();
                     entity.CaseNo = caseNo;
                     entity.PolicyNo = dr["CertNo"].ToString();
 
@@ -390,7 +390,7 @@ SELECT caseID, customerFlightDate, CertNo,
 
                 if (isIssuingRequired)
                 {
-                    WithdrawEntity entity;
+                    WithdrawEntity entity = new WithdrawEntity();
                     entity.CaseNo = caseNo;
                     entity.PolicyNo = dr["CertNo"].ToString();
 

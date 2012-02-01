@@ -21,9 +21,13 @@ namespace IAMessageQ
     public partial class FormQueue : Form
     {
         /// <summary>
-        /// 延迟重发,单位:分钟
+        /// 最小重发延迟时间,单位:分钟
         /// </summary>
-        public int DelayMinutes = 30;
+        public int DelayMinutesMin = 30;
+        /// <summary>
+        /// 最大重发次数
+        /// </summary>
+        public int RedeliveryCountMax = 3;
         int countRunningThread;
         bool IsRunning = false;
         //SmartThreadPool stp = new SmartThreadPool();
@@ -127,7 +131,7 @@ namespace IAMessageQ
             this.BeginInvoke(new MethodInvoker(delegate
             {
                 lblCountIdle.Text = countRunningThread.ToString();
-                if (countRunningThread == 0)
+                if (countRunningThread == 0 && !IsRunning)
                     this.btnIssueStart.Enabled = true;
             }));
         }
@@ -154,11 +158,21 @@ namespace IAMessageQ
                     {
                         if (IsRunning)
                         {
-                            //重发,并设置延迟时间
-                            MQClient.EnqueueObject(amqMsg.Body, 60 * 1000 * DelayMinutes);
-                            message.Acknowledge();//事务结束,出队列确认
-                            sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                            sb.AppendLine(string.Format(" {0}分钟后重发!", DelayMinutes));
+                            MessageEntity entity = amqMsg.Body as MessageEntity;
+                            if (entity.RedeliveryCount < this.RedeliveryCountMax)
+                            {
+                                //重发,并设置延迟时间,每次重发延迟时间加倍
+                                entity.RedeliveryCount++;
+                                MQClient.EnqueueObject(entity, 60 * 1000 * DelayMinutesMin * entity.RedeliveryCount);
+                                message.Acknowledge();//事务结束
+                                sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
+                                sb.AppendLine(string.Format(" {0}分钟后重发!", DelayMinutesMin * entity.RedeliveryCount));
+                            }
+                            else
+                            {
+                                message.Acknowledge();//事务结束
+                                sb.AppendLine(string.Format(" {0}次重发失败,放弃!", RedeliveryCountMax));
+                            }
                         }
                         else
                         {
@@ -180,7 +194,8 @@ namespace IAMessageQ
             catch (Apache.NMS.NMSException e)//"The Consumer has been Closed" 点击Stop按钮后consumer被关闭,由message.Acknowledge()引发异常
             {
                 //已出单,却未能提交事务;将导致少量重复投保.
-                string error = message.NMSMessageId + " : " + e.ToString() + System.Environment.NewLine;
+                string error = string.Format("{0} : 线程{1} {2}{3}",
+                    DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId, e.ToString(), System.Environment.NewLine);
                 Common.LogIt(error);
                 this.BeginInvoke(new MethodInvoker(delegate
                 {
@@ -189,7 +204,8 @@ namespace IAMessageQ
             }
             catch (Exception e)
             {
-                string error = message.NMSMessageId + " : " + e.ToString() + System.Environment.NewLine;
+                string error = string.Format("{0} : 线程{1} {2}{3}",
+                    DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId, e.ToString(), System.Environment.NewLine);
                 Common.LogIt(error);
                 this.BeginInvoke(new MethodInvoker(delegate
                 {
