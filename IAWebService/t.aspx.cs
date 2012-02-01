@@ -18,7 +18,8 @@ public partial class t : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         IssueEntity entity = new IssueEntity();
-        entity.Name = "刘德华";
+        entity.Name = txtName.Text.Trim();
+        entity.PhoneNumber = txtMobile.Text.Trim();
         entity.ID = "352224198204120013";
         entity.IDType = IdentityType.身份证;
         entity.Birthday = DateTime.Parse("1982-04-12");
@@ -34,9 +35,9 @@ public partial class t : System.Web.UI.Page
 
     protected void Button2_Click1(object sender, EventArgs e)
     {
-        Common.messageQ.Start();
-
-        for (int i = 0; i < 500; i++)
+        //Common.MessageQ.Start();
+        int count = int.Parse(txtItemCount.Text.Trim());
+        for (int i = 0; i < count; i++)
         {
             IssueEntity entity = new IssueEntity();
             entity.Name = "刘德华";
@@ -44,9 +45,11 @@ public partial class t : System.Web.UI.Page
             entity.IDType = IdentityType.身份证;
             entity.Birthday = DateTime.Parse("1982-04-12");
             entity.Gender = Gender.Male;
+            //entity.EffectiveDate = DateTime.Today.AddDays(3);
+            //entity.ExpiryDate = DateTime.Today.AddDays(4);
             entity.CaseNo = "PIC" + i.ToString().PadLeft(25, '0');
             entity.IOC_TypeName = "PingAn";
-            Common.messageQ.EnqueueObject(entity);
+            Common.MessageQ.EnqueueObject(entity);
         }
     }
     protected void Button3_Click(object sender, EventArgs e)
@@ -56,7 +59,7 @@ public partial class t : System.Web.UI.Page
     protected void Button4_Click(object sender, EventArgs e)
     {
         WithdrawEntity entity = new WithdrawEntity();
-        entity.PolicyNo = TextBox1.Text.Trim();
+        entity.PolicyNo = txtPlicyNo.Text.Trim();
         TraceEntity ret = new Pingan.Issuing().Withdraw(entity);
         Response.Write("<BR>" + Common.SoapSerialize<TraceEntity>(ret));
     }

@@ -87,6 +87,7 @@ namespace Pingan
         public string units;
         public string effDate;
         public string matuDate;
+        public string mobile;
     }
     public struct RevokePolicy
     {
@@ -234,6 +235,7 @@ namespace Pingan
                 parameter.SelectSingleNode("effDate").InnerText = pc.effDate;
                 parameter.SelectSingleNode("matuDate").InnerText = pc.matuDate;
                 parameter.SelectSingleNode("units").InnerText = pc.units;
+                parameter.SelectSingleNode("mobile").InnerText = pc.mobile;
                 para.ParentNode.AppendChild(parameter);
             }
             para.ParentNode.RemoveChild(para);
@@ -322,6 +324,7 @@ namespace Pingan
             cert[0].matuDate = entity.ExpiryDate.ToString("yyyyMMdd");
             cert[0].name = entity.Name;
             cert[0].units = "1";
+            cert[0].mobile = entity.PhoneNumber;
             string xmlRet = "";
 
             try

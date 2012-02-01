@@ -32,7 +32,7 @@ namespace IAClass.Entity
         public string FlightNo;
         public string SMSContent;
         /// <summary>
-        /// 是否可以延迟投保（追溯）
+        /// 可延迟投保（追溯）
         /// </summary>
         public bool IsLazyIssue;
         /// <summary>
@@ -58,6 +58,10 @@ namespace IAClass.Entity
         /// 本系统电子单号
         /// </summary>
         public string CaseNo;
+        /// <summary>
+        /// 重试次数
+        /// </summary>
+        public int RedeliveryCount;
     }
 
     /// <summary>

@@ -52,7 +52,7 @@ using log4net;
         public static NBearLite.Database DB = new NBearLite.Database("InsuranceAviation");
         public static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["InsuranceAviation"].ConnectionString;
         public static readonly string BaseDirectory = System.AppDomain.CurrentDomain.BaseDirectory;//HttpContext.Current.Server.MapPath("~");
-        public static IAClass.MessageQClient messageQ = new IAClass.MessageQClient(Queue_Issuing, 1);
+        public static IAClass.MessageQClient MessageQ = new IAClass.MessageQClient(Queue_Issuing, 1);
 
         public static bool CheckIfSystemFailed(PurchaseResponseEntity response)
         {

@@ -20,6 +20,10 @@ namespace IAMessageQ
 {
     public partial class FormQueue : Form
     {
+        /// <summary>
+        /// 延迟重发,单位:分钟
+        /// </summary>
+        public int DelayMinutes = 30;
         int countRunningThread;
         bool IsRunning = false;
         //SmartThreadPool stp = new SmartThreadPool();
@@ -28,9 +32,13 @@ namespace IAMessageQ
         string AppName = ConfigurationManager.AppSettings["AppName"];
         string QueueName;
         /// <summary>
-        /// 处理消息实体的方法
+        /// 正常处理消息实体的方法
         /// </summary>
-        Func<object, TraceEntity> Consume;
+        Func<object, TraceEntity> NormalWork;
+        /// <summary>
+        /// 失败后的处理消息实体方法
+        /// </summary>
+        Func<object, string> FailureWork;
         /// <summary>
         /// 显示消息实体的方法
         /// </summary>
@@ -40,15 +48,17 @@ namespace IAMessageQ
         /// 构造函数
         /// </summary>
         /// <param name="queueName"></param>
-        /// <param name="consume">处理消息实体的方法</param>
+        /// <param name="normalWork">正常处理消息实体的方法</param>
+        /// <param name="failureWork">失败后的处理消息实体方法</param>
         /// <param name="messageToString">显示消息实体的方法</param>
-        public FormQueue(string queueName, Func<object, TraceEntity> consume, Func<object, string> messageToString)
+        public FormQueue(string queueName, Func<object, TraceEntity> normalWork, Func<object, string> failureWork, Func<object, string> messageToString)
         {
             InitializeComponent();
 
             this.Text += " - " + AppName;
             this.QueueName = queueName;
-            this.Consume = consume;
+            this.NormalWork = normalWork;
+            this.FailureWork = failureWork;
             this.MessageToString = messageToString;
             MQClient = new MessageQClient(this.QueueName, (int)nudThreads.Value);
         }
@@ -134,7 +144,7 @@ namespace IAMessageQ
                 if (IsRunning)
                 {
                     //事务开始
-                    TraceEntity result = Consume(amqMsg.Body);
+                    TraceEntity result = NormalWork(amqMsg.Body);
                     if (string.IsNullOrEmpty(result.ErrorMsg))
                     {
                         message.Acknowledge();//事务结束,出队列确认
@@ -144,11 +154,11 @@ namespace IAMessageQ
                     {
                         if (IsRunning)
                         {
-                            //重发,并设置延迟时间为一小时
-                            MQClient.EnqueueObject(amqMsg.Body, 60 * 1000 * 30);
+                            //重发,并设置延迟时间
+                            MQClient.EnqueueObject(amqMsg.Body, 60 * 1000 * DelayMinutes);
                             message.Acknowledge();//事务结束,出队列确认
                             sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                            sb.AppendLine(" 1小时候后重发!");
+                            sb.AppendLine(string.Format(" {0}分钟后重发!", DelayMinutes));
                         }
                         else
                         {

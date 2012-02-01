@@ -72,15 +72,16 @@ namespace IAClass
                 connection = factory.CreateConnection();
 
                 Connection cnn = connection as Connection;
-                cnn.PrefetchPolicy.QueuePrefetch = 1;
-                cnn.RequestTimeout = TimeSpan.FromSeconds(10);
-                cnn.Start();//网络连接建立
+                cnn.PrefetchPolicy.QueuePrefetch = 1;//队列预取值
+                //cnn.AsyncSend = true;//异步发送
+                cnn.RequestTimeout = TimeSpan.FromSeconds(10);//设置cnn.Start()方法的超时
+                cnn.Start();//网络连接开始建立
             }
 
             if (sessionArray.Count == 0)
             {
                 for (int i = 0; i < sessionCount; i++)
-                {   //ClientAcknowledge模式,以message.Acknowledge()方式来启用事务;如不使用事务,则在stop()后,文本框中会发现有重复的消息
+                {   //ClientAcknowledge模式,以message.Acknowledge()主动应答的方式来使用事务;如不使用事务,则在stop()后,文本框中会发现有重复的消息
                     ISession session = connection.CreateSession(AcknowledgementMode.ClientAcknowledge);
                     sessionArray.Add(session);
                 }
@@ -108,13 +109,15 @@ namespace IAClass
         {
             if (producer == null)
             {
+                if (sessionArray.Count == 0)
+                    throw new Exception("队列服务尚未启动,请使用Start()方法.");
                 ISession session = sessionArray[0] as ISession;
                 producer = session.CreateProducer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue(queueName));
             }
 
             IObjectMessage msg = producer.CreateObjectMessage(entity);
             if(delay >0)
-                msg.Properties["AMQ_SCHEDULED_DELAY"] = delay;
+                msg.Properties["AMQ_SCHEDULED_DELAY"] = (int)delay;
             producer.Send(msg, Apache.NMS.MsgDeliveryMode.Persistent, Apache.NMS.MsgPriority.Normal, TimeSpan.MinValue);
             //msg.Acknowledge();//不需要??
         }
@@ -123,6 +126,8 @@ namespace IAClass
         {
             if (producer == null)
             {
+                if (sessionArray.Count == 0)
+                    throw new Exception("队列服务尚未启动,请使用Start()方法.");
                 ISession session = sessionArray[0] as ISession;
                 producer = session.CreateProducer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue(queueName));
             }
@@ -141,6 +146,8 @@ namespace IAClass
 
             if (consumerArray.Count == 0)
             {
+                if (sessionArray.Count == 0)
+                    throw new Exception("队列服务尚未启动,请使用Start()方法.");
                 foreach(Session session in sessionArray)
                 {
                     IDestination dest = session.GetQueue(queueName);
