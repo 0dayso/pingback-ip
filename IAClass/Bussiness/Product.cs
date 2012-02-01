@@ -11,13 +11,10 @@ using IAClass.Entity;
     {
         public static DataSet GetProduct(string productId)
         {
-            DataSet ds = Common.DB.Select(Tables.t_Product, Tables.t_Product.productName,
-                                                        Tables.t_Product.productSupplier, Tables.t_Product.productDuration, Tables.t_Product.IsIssuingLazyEnabled,
-                                                        Tables.t_Product.FilterInclude, Tables.t_Product.FilterExclude, Tables.t_Product.FilterComment,
-                                                        Tables.t_Product.IsIssuingRequired, Tables.t_Product.IOC_TypeName)
-                                                   .Where(Tables.t_Product.productID == productId)
-                                                   .Where(Tables.t_Product.Enabled == true)
-                                                   .ToDataSet();
+            DataSet ds = Common.DB.Select(Tables.t_Product)
+                                    .Where(Tables.t_Product.productID == productId)
+                                    .Where(Tables.t_Product.Enabled == true)
+                                    .ToDataSet();
             return ds;
         }
 

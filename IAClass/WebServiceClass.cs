@@ -263,6 +263,15 @@ namespace IAClass
                     DataRow drProduct = dsProduct.Tables[0].Rows[0];
                     bool isIssuingRequired = Convert.ToBoolean(drProduct["IsIssuingRequired"]);
                     bool isIssuingLazyEnabled = Convert.ToBoolean(drProduct["IsIssuingLazyEnabled"]);
+                    bool isMobileNoRequired = Convert.ToBoolean(drProduct["IsMobileNoRequired"]);
+                    if (isMobileNoRequired)
+                    {
+                        if (!Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
+                        {
+                            response.Trace.ErrorMsg = "请正确填写手机号码！";
+                            return response;
+                        }
+                    }
                     string IOC_TypeName = drProduct["IOC_TypeName"].ToString();
                     object caseSupplier = drProduct["productSupplier"];
                     int caseDuration = Convert.ToInt32(drProduct["productDuration"]);

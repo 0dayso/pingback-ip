@@ -62,11 +62,15 @@ namespace @__a
 
         private static NBearLite.QueryColumn _customerID = new NBearLite.QueryColumn((___TABLE_NAME + ".customerID"), System.Data.DbType.AnsiString);
 
+        private static NBearLite.QueryColumn _customerGender = new NBearLite.QueryColumn((___TABLE_NAME + ".customerGender"), System.Data.DbType.AnsiString);
+
         private static NBearLite.QueryColumn _customerPhone = new NBearLite.QueryColumn((___TABLE_NAME + ".customerPhone"), System.Data.DbType.AnsiString);
 
         private static NBearLite.QueryColumn _customerFlightNo = new NBearLite.QueryColumn((___TABLE_NAME + ".customerFlightNo"), System.Data.DbType.AnsiString);
 
         private static NBearLite.QueryColumn _customerFlightDate = new NBearLite.QueryColumn((___TABLE_NAME + ".customerFlightDate"), System.Data.DbType.DateTime);
+
+        private static NBearLite.QueryColumn _customerBirth = new NBearLite.QueryColumn((___TABLE_NAME + ".customerBirth"), System.Data.DbType.DateTime);
 
         private static NBearLite.QueryColumn _datetime = new NBearLite.QueryColumn((___TABLE_NAME + ".datetime"), System.Data.DbType.DateTime);
 
@@ -97,10 +101,6 @@ namespace @__a
         private static NBearLite.QueryColumn _PrintingNo = new NBearLite.QueryColumn((___TABLE_NAME + ".PrintingNo"), System.Data.DbType.AnsiString);
 
         private static NBearLite.QueryColumn _ParentPath = new NBearLite.QueryColumn((___TABLE_NAME + ".ParentPath"), System.Data.DbType.AnsiString);
-
-        private static NBearLite.QueryColumn _customerGender = new NBearLite.QueryColumn((___TABLE_NAME + ".customerGender"), System.Data.DbType.AnsiString);
-
-        private static NBearLite.QueryColumn _customerBirth = new NBearLite.QueryColumn((___TABLE_NAME + ".customerBirth"), System.Data.DbType.DateTime);
 
         public t_Case_Columns(string aliasName)
         {
@@ -232,6 +232,21 @@ namespace @__a
             }
         }
 
+        public NBearLite.QueryColumn customerGender
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _customerGender;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".customerGender"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
         public NBearLite.QueryColumn customerPhone
         {
             get
@@ -273,6 +288,21 @@ namespace @__a
                 else
                 {
                     return new NBearLite.QueryColumn((this.___aliasName + ".customerFlightDate"), System.Data.DbType.DateTime);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn customerBirth
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _customerBirth;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".customerBirth"), System.Data.DbType.DateTime);
                 }
             }
         }
@@ -498,36 +528,6 @@ namespace @__a
                 else
                 {
                     return new NBearLite.QueryColumn((this.___aliasName + ".ParentPath"), System.Data.DbType.AnsiString);
-                }
-            }
-        }
-
-        public NBearLite.QueryColumn customerGender
-        {
-            get
-            {
-                if ((this.___aliasName == ___TABLE_NAME))
-                {
-                    return _customerGender;
-                }
-                else
-                {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".customerGender"), System.Data.DbType.AnsiString);
-                }
-            }
-        }
-
-        public NBearLite.QueryColumn customerBirth
-        {
-            get
-            {
-                if ((this.___aliasName == ___TABLE_NAME))
-                {
-                    return _customerBirth;
-                }
-                else
-                {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".customerBirth"), System.Data.DbType.DateTime);
                 }
             }
         }
@@ -1106,19 +1106,23 @@ namespace @__a
 
         private static NBearLite.QueryColumn _id = new NBearLite.QueryColumn((___TABLE_NAME + ".id"), System.Data.DbType.Int32);
 
+        private static NBearLite.QueryColumn _gateway = new NBearLite.QueryColumn((___TABLE_NAME + ".gateway"), System.Data.DbType.AnsiString);
+
         private static NBearLite.QueryColumn _amount = new NBearLite.QueryColumn((___TABLE_NAME + ".amount"), System.Data.DbType.Decimal);
 
-        private static NBearLite.QueryColumn _payer_username = new NBearLite.QueryColumn((___TABLE_NAME + ".payer_username"), System.Data.DbType.AnsiString);
+        private static NBearLite.QueryColumn _payer = new NBearLite.QueryColumn((___TABLE_NAME + ".payer"), System.Data.DbType.AnsiString);
 
-        private static NBearLite.QueryColumn _payer_payment_account = new NBearLite.QueryColumn((___TABLE_NAME + ".payer_payment_account"), System.Data.DbType.AnsiString);
+        private static NBearLite.QueryColumn _payer_account = new NBearLite.QueryColumn((___TABLE_NAME + ".payer_account"), System.Data.DbType.AnsiString);
 
-        private static NBearLite.QueryColumn _payment_status = new NBearLite.QueryColumn((___TABLE_NAME + ".payment_status"), System.Data.DbType.AnsiString);
+        private static NBearLite.QueryColumn _payer_tradeNo = new NBearLite.QueryColumn((___TABLE_NAME + ".payer_tradeNo"), System.Data.DbType.AnsiString);
 
-        private static NBearLite.QueryColumn _payment_date = new NBearLite.QueryColumn((___TABLE_NAME + ".payment_date"), System.Data.DbType.DateTime);
+        private static NBearLite.QueryColumn _status = new NBearLite.QueryColumn((___TABLE_NAME + ".status"), System.Data.DbType.AnsiString);
+
+        private static NBearLite.QueryColumn _date_created = new NBearLite.QueryColumn((___TABLE_NAME + ".date_created"), System.Data.DbType.DateTime);
+
+        private static NBearLite.QueryColumn _date_Payed = new NBearLite.QueryColumn((___TABLE_NAME + ".date_Payed"), System.Data.DbType.DateTime);
 
         private static NBearLite.QueryColumn _remark = new NBearLite.QueryColumn((___TABLE_NAME + ".remark"), System.Data.DbType.AnsiString);
-
-        private static NBearLite.QueryColumn _reserved = new NBearLite.QueryColumn((___TABLE_NAME + ".reserved"), System.Data.DbType.AnsiString);
 
         public t_Payment_Columns(string aliasName)
         {
@@ -1145,6 +1149,21 @@ namespace @__a
             }
         }
 
+        public NBearLite.QueryColumn gateway
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _gateway;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".gateway"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
         public NBearLite.QueryColumn amount
         {
             get
@@ -1160,62 +1179,92 @@ namespace @__a
             }
         }
 
-        public NBearLite.QueryColumn payer_username
+        public NBearLite.QueryColumn payer
         {
             get
             {
                 if ((this.___aliasName == ___TABLE_NAME))
                 {
-                    return _payer_username;
+                    return _payer;
                 }
                 else
                 {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".payer_username"), System.Data.DbType.AnsiString);
+                    return new NBearLite.QueryColumn((this.___aliasName + ".payer"), System.Data.DbType.AnsiString);
                 }
             }
         }
 
-        public NBearLite.QueryColumn payer_payment_account
+        public NBearLite.QueryColumn payer_account
         {
             get
             {
                 if ((this.___aliasName == ___TABLE_NAME))
                 {
-                    return _payer_payment_account;
+                    return _payer_account;
                 }
                 else
                 {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".payer_payment_account"), System.Data.DbType.AnsiString);
+                    return new NBearLite.QueryColumn((this.___aliasName + ".payer_account"), System.Data.DbType.AnsiString);
                 }
             }
         }
 
-        public NBearLite.QueryColumn payment_status
+        public NBearLite.QueryColumn payer_tradeNo
         {
             get
             {
                 if ((this.___aliasName == ___TABLE_NAME))
                 {
-                    return _payment_status;
+                    return _payer_tradeNo;
                 }
                 else
                 {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".payment_status"), System.Data.DbType.AnsiString);
+                    return new NBearLite.QueryColumn((this.___aliasName + ".payer_tradeNo"), System.Data.DbType.AnsiString);
                 }
             }
         }
 
-        public NBearLite.QueryColumn payment_date
+        public NBearLite.QueryColumn status
         {
             get
             {
                 if ((this.___aliasName == ___TABLE_NAME))
                 {
-                    return _payment_date;
+                    return _status;
                 }
                 else
                 {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".payment_date"), System.Data.DbType.DateTime);
+                    return new NBearLite.QueryColumn((this.___aliasName + ".status"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn date_created
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _date_created;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".date_created"), System.Data.DbType.DateTime);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn date_Payed
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _date_Payed;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".date_Payed"), System.Data.DbType.DateTime);
                 }
             }
         }
@@ -1231,21 +1280,6 @@ namespace @__a
                 else
                 {
                     return new NBearLite.QueryColumn((this.___aliasName + ".remark"), System.Data.DbType.AnsiString);
-                }
-            }
-        }
-
-        public NBearLite.QueryColumn reserved
-        {
-            get
-            {
-                if ((this.___aliasName == ___TABLE_NAME))
-                {
-                    return _reserved;
-                }
-                else
-                {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".reserved"), System.Data.DbType.AnsiString);
                 }
             }
         }
@@ -1295,6 +1329,8 @@ namespace @__a
         private static NBearLite.QueryColumn _IOC_TypeName = new NBearLite.QueryColumn((___TABLE_NAME + ".IOC_TypeName"), System.Data.DbType.AnsiString);
 
         private static NBearLite.QueryColumn _IsIssuingLazyEnabled = new NBearLite.QueryColumn((___TABLE_NAME + ".IsIssuingLazyEnabled"), System.Data.DbType.Boolean);
+
+        private static NBearLite.QueryColumn _IsMobileNoRequired = new NBearLite.QueryColumn((___TABLE_NAME + ".IsMobileNoRequired"), System.Data.DbType.Boolean);
 
         private static NBearLite.QueryColumn _WithdrawRatio = new NBearLite.QueryColumn((___TABLE_NAME + ".WithdrawRatio"), System.Data.DbType.Decimal);
 
@@ -1514,6 +1550,21 @@ namespace @__a
                 else
                 {
                     return new NBearLite.QueryColumn((this.___aliasName + ".IsIssuingLazyEnabled"), System.Data.DbType.Boolean);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn IsMobileNoRequired
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _IsMobileNoRequired;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".IsMobileNoRequired"), System.Data.DbType.Boolean);
                 }
             }
         }

@@ -42,7 +42,7 @@
                         </asp:SqlDataSource>
                         <asp:SqlDataSource ID="sdsProduct" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
                             SelectCommand="SELECT * FROM t_Product WHERE (productID = @productID) AND (productSupplier = @productSupplier)"
-                            InsertCommand="INSERT INTO t_Product(Enabled, productName, productSupplier, productDuration, productComment, PrintingConfig, FilterInclude, FilterExclude, FilterComment, IsIssuingRequired, IOC_TypeName, IsIssuingLazyEnabled, WithdrawRatio) VALUES (@Enabled, @productName, @productSupplier, @productDuration, @productComment, @PrintingConfig, @FilterInclude, @FilterExclude, @FilterComment, @IsIssuingRequired, @IOC_TypeName, @IsIssuingLazyEnabled, @WithdrawRatio)"
+                            InsertCommand="INSERT INTO t_Product(Enabled, productName, productSupplier, productDuration, productComment, PrintingConfig, FilterInclude, FilterExclude, FilterComment, IsIssuingRequired, IOC_TypeName, IsIssuingLazyEnabled, IsMobileNoRequired, WithdrawRatio) VALUES (@Enabled, @productName, @productSupplier, @productDuration, @productComment, @PrintingConfig, @FilterInclude, @FilterExclude, @FilterComment, @IsIssuingRequired, @IOC_TypeName, @IsIssuingLazyEnabled, @IsMobileNoRequired, @WithdrawRatio)"
                             
                             
                             
@@ -53,7 +53,7 @@
                             
                             
                             
-                            UpdateCommand="UPDATE t_Product SET Enabled = @Enabled, productName = @productName, productDuration = @productDuration, productComment = @productComment, PrintingConfig = @PrintingConfig, FilterInclude = @FilterInclude, FilterExclude = @FilterExclude, FilterComment = @FilterComment, IsIssuingRequired = @IsIssuingRequired, IOC_TypeName = @IOC_TypeName, IsIssuingLazyEnabled = @IsIssuingLazyEnabled, WithdrawRatio = @WithdrawRatio WHERE (productID = @productID)">
+                            UpdateCommand="UPDATE t_Product SET Enabled = @Enabled, productName = @productName, productDuration = @productDuration, productComment = @productComment, PrintingConfig = @PrintingConfig, FilterInclude = @FilterInclude, FilterExclude = @FilterExclude, FilterComment = @FilterComment, IsIssuingRequired = @IsIssuingRequired, IOC_TypeName = @IOC_TypeName, IsIssuingLazyEnabled = @IsIssuingLazyEnabled, IsMobileNoRequired = @IsMobileNoRequired, WithdrawRatio = @WithdrawRatio WHERE (productID = @productID)">
                             <UpdateParameters>
                                 <asp:Parameter Name="productName" />
                                 <asp:Parameter Name="productDuration" />
@@ -67,6 +67,7 @@
                                 <asp:Parameter Name="IsIssuingRequired" />
                                 <asp:Parameter Name="IOC_TypeName" />
                                 <asp:Parameter Name="IsIssuingLazyEnabled" />
+                                <asp:Parameter Name="IsMobileNoRequired" />
                                 <asp:Parameter Name="WithdrawRatio" />
                             </UpdateParameters>
                             <InsertParameters>
@@ -82,6 +83,7 @@
                                 <asp:Parameter Name="IsIssuingRequired" />
                                 <asp:Parameter Name="IOC_TypeName" />
                                 <asp:Parameter Name="IsIssuingLazyEnabled" />
+                                <asp:Parameter Name="IsMobileNoRequired" />
                                 <asp:Parameter Name="WithdrawRatio" />
                             </InsertParameters>
                             <SelectParameters>
@@ -285,8 +287,9 @@
                                                                                 <asp:BoundField DataField="FilterComment" HeaderText="过滤说明" />
                                                                                 <asp:BoundField DataField="productComment" HeaderText="产品备注" />
                                                                                 <asp:CheckBoxField DataField="IsIssuingRequired" HeaderText="数据对接" />
-                                                                                <asp:BoundField DataField="IOC_TypeName" HeaderText="IOC对象名" />
-                                                                                <asp:CheckBoxField DataField="IsIssuingLazyEnabled" HeaderText="可否延迟投保（追溯）" />
+                                                                                <asp:BoundField DataField="IOC_TypeName" HeaderText="对接参数IOC" />
+                                                                                <asp:CheckBoxField DataField="IsIssuingLazyEnabled" HeaderText="可延迟投保（追溯）" />
+                                                                                <asp:CheckBoxField DataField="IsMobileNoRequired" HeaderText="必须填写手机号" />
                                                                                 <asp:BoundField DataField="WithdrawRatio" HeaderText="作废率" />
                                                                                 <asp:CommandField ShowEditButton="True" ShowInsertButton="True" />
                                                                             </Fields>
