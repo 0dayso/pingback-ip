@@ -3885,6 +3885,7 @@ namespace ePlus
                     #region else if (buffer[0] == 0x04 && buffer[1] == 0x10)//保持连接返回，超时信息处理
                     else if (buffer[0] == 0x04 && buffer[1] == 0x10)//保持连接返回，超时信息处理
                     {
+                        return;//2012.2.1 部分用户无故开始频繁出现"您的帐号在别处重复登陆"提示
                         //超时协议体第13,14个字节
                         if (buffer.Length <= 12)
                         {

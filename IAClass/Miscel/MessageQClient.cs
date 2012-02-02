@@ -14,7 +14,7 @@ namespace IAClass
         Producer, Consumer
     }
 
-    public class MessageQClient : IDisposable
+    public class ActiveMQClient : IDisposable
     {
         public  IConnection connection;
         private ArrayList sessionArray = new ArrayList();
@@ -56,7 +56,7 @@ namespace IAClass
         /// </summary>
         /// <param name="queueName">消息队列的名称</param>
         /// <param name="sessionCount">并发的session数目</param>
-        public MessageQClient(string queueName, int sessionCount)
+        public ActiveMQClient(string queueName, int sessionCount)
         {
             if (sessionCount < 1)
                 throw new Exception("并发数不能小于１,初始化失败!");
@@ -68,21 +68,24 @@ namespace IAClass
         {
             if (connection == null)
             {
-                IConnectionFactory factory = new ConnectionFactory("tcp://localhost:61616");//"failover:tcp://localhost:61616?nms.PrefetchPolicy.QueuePrefetch=1"
+                //使用failover前缀后,即使AMQ服务被重启,生产和消费也不会抛出异常(自动重连)
+                //但同时会导致Start()的超时机制失效!
+                IConnectionFactory factory = new ConnectionFactory("failover:tcp://localhost:61616");//"failover:tcp://localhost:61616?nms.PrefetchPolicy.QueuePrefetch=1"
                 connection = factory.CreateConnection();
 
                 Connection cnn = connection as Connection;
                 cnn.PrefetchPolicy.QueuePrefetch = 1;//队列预取值
                 //cnn.AsyncSend = true;//异步发送
                 cnn.RequestTimeout = TimeSpan.FromSeconds(10);//设置cnn.Start()方法的超时
-                cnn.Start();//网络连接开始建立
+                cnn.Start();//Tcp连接开始真正建立
             }
 
             if (sessionArray.Count == 0)
             {
                 for (int i = 0; i < sessionCount; i++)
-                {   //ClientAcknowledge模式,以message.Acknowledge()主动应答的方式来使用事务;如不使用事务,则在stop()后,文本框中会发现有重复的消息
-                    ISession session = connection.CreateSession(AcknowledgementMode.ClientAcknowledge);
+                {
+                    //以message.Acknowledge()主动应答的方式来使用事务;如不使用事务,则在stop()后,文本框中会发现有重复的消息
+                    ISession session = connection.CreateSession(AcknowledgementMode.IndividualAcknowledge);
                     sessionArray.Add(session);
                 }
             }
@@ -111,6 +114,7 @@ namespace IAClass
             {
                 if (sessionArray.Count == 0)
                     throw new Exception("队列服务尚未启动,请使用Start()方法.");
+                
                 ISession session = sessionArray[0] as ISession;
                 producer = session.CreateProducer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue(queueName));
             }
@@ -120,20 +124,6 @@ namespace IAClass
                 msg.Properties["AMQ_SCHEDULED_DELAY"] = delay;
             producer.Send(msg, Apache.NMS.MsgDeliveryMode.Persistent, Apache.NMS.MsgPriority.Normal, TimeSpan.MinValue);
             //msg.Acknowledge();//不需要??
-        }
-
-        public void EnqueueText(string text)
-        {
-            if (producer == null)
-            {
-                if (sessionArray.Count == 0)
-                    throw new Exception("队列服务尚未启动,请使用Start()方法.");
-                ISession session = sessionArray[0] as ISession;
-                producer = session.CreateProducer(new Apache.NMS.ActiveMQ.Commands.ActiveMQQueue(queueName));
-            }
-
-            ITextMessage msg = producer.CreateTextMessage(text);
-            producer.Send(msg, Apache.NMS.MsgDeliveryMode.Persistent, Apache.NMS.MsgPriority.Normal, TimeSpan.MinValue);
         }
 
         /// <summary>

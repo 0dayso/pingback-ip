@@ -71,7 +71,7 @@ namespace JinHang
             //    return result;
             //}
 
-            //try
+            try
             {
                 XmlDocument xml = new XmlDocument();
                 xml.LoadXml(ret);
@@ -94,14 +94,11 @@ namespace JinHang
 
                 return result;
             }
-            //catch(Exception e)
-            //{
-            //    Common.LogIt("投保参数：" + policy.OuterXml + System.Environment.NewLine
-            //                    + "金航网返回：" + ret + System.Environment.NewLine
-            //                    + e.ToString());
-            //    result.Trace.Detail = "返回结果解析失败！";
-            //    return result;
-            //}            
+            catch (Exception e)
+            {
+                Common.LogIt("投保参数：" + policy.OuterXml + System.Environment.NewLine + "金航网返回：" + ret);
+                throw;
+            }            
         }
 
         public TraceEntity Withdraw(WithdrawEntity entity)
@@ -222,16 +219,20 @@ namespace JinHang
 
     class XMLString
     {
+        static object mutex = new object();
         static XmlDocument issuing;
 
         public static XmlDocument Issuing
         {
             get
             {
-                if (issuing == null)
+                lock (mutex)
                 {
-                    issuing = new XmlDocument();
-                    issuing.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/JinHang/Issuing.xml"));
+                    if (issuing == null)
+                    {
+                        issuing = new XmlDocument();
+                        issuing.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/JinHang/Issuing.xml"));
+                    }
                 }
 
                 return issuing;

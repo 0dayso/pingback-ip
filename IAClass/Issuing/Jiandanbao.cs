@@ -57,7 +57,7 @@ namespace Jiandanbao
             catch (Exception e)
             {
                 Common.LogIt(wsCheck.Url + System.Environment.NewLine + e.ToString());
-                result.Trace.Detail = "简单保DataCheck访问失败！";
+                result.Trace.ErrorMsg = "简单保DataCheck访问失败！";
                 return result;
             }
 
@@ -77,7 +77,7 @@ namespace Jiandanbao
                 catch (Exception e)
                 {
                     Common.LogIt(ws.Url + System.Environment.NewLine + e.ToString());
-                    result.Trace.Detail = "简单保InsertOrder访问失败！";
+                    result.Trace.ErrorMsg = "简单保InsertOrder访问失败！";
                     return result;
                 }
 
@@ -85,7 +85,7 @@ namespace Jiandanbao
                 if (!ret.StartsWith("Z"))
                 {
                     Common.LogIt("投保参数" + xmlString + System.Environment.NewLine + "简单保投保：" + ret);
-                    result.Trace.Detail = ret;
+                    result.Trace.ErrorMsg = ret;
                 }
                 else
                     result.PolicyNo = ret;
@@ -95,7 +95,7 @@ namespace Jiandanbao
             else
             {
                 entity.IOC_TypeName = "chinalife_bj";
-                string msg = "简单保核保未通过：id={0}, phone={1}  转入其他接口：{2}";
+                string msg = "jiandanbao_all核保未通过：id={0}, phone={1}  转入其他接口：{2}";
                 msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_TypeName);
                 Common.LogIt(msg);
 
@@ -226,7 +226,7 @@ namespace Jiandanbao
                     ret = ret.ToUpper();
                     if (!ret.StartsWith("Z"))
                     {
-                        //Common.LogIt("投保参数" + xmlString + System.Environment.NewLine + "简单保投保：" + ret);
+                        Common.LogIt("投保参数" + xmlString + System.Environment.NewLine + "简单保投保：" + ret);
                         //result.Trace.Detail = ret;
                         throw new Exception(ret);
                     }
@@ -324,15 +324,20 @@ namespace Jiandanbao
         private static XmlDocument issuing_Free;
         private static XmlDocument issuing_all;
         private static XmlDocument withdraw;
+        static object mutex1 = new object();
+        static object mutex2 = new object();
 
         public static XmlDocument Issuing_All
         {
             get
             {
-                if (issuing_all == null)
+                lock (mutex1)
                 {
-                    issuing_all = new XmlDocument();
-                    issuing_all.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/Jiandanbao/iOrder_All.xml"));
+                    if (issuing_all == null)
+                    {
+                        issuing_all = new XmlDocument();
+                        issuing_all.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/Jiandanbao/iOrder_All.xml"));
+                    }
                 }
 
                 return issuing_all;
@@ -343,10 +348,13 @@ namespace Jiandanbao
         {
             get
             {
-                if (issuing_Free == null)
+                lock (mutex2)
                 {
-                    issuing_Free = new XmlDocument();
-                    issuing_Free.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/Jiandanbao/iOrder_Free.xml"));
+                    if (issuing_Free == null)
+                    {
+                        issuing_Free = new XmlDocument();
+                        issuing_Free.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/Jiandanbao/iOrder_Free.xml"));
+                    }
                 }
 
                 return issuing_Free;

@@ -31,7 +31,7 @@ namespace IAMessageQ
         int countRunningThread;
         bool IsRunning = false;
         //SmartThreadPool stp = new SmartThreadPool();
-        MessageQClient MQClient;
+        ActiveMQClient MQClient;
         Thread workItemsProducerThread;
         string AppName = ConfigurationManager.AppSettings["AppName"];
         string QueueName;
@@ -64,7 +64,6 @@ namespace IAMessageQ
             this.NormalWork = normalWork;
             this.FailureWork = failureWork;
             this.MessageToString = messageToString;
-            MQClient = new MessageQClient(this.QueueName, (int)nudThreads.Value);
         }
 
         /// <summary>
@@ -76,7 +75,7 @@ namespace IAMessageQ
             txtLogInfo.AppendText(isStart ? "队列启动…" : "队列暂停…");
             txtLogInfo.AppendText(System.Environment.NewLine);
             this.IsRunning = isStart;
-            btnIssueStart.Enabled = false;
+            btnIssueStart.Enabled = !isStart;
             btnIssueStop.Enabled = isStart;
             nudThreads.Enabled = !isStart;
         }
@@ -107,7 +106,7 @@ namespace IAMessageQ
             try
             {
                 if(MQClient == null)
-                    MQClient = new MessageQClient(this.QueueName, (int)nudThreads.Value);
+                    MQClient = new ActiveMQClient(this.QueueName, (int)nudThreads.Value);
                 MQClient.Start();
                 MQClient.Dequeue(consumer_Listener);
             }
@@ -138,11 +137,11 @@ namespace IAMessageQ
 
         void consumer_Listener(IMessage message)
         {
+            StringBuilder sb = new StringBuilder();
             try
             {
                 SetRunningThreadCount(true);
                 IObjectMessage amqMsg = message as IObjectMessage;
-                StringBuilder sb = new StringBuilder();
                 sb.Append(MessageToString(amqMsg.Body));
 
                 if (IsRunning)
@@ -194,22 +193,24 @@ namespace IAMessageQ
             catch (Apache.NMS.NMSException e)//"The Consumer has been Closed" 点击Stop按钮后consumer被关闭,由message.Acknowledge()引发异常
             {
                 //已出单,却未能提交事务;将导致少量重复投保.
-                string error = string.Format("{0} : 线程{1} {2}{3}",
-                    DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId, e.ToString(), System.Environment.NewLine);
+                string error = string.Format("{3}{0} : 消息{1} {2}",
+                    DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), System.Environment.NewLine);
                 Common.LogIt(error);
+                sb.AppendLine(error);
                 this.BeginInvoke(new MethodInvoker(delegate
                 {
-                    txtLogInfo.AppendText(error);
+                    txtLogInfo.AppendText(sb.ToString());
                 }));
             }
             catch (Exception e)
             {
-                string error = string.Format("{0} : 线程{1} {2}{3}",
-                    DateTime.Now.ToLongTimeString(), Thread.CurrentThread.ManagedThreadId, e.ToString(), System.Environment.NewLine);
+                string error = string.Format("{3}{0} : 消息{1} {2}",
+                    DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), System.Environment.NewLine);
                 Common.LogIt(error);
+                sb.AppendLine(error);
                 this.BeginInvoke(new MethodInvoker(delegate
                 {
-                    txtLogInfo.AppendText(error);
+                    txtLogInfo.AppendText(sb.ToString());
                 }));
             }
             finally
@@ -235,7 +236,8 @@ namespace IAMessageQ
 
         private void FormQueue_FormClosing(object sender, FormClosingEventArgs e)
         {
-            MQClient.Close();
+            if(MQClient != null)
+                MQClient.Close();
         }
     }
 }

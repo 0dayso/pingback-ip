@@ -40,7 +40,7 @@ namespace IAMessageQ
         TraceEntity Issue(object message)
         {
             IssueEntity entity = (IssueEntity)message;
-            IssuingResultEntity result = Case.Issue(entity);
+            IssuingResultEntity result = Case.IssueAsync(entity);
             return result.Trace;
         }
 

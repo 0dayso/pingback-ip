@@ -71,25 +71,24 @@ namespace ChinaLife_BJ
                 if (ret == null)
                     throw new Exception("北京国寿WebService返回为空！");
             }
-            catch(Exception e)
+            catch
             {
-                Common.LogIt(wsSave.Url + e.ToString());
-                result.Trace.Detail = e.Message;
-                return result;
+                Common.LogIt(wsSave.Url);
+                throw;
             }
 
             if (string.IsNullOrEmpty(ret.error))
                 if(string.IsNullOrEmpty(ret.policyNo))
                 {
-                    throw new Exception("保单号为空！？");
+                    throw new Exception("北京国寿保单号为空！？");
                 }
                 else
                     result.PolicyNo = ret.policyNo;
             else
             {
                 string request = Common.XmlSerializer<TransportAccidentForSaveRequsetDto>(dto);
-                Common.LogIt("投保参数" + request + System.Environment.NewLine + "北京国寿 投保：" + ret.error);
-                result.Trace.Detail = ret.error;
+                Common.LogIt("投保参数" + request + System.Environment.NewLine + "北京国寿投保：" + ret.error);
+                result.Trace.ErrorMsg = ret.error;
             }
 
             return result;

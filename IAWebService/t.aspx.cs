@@ -45,10 +45,11 @@ public partial class t : System.Web.UI.Page
             entity.IDType = IdentityType.身份证;
             entity.Birthday = DateTime.Parse("1982-04-12");
             entity.Gender = Gender.Male;
-            //entity.EffectiveDate = DateTime.Today.AddDays(3);
-            //entity.ExpiryDate = DateTime.Today.AddDays(4);
+            entity.EffectiveDate = DateTime.Today.AddDays(3);
+            entity.ExpiryDate = DateTime.Today.AddDays(4);
             entity.CaseNo = "PIC" + i.ToString().PadLeft(25, '0');
-            entity.IOC_TypeName = "PingAn";
+            //entity.CaseId = "1234239";
+            entity.IOC_TypeName = "JinHang";
             Common.MessageQ.EnqueueObject(entity);
         }
     }

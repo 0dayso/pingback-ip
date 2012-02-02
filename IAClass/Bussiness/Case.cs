@@ -67,7 +67,7 @@ using IAClass.Issuing;
         /// 延迟投保，可以追溯
         /// </summary>
         /// <param name="entityObj"></param>
-        public static void IssueAsync(object entityObj)
+        public static IssuingResultEntity IssueAsync(object entityObj)
         {
             string strSql = "";
             try
@@ -80,13 +80,11 @@ using IAClass.Issuing;
                 {
                     if (string.IsNullOrEmpty(result.PolicyNo))//没有保单号
                     {
-                        if (!string.IsNullOrEmpty(result.Trace.Detail))
-                        {
-                            strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
-                            SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql,
-                                new string[] { "@IssuingFailed", "@caseNo" },
-                                new object[] { result.Trace.Detail, entity.CaseNo });
-                        }
+                        result.Trace.ErrorMsg = "投保失败，没有返回保单号！？";
+                        strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
+                        SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql,
+                            new string[] { "@IssuingFailed", "@caseNo" },
+                            new object[] { result.Trace.ErrorMsg, entity.CaseNo });
                     }
                     else
                     {
@@ -103,10 +101,13 @@ using IAClass.Issuing;
                         new string[] { "@IssuingFailed", "@caseNo" },
                         new object[] { result.Trace.ErrorMsg, entity.CaseNo });
                 }
+
+                return result;
             }
             catch(Exception e)
             {
-                Common.LogIt("IssueAsync线程异常：" + System.Environment.NewLine + strSql + System.Environment.NewLine + e.ToString());
+                Common.LogIt("IssueAsync异常：" + System.Environment.NewLine + strSql + System.Environment.NewLine + e.ToString());
+                throw;
             }
         }
 
