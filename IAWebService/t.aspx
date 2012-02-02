@@ -26,6 +26,7 @@
         <br />
         <br />
         <asp:TextBox ID="txtItemCount" runat="server">1</asp:TextBox>
+        <asp:TextBox ID="txtIOC" runat="server">JinHang</asp:TextBox>
         <br />
         <asp:Button ID="Button2" runat="server" onclick="Button2_Click1" 
             Text="Button" />

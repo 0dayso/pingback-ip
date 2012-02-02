@@ -459,7 +459,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                             catch
                             {
                                 tran.Rollback();
-                                string msg = "产品名称：{0}" + System.Environment.NewLine + "Last SQL：{1}";
+                                string msg = "产品名称：{0}" + Environment.NewLine + "Last SQL：{1}";
                                 msg = string.Format(msg, productName, strSql);
                                 Common.LogIt(msg);
                                 throw;

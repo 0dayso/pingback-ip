@@ -106,7 +106,7 @@ using IAClass.Issuing;
             }
             catch(Exception e)
             {
-                Common.LogIt("IssueAsync异常：" + System.Environment.NewLine + strSql + System.Environment.NewLine + e.ToString());
+                Common.LogIt("IssueAsync异常：" + Environment.NewLine + strSql + Environment.NewLine + e.ToString());
                 throw;
             }
         }

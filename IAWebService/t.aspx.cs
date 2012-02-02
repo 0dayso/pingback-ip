@@ -49,7 +49,7 @@ public partial class t : System.Web.UI.Page
             entity.ExpiryDate = DateTime.Today.AddDays(4);
             entity.CaseNo = "PIC" + i.ToString().PadLeft(25, '0');
             //entity.CaseId = "1234239";
-            entity.IOC_TypeName = "JinHang";
+            entity.IOC_TypeName = txtIOC.Text.Trim();
             Common.MessageQ.EnqueueObject(entity);
         }
     }

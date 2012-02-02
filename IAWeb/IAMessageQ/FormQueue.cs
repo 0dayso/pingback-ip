@@ -73,7 +73,7 @@ namespace IAMessageQ
         private void UpdateControls(bool isStart)
         {
             txtLogInfo.AppendText(isStart ? "队列启动…" : "队列暂停…");
-            txtLogInfo.AppendText(System.Environment.NewLine);
+            txtLogInfo.AppendText(Environment.NewLine);
             this.IsRunning = isStart;
             btnIssueStart.Enabled = !isStart;
             btnIssueStop.Enabled = isStart;
@@ -190,28 +190,18 @@ namespace IAMessageQ
                     }));
                 }
             }
-            catch (Apache.NMS.NMSException e)//"The Consumer has been Closed" 点击Stop按钮后consumer被关闭,由message.Acknowledge()引发异常
-            {
-                //已出单,却未能提交事务;将导致少量重复投保.
-                string error = string.Format("{3}{0} : 消息{1} {2}",
-                    DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), System.Environment.NewLine);
-                Common.LogIt(error);
-                sb.AppendLine(error);
-                this.BeginInvoke(new MethodInvoker(delegate
-                {
-                    txtLogInfo.AppendText(sb.ToString());
-                }));
-            }
             catch (Exception e)
             {
-                string error = string.Format("{3}{0} : 消息{1} {2}",
-                    DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), System.Environment.NewLine);
+                string error = string.Format("{3}{0} : 消息{1} {2}{4}发生异常,消息将重发!",
+                    DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), Environment.NewLine, Environment.NewLine);
                 Common.LogIt(error);
                 sb.AppendLine(error);
                 this.BeginInvoke(new MethodInvoker(delegate
                 {
                     txtLogInfo.AppendText(sb.ToString());
                 }));
+
+                throw;//直接抛出异常,引发Redelivery(默认最多7次,之后被移至死信队列)
             }
             finally
             { SetRunningThreadCount(false); }
