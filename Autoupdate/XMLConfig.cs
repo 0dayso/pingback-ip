@@ -45,7 +45,7 @@ namespace AutoUpdate
                 if (fs != null)
                     fs.Close();
                 Common.LogWrite(e.ToString());
-                System.Windows.Forms.MessageBox.Show("读取 " + fileName + " 配置文件失败，将使用默认值。", "警告", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                //System.Windows.Forms.MessageBox.Show("读取 " + fileName + " 配置文件失败，将使用默认值。", "警告", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
                 data = (XMLConfig)Activator.CreateInstance(this.GetType());
             }
 
