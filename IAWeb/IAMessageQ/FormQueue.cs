@@ -193,7 +193,7 @@ namespace IAMessageQ
             }
             catch (Exception e)
             {
-                string error = string.Format("{3}{0} : 消息{1} {2}{4}发生异常,消息将重发!",
+                string error = string.Format("{3}{0} : 消息{1} {2}{4}   发生异常,事务回滚!",
                     DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), Environment.NewLine, Environment.NewLine);
                 Common.LogIt(error);
                 sb.AppendLine(error);
