@@ -155,7 +155,7 @@ namespace IAMessageQ
                     }
                     else
                     {
-                        if (IsRunning)
+                        //if (IsRunning)
                         {
                             MessageEntity entity = amqMsg.Body as MessageEntity;
                             if (entity.RedeliveryCount < this.RedeliveryCountMax)
@@ -173,11 +173,12 @@ namespace IAMessageQ
                                 sb.AppendLine(string.Format(" {0}次重发失败,放弃!", RedeliveryCountMax));
                             }
                         }
-                        else
-                        {
-                            sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                            sb.AppendLine(" 回滚!");
-                        }
+                        //else
+                        //{
+                        //    sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
+                        //    sb.AppendLine(" 回滚!");
+                        //    throw new Exception("rollback!");
+                        //}
                     }
                     //这里若用Invoke将导致一个非常隐秘的Bug
                     //现象：点击Stop按钮后，应用程序将挂起
