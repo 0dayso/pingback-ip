@@ -26,6 +26,7 @@ namespace IAClass.Entity
     {
         public string MobilePhone;
         public string Content;
+        public string IOC_TypeName;
     }
 
     /// <summary>
