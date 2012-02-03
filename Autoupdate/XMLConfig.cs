@@ -22,12 +22,6 @@ namespace AutoUpdate
     /// </summary>
     public abstract class XMLConfig
     {
-        /// <summary>
-        /// 获取当前实例的抽象方法，必须被重载
-        /// </summary>
-        /// <returns></returns>
-        public abstract XMLConfig GetInstance();
-
         public XMLConfig Read()
         {
             string fileName = this.GetType().Name + ".xml";
@@ -51,8 +45,8 @@ namespace AutoUpdate
                 if (fs != null)
                     fs.Close();
                 Common.LogWrite(e.ToString());
-                //System.Windows.Forms.MessageBox.Show("读取 " + fileName + " 配置文件失败，将使用默认值。", "警告", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
-                data = GetInstance();
+                System.Windows.Forms.MessageBox.Show("读取 " + fileName + " 配置文件失败，将使用默认值。", "警告", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
+                data = (XMLConfig)Activator.CreateInstance(this.GetType());
             }
 
             return data;
@@ -100,11 +94,6 @@ namespace AutoUpdate
         {
             set { selectedISP = value; }
             get { return selectedISP; }
-        }
-
-        public override XMLConfig GetInstance()
-        {
-            return new XMLConfigUser();
         }
     }
 
@@ -262,11 +251,6 @@ namespace AutoUpdate
         {
             set { iaWebServiceURL2 = value; }
             get { return iaWebServiceURL2; }
-        }
-
-        public override XMLConfig GetInstance()
-        {
-            return new XMLSettingsGlobal();
         }
     }
 }
