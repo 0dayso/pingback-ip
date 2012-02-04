@@ -63,6 +63,24 @@ namespace IAMessageQ
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            this.WindowState = FormWindowState.Minimized;
+            this.ShowInTaskbar = false;
+            e.Cancel = true;
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            打开ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
+        }
+
+        private void 退出QToolStripMenuItem_Click(object sender, EventArgs e)
+        {
             if (MessageBox.Show("确定要退出?", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.OK)
             {
                 foreach (TabPage page in tabControl1.TabPages)
@@ -76,9 +94,9 @@ namespace IAMessageQ
                         }
                     }
                 }
+
+                Application.Exit();
             }
-            else
-                e.Cancel = true;
         }
     }
 }
