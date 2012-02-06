@@ -112,6 +112,9 @@ namespace ePlus
             try
             {
                 wsi = new EagleWebService.wsInsurrance();
+                //解决部分用户登录异常:"The underlying connection was closed: The connection was closed unexpectedly."
+                //取消以下语句,直接修改服务器的web.config
+                //System.Net.ServicePointManager.Expect100Continue = false;
                 ret = wsi.Login(Options.GlobalVar.IAUsername, Options.GlobalVar.IAPassword);
 
                 if (!string.IsNullOrEmpty(ret.Trace.ErrorMsg))

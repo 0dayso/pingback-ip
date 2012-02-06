@@ -19,6 +19,7 @@ namespace IAMessageQ
         {
             InitializeComponent();
             this.Text += " - " + AppName;
+            this.notifyIcon1.Text = this.Text;
         }
 
         private void Form1_Load(object sender, EventArgs e)

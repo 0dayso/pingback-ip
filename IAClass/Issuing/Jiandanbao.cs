@@ -57,7 +57,7 @@ namespace Jiandanbao
             catch (Exception e)
             {
                 Common.LogIt(wsCheck.Url + System.Environment.NewLine + e.ToString());
-                result.Trace.ErrorMsg = "简单保DataCheck访问失败！";
+                result.Trace.ErrorMsg = e.Message;
                 return result;
             }
 
@@ -77,7 +77,7 @@ namespace Jiandanbao
                 catch (Exception e)
                 {
                     Common.LogIt(ws.Url + System.Environment.NewLine + e.ToString());
-                    result.Trace.ErrorMsg = "简单保InsertOrder访问失败！";
+                    result.Trace.ErrorMsg = e.Message;
                     return result;
                 }
 
@@ -94,13 +94,17 @@ namespace Jiandanbao
             }
             else
             {
-                entity.IOC_TypeName = "chinalife_bj";
-                string msg = "jiandanbao_all核保未通过：id={0}, phone={1}  转入其他接口：{2}";
-                msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_TypeName);
-                Common.LogIt(msg);
-
-                result = new IAClass.Issuing.IssuingFacade().Issue(entity);
+                string msg = "dataCheck未通过(id={0}, phone={1})";
+                msg = string.Format(msg, entity.ID, entity.PhoneNumber);
+                result.Trace.ErrorMsg = msg;
                 return result;
+                //entity.IOC_TypeName = "chinalife_bj";
+                //string msg = "jiandanbao_all核保未通过：id={0}, phone={1}  转入其他接口：{2}";
+                //msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_TypeName);
+                //Common.LogIt(msg);
+
+                //result = new IAClass.Issuing.IssuingFacade().Issue(entity);
+                //return result;
             }
         }
 
