@@ -33,12 +33,10 @@ namespace ChinaLife_BJ
 
         private System.Threading.SendOrPostCallback endorPolicyOperationCompleted;
 
-        static string[] config = System.Configuration.ConfigurationManager.AppSettings["ChinaLife_BJ_Withdraw"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
         /// <remarks/>
         public TransportAccidentForEndorseServer()
         {
-            this.Url = config[0];
+            this.Url = "http://1.202.165.69:7008/webServiceServerJT/services/TransportAccidentForEndorseServer";
         }
 
         /// <remarks/>

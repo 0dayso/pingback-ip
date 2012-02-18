@@ -171,11 +171,11 @@ namespace IAClass
                 {
                     if (request.flightDate.Date == dtNow.Date)//当日起飞，则进行时间部分的验证
                     {
-                        //if (request.flightDate.TimeOfDay.Ticks > 0)
-                        //    response.Trace.ErrorMsg = "请输入准确的起飞时间！";
-                        //else//时间部分为零（PNR未能导入）
-                        //    response.Trace.ErrorMsg = "请输入起飞时间！";
-                        //return response;
+                        if (request.flightDate.TimeOfDay.Ticks > 0)
+                            response.Trace.ErrorMsg = "请输入准确的起飞时间！";
+                        else//时间部分为零（PNR未能导入）
+                            response.Trace.ErrorMsg = "请输入起飞时间！";
+                        return response;
                     }
                     else//日期是昨天、昨天以前
                     {
@@ -268,7 +268,7 @@ namespace IAClass
                     {
                         if (!Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
                         {
-                            response.Trace.ErrorMsg = "请正确填写手机号码！";
+                            response.Trace.ErrorMsg = "该款产品必须填写手机号！";
                             return response;
                         }
                     }

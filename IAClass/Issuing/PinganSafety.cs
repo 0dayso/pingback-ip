@@ -192,10 +192,10 @@ namespace Pingan
     }
     public class Issuing : IIssuing
     {
-        private string filename = Path.Combine(Common.BaseDirectory, "App_Data/PingAn/D__Test-Eai_cert_stg-cer.pfx");//System.Configuration.ConfigurationManager.AppSettings["PACertFilename"];
-        private string password = "panjin";//System.Configuration.ConfigurationManager.AppSettings["PACertPassword"];
-        private string url = "https://eairiis-stgdmz.paic.com.cn/invoke/wm.tn/receive";//System.Configuration.ConfigurationManager.AppSettings["PACertUrl"];
-       
+        private string filename = Path.Combine(Common.BaseDirectory, "App_Data/PingAn/EXV_BIS_IFRONT_EGIS_ABBS_JNJRD_001_PRD.pfx");//System.Configuration.ConfigurationManager.AppSettings["PACertFilename"];
+        private string password = "Pa888888";//System.Configuration.ConfigurationManager.AppSettings["PACertPassword"];
+        private string url = "https://eairiis-prddmz.paic.com.cn/invoke/wm.tn/receive";//System.Configuration.ConfigurationManager.AppSettings["PACertUrl"];
+        //https://eairiis-stgdmz.paic.com.cn/invoke/wm.tn/receive
         private string GetPrintstring(PinganPrint[] printpar)
         {
             
@@ -281,6 +281,7 @@ namespace Pingan
             //2012.01.31 新增X509KeyStorageFlags参数，以解决忽然出现的异常“CryptographicException: 出现了内部错误”
             X509Certificate2 cer2 = new X509Certificate2(filename, password, X509KeyStorageFlags.MachineKeySet);
             hwrequest.ClientCertificates.Add(cer2);
+            System.Net.ServicePointManager.Expect100Continue = false;
             //获取用于请求的数据流
             using (Stream reqStream = hwrequest.GetRequestStream())
             {

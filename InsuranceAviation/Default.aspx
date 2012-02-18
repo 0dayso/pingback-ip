@@ -5,11 +5,11 @@
 <head runat="server">
     <title>::电子商务数据采集系统::</title>
     <link rel="stylesheet" href="Css/nyroModal.css" type="text/css" media="screen" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+    <script type="text/javascript" src="Script/jquery.min.js"></script>
     <script type="text/javascript" src="Script/jquery.nyroModal.custom.min.js"></script>
 <script type="text/javascript">
     $(function () {
-        $('.nyroModal').nyroModal(
+        $('.nyroModal').nm(
         {
             showCloseButton: false,
             _transition: true

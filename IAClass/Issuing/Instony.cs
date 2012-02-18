@@ -10,6 +10,7 @@ namespace Instony
     class Issuing : IAClass.Issuing.IIssuing
     {
         static InstonyService ws = new InstonyService();
+        static string key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing"];
 
         public IssuingResultEntity Issue(IssueEntity entity)
         {
@@ -40,7 +41,7 @@ namespace Instony
             string response = "";
             try
             {
-                response = ws.doSaleService(xmlDoc.OuterXml, "SI1qlhp5e4kZtjqd7+3gMUsfPdMa63Py");
+                response = ws.doSaleService(xmlDoc.OuterXml, key);
                 if(string.IsNullOrEmpty(response))
                     throw new Exception("意时网投保WebService返回为空！");
             }
@@ -80,7 +81,7 @@ namespace Instony
             string response = "";
             try
             {
-                response = ws.CannelPolicyByPolicyNos(entity.PolicyNo, "SI1qlhp5e4kZtjqd7+3gMUsfPdMa63Py");
+                response = ws.CannelPolicyByPolicyNos(entity.PolicyNo, key);
                 if (string.IsNullOrEmpty(response))
                     throw new Exception("意时网退保WebService返回为空！");
             }

@@ -13,7 +13,7 @@ namespace IAClass.Entity
     public abstract class MessageEntity
     {
         /// <summary>
-        /// 消息被重发的次数
+        /// 消息已被重发的次数
         /// </summary>
         public int RedeliveryCount;
     }
@@ -26,6 +26,7 @@ namespace IAClass.Entity
     {
         public string MobilePhone;
         public string Content;
+        public string CaseNo;
         public string IOC_TypeName;
     }
 

@@ -33,12 +33,10 @@ namespace ChinaLife_BJ
 
         private System.Threading.SendOrPostCallback savePolicyOperationCompleted;
 
-        static string[] config = System.Configuration.ConfigurationManager.AppSettings["ChinaLife_BJ_Issuing"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
         /// <remarks/>
         public TransportAccidentForSaveServer()
         {
-            this.Url = config[0];
+            this.Url = "http://1.202.165.69:7008/webServiceServerJT/services/TransportAccidentForSaveServer";
         }
 
         /// <remarks/>

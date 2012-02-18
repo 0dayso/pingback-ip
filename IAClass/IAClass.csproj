@@ -108,6 +108,7 @@
     <Compile Include="Bussiness\Payment.cs" />
     <Compile Include="Bussiness\Product.cs" />
     <Compile Include="Bussiness\Serial.cs" />
+    <Compile Include="Bussiness\SMS.cs" />
     <Compile Include="Issuing\ChinaLife_BJ_ws_Endorse.cs" />
     <Compile Include="Issuing\Huayubaoxian.cs" />
     <Compile Include="Issuing\Huayubaoxian_ws.cs" />

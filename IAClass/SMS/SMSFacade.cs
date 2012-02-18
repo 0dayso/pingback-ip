@@ -9,7 +9,7 @@ using IAClass.Entity;
 
 namespace IAClass.SMS
 {
-    class SMSFacade
+    public class SMSFacade
     {
         static IUnityContainer container;
         ISMS issuingInstance;

@@ -34,6 +34,11 @@ body, td
     font: menu;
 }
 
+img
+{
+    border: 0;
+}
+
 .inputbox
 {
     border-bottom: 1px solid;

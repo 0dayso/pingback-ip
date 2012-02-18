@@ -18,16 +18,37 @@
     <script type="text/javascript" src="../Script/Cal.aspx"></script>
     <script type="text/javascript" src="../Script/jquery.min.js"></script>
     <script type="text/javascript" src="../Script/jquery.timeago.js"></script>
+
+    <link rel="stylesheet" href="../Css/nyroModal.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="../Script/jquery.nyroModal.custom.min.js"></script>
     <script type="text/javascript">
 <!--
         $(document).ready(function () {
             timeAgo();
+            SMSModal();
             PageMethods.TopEveryday($get("txtDateStart").value, $get("ddlProduct").value, callbackTop1);
             PageMethods.TopToday($get("txtDateStart").value, $get("txtDateEnd").value, $get("ddlProduct").value, callbackTop2);
             //每次ajax翻页完成后，调用该方法，否则timeago效果会消失
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(timeAgo);
-
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(SMSModal);
         });
+
+        function SMSModal() {
+            $('.nyroModal').nm(
+            {
+                showCloseButton: true,
+                _loading: true,
+                _transition: false,
+                _animated: false,
+                sizes: {	// Size information
+                    minW: 50, 	// width
+                    minH: 50		// height
+                },
+                callbacks: {
+                    afterClose: function (nmObj) { nmObj.opener.children().eq(0).attr("src", "../images/smSent.gif"); }
+                }
+            });
+        }
 
         function callbackTop1(result) {
             var div = $get("TopEverydayParent");
@@ -158,7 +179,7 @@
                                                                 </asp:BoundField>
                                                                 <asp:TemplateField HeaderText="短信">
                                                                     <ItemTemplate>
-                                                                        <%# GetSMStatus(Eval("isSMSent")) %>
+                                                                        <a href="SMS_Send.aspx?case=<%# Eval("caseNo")%>&mobile=<%# Eval("customerPhone")%>" target="_blank" class="nyroModal"><%# GetSMStatus(Eval("isSMSent")) %></a>
                                                                     </ItemTemplate>
                                                                     <ItemStyle HorizontalAlign="Center" />
                                                                 </asp:TemplateField>

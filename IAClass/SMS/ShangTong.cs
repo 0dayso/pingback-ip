@@ -7,7 +7,7 @@ using IAClass.Entity;
 
 namespace ShangTong
 {
-    class ShangTong : ISMS
+    class SMS : ISMS
     {
         static SmsService ws = new SmsService();
 
@@ -16,9 +16,9 @@ namespace ShangTong
             TraceEntity result = new TraceEntity();
             
             //使用BASE64对用户名转码
-            String userID = Convert.ToBase64String(System.Text.ASCIIEncoding.Default.GetBytes("yourname"));
+            String userID = Convert.ToBase64String(System.Text.ASCIIEncoding.Default.GetBytes("bbfd"));
             //使用BASE64对密码转码
-            String pwd = Convert.ToBase64String(System.Text.ASCIIEncoding.Default.GetBytes("yourpwd"));
+            String pwd = Convert.ToBase64String(System.Text.ASCIIEncoding.Default.GetBytes("bbfd123"));
             //使用BASE64对短信内容进行转码
             String smsContent = Convert.ToBase64String(System.Text.ASCIIEncoding.Default.GetBytes(entity.Content));
             //调用接口类中的send方法发送短信

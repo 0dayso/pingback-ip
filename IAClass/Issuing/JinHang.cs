@@ -78,7 +78,7 @@ namespace JinHang
                 string errorCode = xml.SelectSingleNode("message/dataSet/record/retCode").InnerText;
                 if (errorCode != "000000")
                 {
-                    Common.LogIt("投保参数" + policy.OuterXml + System.Environment.NewLine + "金航网投保：" + ret);
+                    Common.LogIt("金航网投保参数" + policy.OuterXml + System.Environment.NewLine + "返回错误码：" + errorCode);
                     string error = xml.SelectSingleNode("message/dataSet/record/errMsg").InnerText;
 
                     if (!string.IsNullOrEmpty(error))

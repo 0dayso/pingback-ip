@@ -111,6 +111,14 @@ using IAClass.Issuing;
             }
         }
 
+        public static void SetSMS(string caseNo)
+        {
+            string strSql = "update t_case set isSMSent = 1 where caseNo = @caseNo";
+            SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql,
+                new string[] { "@caseNo" },
+                new object[] { caseNo });
+        }
+
         public static object TopEveryday(DateTime date, string productId)
         {
             string strSql = @"

@@ -172,6 +172,7 @@ namespace IAMessageQ
                                 message.Acknowledge();//事务结束
                                 sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
                                 sb.AppendLine(string.Format(" {0}次重发失败,放弃!", RedeliveryCountMax));
+                                Common.LogIt(sb.ToString());
                             }
                         }
                         //else
