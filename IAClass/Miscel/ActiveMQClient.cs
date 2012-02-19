@@ -68,6 +68,7 @@ namespace IAClass
         {
             if (connection == null)
             {
+                Common.LogIt("ActiveMQ Service Start..." + queueName);
                 //使用failover前缀后,即使AMQ服务被重启,生产和消费也不会抛出异常(自动重连)
                 //但同时会导致Start()的超时机制失效!
                 IConnectionFactory factory = new ConnectionFactory("failover:tcp://localhost:61616");//"failover:tcp://localhost:61616?nms.PrefetchPolicy.QueuePrefetch=1"

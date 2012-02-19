@@ -104,5 +104,29 @@ namespace IAClass.Issuing
             result = issuingInstance.Withdraw(entity);
             return result;
         }
+
+        /// <summary>
+        /// 检查数据完整性
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            TraceEntity result = new TraceEntity();
+
+            try
+            {
+                //注入实例
+                issuingInstance = container.Resolve<IIssuing>(entity.IOC_TypeName);
+            }
+            catch (Exception e)
+            {
+                Common.LogIt(e.ToString());
+                throw;
+            }
+
+            result = issuingInstance.Validate(entity);
+            return result;
+        }
     }
 }

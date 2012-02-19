@@ -28,6 +28,11 @@ namespace ChinaLife_BJ
             }
         }
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         /// <summary>
         /// 投保
         /// </summary>

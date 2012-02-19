@@ -119,7 +119,7 @@
     <Compile Include="Issuing\JinHang.cs" />
     <Compile Include="Issuing\XiAnQiYi.cs" />
     <Compile Include="Issuing\XiAnQiYi_ws.cs" />
-    <Compile Include="Miscel\MessageQClient.cs" />
+    <Compile Include="Miscel\ActiveMQClient.cs" />
     <Compile Include="Miscel\SqlCommandSerializable.cs" />
     <Compile Include="Miscel\Common.cs" />
     <Compile Include="Entity\CommonEntity.cs" />

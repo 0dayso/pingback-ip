@@ -24,5 +24,12 @@ namespace IAClass.Issuing
         /// <param name="policyNo">正式保单号</param>
         /// <returns></returns>
         TraceEntity Withdraw(WithdrawEntity entity);
+
+        /// <summary>
+        /// 检查数据完整性
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        TraceEntity Validate(IssueEntity entity);
     }
 }

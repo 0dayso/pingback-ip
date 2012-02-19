@@ -12,6 +12,11 @@ namespace Instony
         static InstonyService ws = new InstonyService();
         static string key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing"];
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         public IssuingResultEntity Issue(IssueEntity entity)
         {
             IssuingResultEntity result = new IssuingResultEntity();

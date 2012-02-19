@@ -64,6 +64,19 @@ using IAClass.Issuing;
         }
 
         /// <summary>
+        /// 检查数据完整性
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public static TraceEntity Validate(IssueEntity entity)
+        {
+            TraceEntity result = new TraceEntity();
+            IssuingFacade facade = new IssuingFacade();
+            result = facade.Validate(entity);
+            return result;
+        }
+
+        /// <summary>
         /// 延迟投保，可以追溯
         /// </summary>
         /// <param name="entityObj"></param>

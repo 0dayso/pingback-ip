@@ -11,6 +11,11 @@ namespace XiAnQiYi
     {
         static Service webService = new Service();
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         /// <summary>
         /// 投保
         /// </summary>

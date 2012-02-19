@@ -32,6 +32,11 @@ namespace Jiandanbao
             }
         }
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         /// <summary>
         /// 投保
         /// </summary>
@@ -171,14 +176,9 @@ namespace Jiandanbao
             }
         }
 
-        /// <summary>
-        /// 投保
-        /// </summary>
-        /// <param name="entity"></param>
-        /// <returns></returns>
-        public IssuingResultEntity Issue(IssueEntity entity)
+        public TraceEntity Validate(IssueEntity entity)
         {
-            IssuingResultEntity result = new IssuingResultEntity();
+            TraceEntity result = new TraceEntity();
 
             double age = (DateTime.Today - entity.Birthday).TotalDays / 365;
 
@@ -188,16 +188,28 @@ namespace Jiandanbao
                 {
                     if (!Regex.IsMatch(entity.PhoneNumber, "^1[3458][0-9]{9}$"))
                     {
-                        result.Trace.ErrorMsg = "请正确填写手机号码！";
+                        result.ErrorMsg = "请正确填写手机号码！";
                         return result;
                     }
                 }
                 else
                 {
-                    result.Trace.ErrorMsg = "请填写手机号码！";
+                    result.ErrorMsg = "请填写手机号码！";
                     return result;
                 }
             }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 投保
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public IssuingResultEntity Issue(IssueEntity entity)
+        {
+            IssuingResultEntity result = new IssuingResultEntity();
 
             bool retCheck;//默认为false
             try

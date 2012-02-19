@@ -406,23 +406,33 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                     entity.CaseNo = caseNo;
                                     entity.CaseId = caseId.ToString();
 
-                                    if (entity.IsLazyIssue)
+                                    TraceEntity validate = Case.Validate(entity);
+                                    if (string.IsNullOrEmpty(validate.ErrorMsg))
                                     {
-                                        //Thread th = new Thread(Case.IssueAsync);
-                                        //th.Start(entity);
-                                        Common.MessageQ.EnqueueObject(entity);
+                                        if (entity.IsLazyIssue)
+                                        {
+                                            //Thread th = new Thread(Case.IssueAsync);
+                                            //th.Start(entity);
+                                            Common.MessageQ.EnqueueObject(entity);
+                                        }
+                                        else
+                                        {
+                                            IssuingResultEntity result = Case.Issue(entity);
+                                            if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
+                                                response.SerialNo = result.PolicyNo;//暂借用该SerialNo字段
+                                            else
+                                            {
+                                                tran.Rollback();
+                                                response.Trace = result.Trace;
+                                                return response;
+                                            }
+                                        }
                                     }
                                     else
                                     {
-                                        IssuingResultEntity result = Case.Issue(entity);
-                                        if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
-                                            response.SerialNo = result.PolicyNo;//暂借用该SerialNo字段
-                                        else
-                                        {
-                                            tran.Rollback();
-                                            response.Trace = result.Trace;
-                                            return response;
-                                        }
+                                        tran.Rollback();
+                                        response.Trace = validate;
+                                        return response;
                                     }
                                     
                                     #endregion

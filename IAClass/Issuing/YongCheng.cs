@@ -30,6 +30,11 @@ namespace YongCheng
     /// </summary>
     public class Issuing : IAClass.Issuing.IIssuing
     {
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         /// <summary>
         /// 投保
         /// </summary>

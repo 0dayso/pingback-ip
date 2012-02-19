@@ -12,6 +12,11 @@ namespace Huayubaoxian
         static Service webService = new Service();
         static Random random = new Random();
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         /// <summary>
         /// 投保
         /// </summary>

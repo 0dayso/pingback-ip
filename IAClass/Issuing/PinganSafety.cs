@@ -312,6 +312,11 @@ namespace Pingan
             return GetResult(GetPolicycert(policycert));
         }
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         public IssuingResultEntity Issue(IssueEntity entity)
         {
             IssuingResultEntity result = new IssuingResultEntity();

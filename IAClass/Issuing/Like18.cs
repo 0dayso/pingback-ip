@@ -14,6 +14,11 @@ namespace Like18
         static Like18Insurance ws = new Like18Insurance();
         private static string[] config = ConfigurationManager.AppSettings["Like18_Issuing"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         static string GetIdType(IdentityType type)
         {
             switch (type)

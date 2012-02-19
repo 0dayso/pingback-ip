@@ -16,6 +16,11 @@ namespace ChinaLife_GD
     {
         static string IssuingURL = System.Configuration.ConfigurationManager.AppSettings["ChinaLife_GD_Issuing"];
 
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         /// <summary>
         /// 投保
         /// </summary>

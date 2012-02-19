@@ -13,6 +13,11 @@ namespace JinHang
 {
     class Issuing : IAClass.Issuing.IIssuing
     {
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+
         public IssuingResultEntity Issue(IssueEntity entity)
         {
             IssuingResultEntity result = new IssuingResultEntity();
