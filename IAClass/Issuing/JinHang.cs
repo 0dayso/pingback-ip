@@ -24,7 +24,7 @@ namespace JinHang
 
             XmlDocument policy = XMLString.Issuing.Clone() as XmlDocument;
             //基本信息
-            policy.SelectSingleNode("message/batchNo").InnerText = entity.CaseId;//最长8位数字（千万级）
+            policy.SelectSingleNode("message/batchNo").InnerText = entity.CaseId + entity.RedeliveryCount;//最长8位数字（千万级）
             policy.SelectSingleNode("message/transDate").InnerText = DateTime.Now.ToString("yyyyMMdd");
             policy.SelectSingleNode("message/transTime").InnerText = DateTime.Now.ToString("yyyyMMddHHmmss");
 

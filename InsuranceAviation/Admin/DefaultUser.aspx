@@ -26,20 +26,25 @@
             height: 36px;
         }
     </style>
-    <link href="../Css/Styles.css" type="text/css" rel="stylesheet"/>
+    <link href="../Css/Styles.css" type="text/css" rel="stylesheet" />
     <script language="javascript" src="../Script/Cal.aspx" type="text/javascript"></script>
     <script type="text/javascript" src="../Script/jquery.min.js"></script>
     <script type="text/javascript" src="../Script/jquery.timeago.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $("abbr.timeago").timeago();
+            timeAgo();
             PageMethods.TopEveryday($get("txtDateStart").value, callbackTop1);
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(timeAgo);
         });
 
         function callbackTop1(result) {
             var div = $get("TopEverydayParent");
             div.className = "";
             div.innerHTML = result;
+        }
+
+        function timeAgo() {
+            $("abbr.timeago").timeago();
         }
     </script>
 </head>
@@ -49,8 +54,6 @@
         <tbody>
             <tr>
                 <td valign="top" style="height: 50px">
-                    
-                    
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
                         DeleteCommand="select 1" OnSelected="SqlDataSource1_Selected" SelectCommand="PagedCaseListWithChild"
                         SelectCommandType="StoredProcedure">
@@ -83,63 +86,67 @@
                                     <table>
                                         <tr>
                                             <td style="height: 150px">
-                                                <div id="TopEverydayParent" class="updating"></div>
+                                                <div id="TopEverydayParent" class="updating">
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" BackColor="White"
-                                                    BorderColor="#DEDFDE" BorderStyle="Solid" BorderWidth="1px" CellPadding="4" ForeColor="Black"
-                                                    GridLines="Vertical" DataKeyNames="caseNo" OnRowDataBound="GridView1_RowDataBound"
-                                                    EnableViewState="False" DataSourceID="SqlDataSource1">
-                                                    <FooterStyle BackColor="#CCCC99" />
-                                                    <Columns>
-                                                        <asp:TemplateField HeaderText="是否作废" Visible="False">
-                                                            <ItemTemplate>
+                                                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                                                    <ContentTemplate>
+                                                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+                                                            BackColor="White" BorderColor="#DEDFDE" BorderStyle="Solid" BorderWidth="1px" 
+                                                            CellPadding="4" DataKeyNames="caseNo" DataSourceID="SqlDataSource1" 
+                                                            EnableViewState="False" ForeColor="Black" GridLines="Vertical" 
+                                                            OnRowDataBound="GridView1_RowDataBound">
+                                                            <FooterStyle BackColor="#CCCC99" />
+                                                            <Columns>
+                                                                <asp:TemplateField HeaderText="是否作废" Visible="False">
+                                                                    <ItemTemplate>
                                                                 <%# GetCaseStatus(Eval("enabled")) %>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="提交时间">
-                                                            <ItemTemplate>
-                                                                <abbr class="timeago" title="<%# Eval("datetime", "{0:yyyy-MM-dd HH:mm:ss}") %>">
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField HeaderText="提交时间">
+                                                                    <ItemTemplate>
+                                                                        <abbr class="timeago" 
+                                                                            title='<%# Eval("datetime", "{0:yyyy-MM-dd HH:mm:ss}") %>'>
                                                                     <%# Eval("datetime", "{0:yyyy-MM-dd HH:mm:ss}") %>
-                                                                </abbr>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:BoundField DataField="userGroup" HeaderText="地区" />
-                                                        <asp:BoundField DataField="displayname" HeaderText="加盟商户" />
-                                                        <asp:TemplateField HeaderText="单证号">
-                                                            <ItemTemplate>
-                                                                <asp:Label ID="Label1" runat="server" Text='<%# Eval("caseNo") %>' ForeColor='<%# DiscardedColor(Eval("enabled")) %>'></asp:Label>
-                                                            </ItemTemplate>
-                                                        </asp:TemplateField>
-                                                        <asp:BoundField DataField="customerName" HeaderText="姓名" />
-                                                        <asp:BoundField DataField="customerID" HeaderText="证件号码" />
-                                                        <asp:BoundField DataField="customerPhone" HeaderText="电话" />
-                                                        <asp:BoundField DataField="customerFlightNo" HeaderText="航班号" />
-                                                        <asp:BoundField DataField="customerFlightDate" HeaderText="乘机时间" DataFormatString="{0:yyyy-MM-dd HH:mm}"
-                                                            HtmlEncode="False" />
-                                                    </Columns>
-                                                    <RowStyle BackColor="#F7F7DE" />
-                                                    <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
-                                                    <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
-                                                    <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
-                                                    <AlternatingRowStyle BackColor="White" />
-                                                </asp:GridView>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <table width="100%">
-                                                    <tr>
-                                                        <td>
-                                                            <cc1:Pager ID="pn1" runat="server" CssClass="PageNumbers" DisplayedPages="10" />
-                                                        </td>
-                                                        <td align="right">
-                                                            <asp:Button ID="btnExport" runat="server" OnClick="btnExport_Click" Text="导 出" />
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                                                                        </abbr>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:BoundField DataField="userGroup" HeaderText="地区" />
+                                                                <asp:BoundField DataField="displayname" HeaderText="加盟商户" />
+                                                                <asp:TemplateField HeaderText="单证号">
+                                                                    <ItemTemplate>
+                                                                        <asp:Label ID="Label1" runat="server" 
+                                                                            ForeColor='<%# DiscardedColor(Eval("enabled")) %>' Text='<%# Eval("caseNo") %>'></asp:Label>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:BoundField DataField="customerName" HeaderText="姓名" />
+                                                                <asp:BoundField DataField="customerID" HeaderText="证件号码" />
+                                                                <asp:BoundField DataField="customerPhone" HeaderText="电话" />
+                                                                <asp:BoundField DataField="customerFlightNo" HeaderText="航班号" />
+                                                                <asp:BoundField DataField="customerFlightDate" 
+                                                                    DataFormatString="{0:yyyy-MM-dd HH:mm}" HeaderText="乘机时间" HtmlEncode="False" />
+                                                                <asp:BoundField DataField="productName" HeaderText="产品" />
+                                                            </Columns>
+                                                            <RowStyle BackColor="#F7F7DE" />
+                                                            <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />
+                                                            <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
+                                                            <HeaderStyle BackColor="#6B696B" Font-Bold="True" ForeColor="White" />
+                                                            <AlternatingRowStyle BackColor="White" />
+                                                        </asp:GridView>
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <cc1:Pager ID="pn1" runat="server" CssClass="pager" DisplayedPages="10" />
+                                                                </td>
+                                                                <td align="right">
+                                                                    &nbsp;</td>
+                                                            </tr>
+                                                        </table>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
                                             </td>
                                         </tr>
                                     </table>
@@ -160,7 +167,8 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <b>账户余额：</b></td>
+                                                <b>账户余额：</b>
+                                            </td>
                                             <td>
                                                 <asp:Label ID="lblBalance" runat="server"></asp:Label>
                                             </td>
@@ -170,7 +178,7 @@
                                                 <strong>库存单证 : </strong>
                                             </td>
                                             <td>
-                                                <a href="#" onclick="window.showModalDialog('CorruptCaseNo.aspx','pop','scroll=no;status=no;center=yes;resizable=no;dialogHeight=250px;dialogWidth=250px')">
+                                                <a href="#" onclick="window.showModalDialog('CorruptCaseNo.aspx?r=' + Math.random(),'pop','scroll=no;status=no;center=yes;resizable=no;dialogHeight=250px;dialogWidth=250px')">
                                                     <asp:Label ID="lblCount" runat="server"></asp:Label></a> 份
                                             </td>
                                         </tr>
@@ -222,6 +230,8 @@
                                         <tr>
                                             <td>
                                                 <asp:Button ID="btnQuery" runat="server" OnClick="btnQuery_Click" Text="查 询" />
+                                            &nbsp;<asp:Button ID="btnExport" runat="server" OnClick="btnExport_Click" 
+                                                    Text="导 出" />
                                             </td>
                                         </tr>
                                         <tr>

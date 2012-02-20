@@ -7,6 +7,7 @@
         //在应用程序启动时运行的代码
         if (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["EnableMessageQueue"]))
         {
+            Common.LogIt("Application Start...");
             try
             {
                 Common.MessageQ.Start();

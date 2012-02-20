@@ -151,7 +151,8 @@ namespace IAMessageQ
                     if (string.IsNullOrEmpty(result.ErrorMsg))
                     {
                         message.Acknowledge();//事务结束,出队列确认
-                        sb.AppendLine(" 出单成功!");
+                        sb.Append(" 出单成功！");
+                        sb.AppendLine(result.Detail);//显示保单号
                     }
                     else
                     {
@@ -195,7 +196,7 @@ namespace IAMessageQ
             }
             catch (Exception e)
             {
-                string error = string.Format("{3}{0} : 消息{1} {2}{4}   发生异常,事务回滚!",
+                string error = string.Format("{3}{0} : 消息{1} {2}{4}   发生异常,消息事务回滚!",
                     DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), Environment.NewLine, Environment.NewLine);
                 Common.LogIt(error);
                 sb.AppendLine(error);

@@ -200,6 +200,14 @@ namespace IAClass
                     response.Trace.ErrorMsg = "乘客证件号码不能为空！";
                     return response;
                 }
+                else
+                {
+                    if (request.customerIDType == IdentityType.身份证 && !Common.CheckIDCard(request.customerID))
+                    {
+                        response.Trace.ErrorMsg = "身份证号码填写有误,请核对！";
+                        return response;
+                    }
+                }
 
                 if (string.IsNullOrEmpty(request.customerName))
                 {

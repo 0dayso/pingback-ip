@@ -104,7 +104,9 @@ using IAClass.Issuing;
                         //主键更新,不会阻塞  保存返回的正式保单号
                         strSql = "update t_case set certNo = '{0}', [isIssued] = 1 where caseNo = '{1}'";
                         strSql = string.Format(strSql, result.PolicyNo, entity.CaseNo);
-                        SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql);
+                        int eff = SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql);
+                        if (eff == 0)
+                            Common.LogIt("ExecuteNonQuery影响行数为0 : " + strSql);
                     }
                 }
                 else

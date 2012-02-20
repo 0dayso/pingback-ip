@@ -36,6 +36,9 @@
         <br />
     
     </div>
+    <asp:TextBox ID="txtIDCard" runat="server"></asp:TextBox>
+    <asp:Button ID="btnCheckIDCard" runat="server" onclick="btnCheckIDCard_Click" 
+        Text="Button" />
     </form>
 </body>
 </html>

@@ -379,7 +379,7 @@
                                     <asp:Label ID="lblUsername" runat="server"></asp:Label><br>
                                     <b>用户身份 : </b>系统管理员<br />
                                     <strong>账户余额 : </strong><asp:Label ID="lblBalance" runat="server"></asp:Label> 元<br />
-                                    <strong>库存单证 : </strong><a href="#" onclick="window.showModalDialog('CorruptCaseNo.aspx','pop','scroll=no;status=no;center=yes;resizable=no;dialogHeight=250px;dialogWidth=450px')">
+                                    <strong>库存单证 : </strong><a href="#" onclick="window.showModalDialog('CorruptCaseNo.aspx?r=' + Math.random(),'pop','scroll=no;status=no;center=yes;resizable=no;dialogHeight=250px;dialogWidth=450px')">
                                         <asp:Label ID="lblCount" runat="server"></asp:Label></a> 份<br />
                                     <br />
                                     <table width="100%">

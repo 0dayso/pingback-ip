@@ -321,6 +321,9 @@ namespace Pingan
         {
             IssuingResultEntity result = new IssuingResultEntity();
 
+            if (entity.EffectiveDate.Date == entity.ExpiryDate.Date)
+                entity.ExpiryDate = entity.ExpiryDate.AddDays(1);//"满期日期必须晚于生效日期"
+
             PolicyCert[] cert = new PolicyCert[1];
             cert[0].birthDate = entity.Birthday.ToString("yyyyMMdd");
             cert[0].effDate = entity.EffectiveDate.ToString("yyyyMMdd");
@@ -357,6 +360,7 @@ namespace Pingan
                     nodes = xd.SelectNodes("Values/array/record/value");
                     string billNo = GetValue(nodes, "certNo");
                     result.PolicyNo = billNo;
+                    result.Trace.ErrorMsg = billNo;
                     return result;
                 }
                 else

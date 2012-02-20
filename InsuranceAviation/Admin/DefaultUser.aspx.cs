@@ -118,7 +118,7 @@ public partial class DefaultUser : NBear.Web.UI.Page
 
             foreach (DataControlField field in GridView1.Columns)
             {
-                if (field.HeaderText.Contains("身份证"))
+                if (field.HeaderText.Split(new string[] { "证件号", "保单号", "单证号", "印刷号", "手机号" }, StringSplitOptions.None).Length == 2)
                     e.Row.Cells[i].Attributes.Add("style", "vnd.ms-excel.numberformat: @");// 文本格式
 
                 i++;

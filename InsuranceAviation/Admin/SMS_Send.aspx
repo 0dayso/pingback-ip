@@ -7,6 +7,12 @@
     <title></title>
     <link rel="stylesheet" href="../Css/nyroModal.css" type="text/css" media="screen" />
     <link href="../Css/Styles.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../Script/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.attachEvent('onbeforeunload', function () { $("#btnSend").val("请等待...").attr("disabled", "true"); });
+        });
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">

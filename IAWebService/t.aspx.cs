@@ -24,7 +24,7 @@ public partial class t : System.Web.UI.Page
         entity.IDType = IdentityType.身份证;
         entity.Birthday = DateTime.Parse("1982-04-12");
         entity.Gender = Gender.Male;
-        entity.EffectiveDate = DateTime.Today.AddDays(3);
+        entity.EffectiveDate = DateTime.Today;//.AddDays(3);
         entity.ExpiryDate = DateTime.Today.AddDays(4);
         entity.IOC_TypeName = "PingAn";
         Response.Write(Common.SoapSerialize<IssueEntity>(entity));
@@ -63,5 +63,10 @@ public partial class t : System.Web.UI.Page
         entity.PolicyNo = txtPlicyNo.Text.Trim();
         TraceEntity ret = new Pingan.Issuing().Withdraw(entity);
         Response.Write("<BR>" + Common.SoapSerialize<TraceEntity>(ret));
+    }
+    protected void btnCheckIDCard_Click(object sender, EventArgs e)
+    {
+        bool a = Common.CheckIDCard(txtIDCard.Text.Trim());
+        Response.Write(a.ToString());
     }
 }

@@ -30,7 +30,6 @@ public partial class Admin_SMS_Send : System.Web.UI.Page
             else
             {
                 this.lblResult.Text = "发送成功!";
-                btnSend.Enabled = false;
             }
         }
         catch(Exception ee)

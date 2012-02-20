@@ -101,6 +101,7 @@ namespace Jiandanbao
             {
                 string msg = "dataCheck未通过(id={0}, phone={1})";
                 msg = string.Format(msg, entity.ID, entity.PhoneNumber);
+                Common.LogIt(msg);
                 result.Trace.ErrorMsg = msg;
                 return result;
                 //entity.IOC_TypeName = "chinalife_bj";
