@@ -14,6 +14,7 @@ namespace IAMessageQ
     public partial class Form1 : Form
     {
         string AppName = ConfigurationManager.AppSettings["AppName"];
+        bool exit = false;
 
         public Form1()
         {
@@ -64,9 +65,12 @@ namespace IAMessageQ
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
-            this.ShowInTaskbar = false;
-            e.Cancel = true;
+            if (!exit)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.ShowInTaskbar = false;
+                e.Cancel = true;
+            }
         }
 
         private void notifyIcon1_DoubleClick(object sender, EventArgs e)
@@ -84,19 +88,22 @@ namespace IAMessageQ
         {
             if (MessageBox.Show("确定要退出?", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.OK)
             {
-                foreach (TabPage page in tabControl1.TabPages)
-                {
-                    foreach (var ctr in page.Controls)
-                    {
-                        if (ctr is FormQueue)
-                        {
-                            ((FormQueue)ctr).Close();
-                            break;
-                        }
-                    }
-                }
+                //不需要 Application.Exit();会触发所有的Form.Closing
+                //foreach (TabPage page in tabControl1.TabPages)
+                //{
+                //    foreach (var ctr in page.Controls)
+                //    {
+                //        if (ctr is FormQueue)
+                //        {
+                //            ((FormQueue)ctr).Close();
+                //            break;
+                //        }
+                //    }
+                //}
 
+                exit = true;
                 Application.Exit();
+                //Environment.Exit(0);
             }
         }
     }
