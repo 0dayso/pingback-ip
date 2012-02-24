@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Xml;
 using IAClass;
 using IAClass.Entity;
+using IAClass.WebService;
 
 /// <summary>
 /// WebService 的摘要说明
@@ -44,9 +45,9 @@ public class WebService : System.Web.Services.WebService
     }
 
     [WebMethod(Description = "取一条单证记录")]
-    public PolicyResponseEntity GetPolicy(string username, string password, int caseID)
+    public PolicyResponseEntity GetPolicy(string username, string password, string caseNo)
     {
-        return WebServiceClass.GetPolicy(username, password, caseID);
+        return WebServiceClass.GetPolicy(username, password, caseNo);
     }
 
     [WebMethod(Description = "出单记录列表")]
@@ -61,13 +62,6 @@ public class WebService : System.Web.Services.WebService
         return WebServiceClass.GetPolicyListBetween(username, password, dtStart, dtEnd);
     }
 
-    /// <summary>
-    /// 作废单证
-    /// </summary>
-    /// <param name="username">用户名</param>
-    /// <param name="password">密码</param>
-    /// <param name="caseNo">单证号</param>
-    /// <returns></returns>
     [WebMethod(Description = "作废")]
     public TraceEntity DiscardIt(string username, string password, string caseNo)
     {

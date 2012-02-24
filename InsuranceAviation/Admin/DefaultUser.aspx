@@ -19,11 +19,11 @@
             height: 16px;
         }
         .updating
-        {
-            background-image: url("../images/spinner03.gif");
+        {   /*图表Loading*/
+            background-image: url("../images/spinner00.gif");
             background-repeat: no-repeat;
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
         }
     </style>
     <link href="../Css/Styles.css" type="text/css" rel="stylesheet" />

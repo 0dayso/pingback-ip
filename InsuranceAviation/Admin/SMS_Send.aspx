@@ -31,6 +31,13 @@
                     手机号：</td>
                 <td>
                     <asp:TextBox ID="txtMobile" runat="server"></asp:TextBox>
+                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" 
+                        ControlToValidate="txtMobile" Display="Dynamic" 
+                        ErrorMessage="请输入手机号码！" 
+                        ValidationExpression="^1[3458][0-9]{9}$" CssClass="redWarning"></asp:RegularExpressionValidator>
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
+                        ControlToValidate="txtMobile" CssClass="redWarning" Display="Dynamic" 
+                        ErrorMessage="手机号码不能为空！"></asp:RequiredFieldValidator>
                 </td>
             </tr>
             <tr>
@@ -45,12 +52,6 @@
                 <td>
                     &nbsp;</td>
                 <td>
-                    &nbsp;</td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp;</td>
-                <td>
                     <asp:Button ID="btnSend" runat="server" onclick="btnSend_Click" Text="发送" />
 &nbsp;<input id="Button1" type="button" value="关闭" onclick="parent.$.nmTop().close(); return false;" /></td>
             </tr>
@@ -58,7 +59,7 @@
                 <td>
                     &nbsp;</td>
                 <td>
-                    <asp:Label ID="lblResult" runat="server" ForeColor="Red"></asp:Label>
+                    <asp:Label ID="lblResult" runat="server" CssClass="redWarning"></asp:Label>
                 </td>
             </tr>
         </table>

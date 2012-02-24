@@ -9,11 +9,11 @@ using NBear.Mapping;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-namespace IAClass
+namespace IAClass.WebService
 {
     public class WebServiceClass
     {
-        public static PolicyResponseEntity GetPolicy(string username, string password, int caseID)
+        public static PolicyResponseEntity GetPolicy(string username, string password, string caseNo)
         {
             PolicyResponseEntity response = new PolicyResponseEntity();
 
@@ -23,7 +23,7 @@ namespace IAClass
 
                 if (string.IsNullOrEmpty(userLogin.Trace.ErrorMsg))
                 {
-                    response.Policy = Case.Get(caseID);
+                    response.Policy = Case.Get(caseNo);
                 }
                 else
                 {
@@ -155,6 +155,17 @@ namespace IAClass
 
         public static PurchaseResponseEntity Purchase(PurchaseRequestEntity request)
         {
+            return Purchase(request, false);
+        }
+
+        /// <summary>
+        /// 出单
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="isExternal">是否外部(第三方机构)调用</param>
+        /// <returns></returns>
+        public static PurchaseResponseEntity Purchase(PurchaseRequestEntity request, bool isExternal)
+        {
             PurchaseResponseEntity response = new PurchaseResponseEntity();
 
             if (Common.CheckIfSystemFailed(response))
@@ -213,6 +224,14 @@ namespace IAClass
                 {
                     response.Trace.ErrorMsg = "乘客姓名不能为空！";
                     return response;
+                }
+                else
+                {
+                    if (request.customerName.Contains("  "))
+                    {
+                        response.Trace.ErrorMsg = "客户名称不合法: 姓名不能有连续空格！";
+                        return response;
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(request.customerPhone))
@@ -356,7 +375,7 @@ namespace IAClass
                                 string caseNo = drSerial["caseNo"].ToString();
                                 response.CaseNo = caseNo;
 
-                                if (isValidIpLocation)//上面若验证通过则此处不查
+                                if (isValidIpLocation)//上面验证若通过则此处继续审查
                                 {
                                     //基于号段的 IP 过滤
                                     include = drSerial["locationInclude"].ToString();
@@ -417,7 +436,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                     TraceEntity validate = Case.Validate(entity);
                                     if (string.IsNullOrEmpty(validate.ErrorMsg))
                                     {
-                                        if (entity.IsLazyIssue)
+                                        if (entity.IsLazyIssue && !isExternal)
                                         {
                                             //Thread th = new Thread(Case.IssueAsync);
                                             //th.Start(entity);
@@ -427,7 +446,10 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                         {
                                             IssuingResultEntity result = Case.Issue(entity);
                                             if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
+                                            {
                                                 response.SerialNo = result.PolicyNo;//暂借用该SerialNo字段
+                                                response.PolicyNo = result.PolicyNo;
+                                            }
                                             else
                                             {
                                                 tran.Rollback();

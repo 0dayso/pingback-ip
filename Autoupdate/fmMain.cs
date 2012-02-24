@@ -205,7 +205,7 @@ namespace AutoUpdate
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "自动更新";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.fmMain_FormClosing);
-            this.Shown += new System.EventHandler(this.fmMain_Shown);
+            this.Load += new System.EventHandler(this.fmMain_Load);
             this.Move += new System.EventHandler(this.fmMain_Move);
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).EndInit();
             this.ResumeLayout(false);
@@ -229,16 +229,24 @@ namespace AutoUpdate
         /// <param name="isStart">true-开始 false-结束</param>
         private void UpdateControls(bool isStart)
         {
-            btnUpdate.Enabled = !isStart;
-            picLoading.Visible = isStart;
-            btnExit.Enabled = !isStart;
-            btnCancel.Enabled = isStart;
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                btnUpdate.Enabled = !isStart;
+                picLoading.Visible = isStart;
+                btnExit.Enabled = !isStart;
+                btnCancel.Enabled = isStart;
+            }));
         }
 
         private void CheckConfigXML()
         {
             try
             {
+                if (!Inite())
+                {
+                    UpdateControls(false);
+                    return;
+                }
                 string strTemp = DateTime.Now.Ticks.ToString();
                 string file = Application.StartupPath + "\\updateServerSide.xml";
                 string fileTemp = file + "." + strTemp + ".tmp";
@@ -536,18 +544,24 @@ namespace AutoUpdate
             proc.Start();
         }
 
-        private void fmMain_Shown(object sender, EventArgs e)
+        private bool Inite()
         {
             XMLConfigUser user = new XMLConfigUser().Read() as XMLConfigUser;
-            if (user.SelectedISP == ISP.ChinaTelecom)
-                rbDianx.Checked = true;
-            else if(user.SelectedISP == ISP.ChinaUnicom)
-                rbWangt.Checked = true;
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                if (user.SelectedISP == ISP.ChinaTelecom)
+                    rbDianx.Checked = true;
+                else if (user.SelectedISP == ISP.ChinaUnicom)
+                    rbWangt.Checked = true;
+            }));
 
             if (user.SelectedISP != ISP.Default)
-                butUpdate_Click(sender, e);
+                return true;
             else
+            {
                 GetRoute();
+                return false;
+            }
         }
 
         private string GetURL()
@@ -574,18 +588,22 @@ namespace AutoUpdate
             XMLSettingsGlobal global = new XMLSettingsGlobal().Read("XMLConfigGlobal.xml") as XMLSettingsGlobal;
             XMLConfigUser user = new XMLConfigUser().Read() as XMLConfigUser;
 
-            if (rbDianx.Checked)
-            {
-                this.txtDownFile.Text = global.Website1;
-                user.SelectedISP = ISP.ChinaTelecom;
-            }
-            else if (rbWangt.Checked)
-            {
-                this.txtDownFile.Text = global.Website2;
-                user.SelectedISP = ISP.ChinaUnicom;
-            }
-            else
-                this.txtDownFile.Text = global.Website;
+            this.Invoke(new MethodInvoker(delegate
+            {   //异步陷阱: 这里不能用BeginInvoke,否则会由于下面user.Save()先执行,从而导致保存的数据不正确
+                //          或者直接把user.Save();包含进来也可以
+                if (rbDianx.Checked)
+                {
+                    this.txtDownFile.Text = global.Website1;
+                    user.SelectedISP = ISP.ChinaTelecom;
+                }
+                else if (rbWangt.Checked)
+                {
+                    this.txtDownFile.Text = global.Website2;
+                    user.SelectedISP = ISP.ChinaUnicom;
+                }
+                else
+                    this.txtDownFile.Text = global.Website;
+            }));
 
             user.Save();
         }
@@ -600,6 +618,11 @@ namespace AutoUpdate
         private void fmMain_Move(object sender, EventArgs e)
         {
             toolTipForRoute.RemoveAll();
+        }
+
+        private void fmMain_Load(object sender, EventArgs e)
+        {
+            butUpdate_Click(sender, e);
         }
     }
 }

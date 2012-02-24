@@ -233,5 +233,39 @@ namespace IAMessageQ
             if(MQClient != null)
                 MQClient.Close();
         }
+
+        [Serializable]
+        public class test
+        {
+            public int a;
+            public string b;
+            public bool c;
+        }
+
+        private void FormQueue_Load(object sender, EventArgs e)
+        {
+            IAClass.Entity.PurchaseRequestEntity req = new PurchaseRequestEntity();
+            req.username = "user001";
+            req.password = "pass001";
+            req.InsuranceCode = "pd001";
+            req.customerName = "张山";
+            req.customerID = "352224198201110013";
+            req.customerIDType = IdentityType.身份证;
+            req.customerGender = Gender.Male;
+            req.customerBirth = DateTime.Parse("1982-1-11");
+            req.customerPhone = "13888888888";
+            req.flightDate = DateTime.Parse("2012-3-15");
+            req.flightNo = "HU3213";
+
+            this.txtLogInfo.Text = Common.XmlSerialize<IAClass.Entity.PurchaseRequestEntity>(req);
+            
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            IAClass.Entity.PurchaseRequestEntity a = Common.XmlDeserialize<IAClass.Entity.PurchaseRequestEntity>(txtLogInfo.Text);
+            return;
+        }
     }
 }

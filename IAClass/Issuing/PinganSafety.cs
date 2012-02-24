@@ -264,37 +264,13 @@ namespace Pingan
         /// <returns></returns>
         private string GetResult(string para)
         {
-            if (Common.Debug)
-                Common.LogIt(para);
             string result = "";
-            byte[] date = Encoding.GetEncoding("gbk").GetBytes(para);
-            HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create(url);
-            hwrequest.KeepAlive = true;
-            hwrequest.ContentType = "text/xml";//"text/xml;charset=gbk"
-            hwrequest.Method = "POST";
-            hwrequest.ContentLength = date.Length;
-            hwrequest.AllowAutoRedirect = true;
-            hwrequest.UserAgent = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; SV1; Maxthon; .NET CLR 4.0.30319); Http STdns";
-            hwrequest.Accept = "*/*";
-            hwrequest.CookieContainer = new CookieContainer();
-            System.Net.ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(ValidateServerCertificate);
+            byte[] data = Encoding.GetEncoding("gbk").GetBytes(para);
             //2012.01.31 新增X509KeyStorageFlags参数，以解决忽然出现的异常“CryptographicException: 出现了内部错误”
             X509Certificate2 cer2 = new X509Certificate2(filename, password, X509KeyStorageFlags.MachineKeySet);
-            hwrequest.ClientCertificates.Add(cer2);
             System.Net.ServicePointManager.Expect100Continue = false;
-            //获取用于请求的数据流
-            using (Stream reqStream = hwrequest.GetRequestStream())
-            {
-                reqStream.Write(date, 0, date.Length);
-            }
-            //获取回应
-            using (HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse())
-            {
-                StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
-                result = sr.ReadToEnd();
-                sr.Close();
-            }
 
+            result = Common.HttpPost(url, data, cer2);
             return result;
         }
 
@@ -359,8 +335,7 @@ namespace Pingan
                 {
                     nodes = xd.SelectNodes("Values/array/record/value");
                     string billNo = GetValue(nodes, "certNo");
-                    result.PolicyNo = billNo;
-                    result.Trace.ErrorMsg = billNo;
+                    result.PolicyNo = result.Trace.Detail = billNo;
                     return result;
                 }
                 else

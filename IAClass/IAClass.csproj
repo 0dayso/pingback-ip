@@ -110,13 +110,16 @@
     <Compile Include="Bussiness\Serial.cs" />
     <Compile Include="Bussiness\SMS.cs" />
     <Compile Include="Issuing\ChinaLife_BJ_ws_Endorse.cs" />
+    <Compile Include="Issuing\HongDingShiChuang.cs" />
     <Compile Include="Issuing\Huayubaoxian.cs" />
     <Compile Include="Issuing\Huayubaoxian_ws.cs" />
+    <Compile Include="Issuing\Renwox.cs" />
     <Compile Include="Issuing\Instony.cs" />
     <Compile Include="Issuing\Instony_ws.cs" />
     <Compile Include="Issuing\Jiandanbao_ws_all.cs" />
     <Compile Include="Issuing\Jiandanbao_ws_all_check.cs" />
     <Compile Include="Issuing\JinHang.cs" />
+    <Compile Include="Issuing\Renwox_ws.cs" />
     <Compile Include="Issuing\XiAnQiYi.cs" />
     <Compile Include="Issuing\XiAnQiYi_ws.cs" />
     <Compile Include="Miscel\ActiveMQClient.cs" />
@@ -157,7 +160,8 @@
     <Compile Include="SMS\SMSFacade.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Miscel\TimeOutSocket.cs" />
-    <Compile Include="WebServiceClass.cs" />
+    <Compile Include="WebService\WebServiceClass.cs" />
+    <Compile Include="WebService\WebServiceClassForExternal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

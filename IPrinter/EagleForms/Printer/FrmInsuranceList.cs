@@ -78,8 +78,8 @@ namespace EagleForms.Printer
                 return;
             }
 
-            int caseId = Convert.ToInt32(this.dataGridView1.SelectedRows[0].Cells["colCaseId"].Value);
-            PolicyResponseEntity response = ws.GetPolicy(GlobalVar.IAUsername, GlobalVar.IAPassword, caseId);
+            string caseNo = this.dataGridView1.SelectedRows[0].Cells["colCaseNo"].Value.ToString();
+            PolicyResponseEntity response = ws.GetPolicy(GlobalVar.IAUsername, GlobalVar.IAPassword, caseNo);
 
             if (string.IsNullOrEmpty(response.Trace.ErrorMsg))
             {

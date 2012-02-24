@@ -191,7 +191,7 @@ ORDER BY count DESC";
         {
             //这里非主键select虽然用readpast依然阻塞 使用with(nolock)来躲开其他线程的更新锁等，以避免阻塞
             string strSql = @"
-SELECT caseID
+SELECT caseNo
   FROM t_Case with(nolock)
   where customerFlightDate = '{0}'
   and customerID = '{1}'
@@ -235,250 +235,147 @@ and enabled = 1";
 
         public static TraceEntity Discard(string username, string caseNo)
         {
-            TraceEntity response = new TraceEntity();
-
-            string strSql = @"
-SELECT caseID, customerFlightDate, CertNo,
-		b.IsIssuingRequired, IOC_TypeName, WithdrawRatio, caseOwner, ParentPath
-  FROM [t_Case] a with(nolock) inner join t_Product b
-  on a.productID = b.productID
-  where caseNo = '{0}'";
-            strSql = string.Format(strSql, caseNo);
-            DataSet ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
-
-            if (ds.Tables[0].Rows.Count == 0)
-            {
-                response.ErrorMsg = "单证号不存在！";
-                return response;
-            }
-            else
-            {
-                DataRow dr = ds.Tables[0].Rows[0];
-                string caseOwner = dr["caseOwner"].ToString();
-                if (username != caseOwner)
-                {
-                    response.ErrorMsg = "单证号不属于该用户！";
-                    return response;
-                }
-
-                bool isIssuingRequired = Convert.ToBoolean(dr["IsIssuingRequired"]);
-                //bool withdrawOnEffDateEnabled = Convert.ToBoolean(dr["WithdrawOnEffDateEnabled"]);//是否可以在生效当日（起飞前）进行退保操作
-                decimal withdrawRatio = Convert.ToDecimal(dr["WithdrawRatio"]);
-                DateTime dtFlightDate = Convert.ToDateTime(dr["customerFlightDate"]);
-                DateTime dtNow = DateTime.Now;
-
-                t_User user = UserClass.GetUser(username);
-                if (user.CountConsumed > 100)
-                {
-                    decimal ratio = (decimal)user.CountWithdrawed / (decimal)user.CountConsumed;
-                    if (ratio > withdrawRatio)
-                    {
-                        response.ErrorMsg = "系统检测到您目前的作废率过高，暂无法作废！";
-                        return response;
-                    }
-                }
-
-                if (dtFlightDate < dtNow)
-                {
-                    response.ErrorMsg = "已生效，无法作废！";
-                    return response;
-                }
-                //else if (!withdrawOnEffDateEnabled)
-                //{
-                //    if (dtFlightDate.Date == dtNow.Date)
-                //    {
-                //        response.ErrorMsg = "乘机当日零点起已生效，无法作废！";
-                //        return response;
-                //    }
-                //}
-
-                //bool isOk = true;
-
-                if (isIssuingRequired)
-                {
-                    WithdrawEntity entity = new WithdrawEntity();
-                    entity.CaseNo = caseNo;
-                    entity.PolicyNo = dr["CertNo"].ToString();
-
-                    if (!string.IsNullOrEmpty(entity.PolicyNo))
-                    {
-                        TraceEntity ret;
-
-                        try
-                        {
-                            IAClass.Issuing.IssuingFacade facade = new IAClass.Issuing.IssuingFacade();
-                            ret = facade.Withdraw(entity, dr["IOC_TypeName"].ToString());
-                        }
-                        catch (Exception ee)
-                        {
-                            Common.LogIt(ee.ToString());
-                            ret.ErrorMsg = ee.Message;
-                        }
-                        //若成功退保，则做下标记；若失败，仍然给客户退单
-                        if (string.IsNullOrEmpty(ret.ErrorMsg))
-                        {
-                            Common.DB.Update(Tables.t_Case)
-                                                .AddColumn(Tables.t_Case.isWithdrawed, true)
-                                                .Where(Tables.t_Case.caseNo == caseNo)
-                                                .Execute();
-                        }
-                    }
-                }
-
-                //if (isOk)
-                {
-                    Common.DB.Update(Tables.t_Case)
-                        .AddColumn(Tables.t_Case.enabled, false)
-                        .Where(Tables.t_Case.caseNo == caseNo)
-                        .Execute();
-
-                    string[] parentArray = dr["ParentPath"].ToString().Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-                    if (parentArray.Length > 1)//形如：/admin/tianzhi/bcaaa/bcaaa0150/
-                    {
-                        Common.DB.Update(Tables.t_User)
-                                .AddColumn(Tables.t_User.balance, Tables.t_User.balance + Tables.t_User.price)
-                                .Where(Tables.t_User.username == parentArray[1])
-                                .Execute();
-                    }
-
-                    //不要求完全精确，无需事务处理
-                    Common.DB.Update(Tables.t_User)
-                        .AddColumn(Tables.t_User.CountWithdrawed, Tables.t_User.CountWithdrawed + 1)
-                        .Where(Tables.t_User.username == username)
-                        .Execute();
-                }
-
-                return response;
-            }
+            t_User user = UserClass.GetUser(username);
+            UserLoginResponse userResp = new UserLoginResponse();
+            userResp.Username = username;
+            userResp.CountConsumed = user.CountConsumed;
+            userResp.CountWithdrawed = user.CountWithdrawed;
+            return Discard(userResp, caseNo);
         }
 
-        public static TraceEntity Discard(UserLoginResponse user, string caseNo)
+        public static TraceEntity Discard(UserLoginResponse user, string serialNo)
         {
             TraceEntity response = new TraceEntity();
 
             string strSql = @"
-SELECT caseID, customerFlightDate, CertNo,
+SELECT caseID, caseNo, customerFlightDate, CertNo,
 		b.IsIssuingRequired, IOC_TypeName, WithdrawRatio, caseOwner, ParentPath
   FROM [t_Case] a with(nolock) inner join t_Product b
   on a.productID = b.productID
-  where caseNo = '{0}'";
-            strSql = string.Format(strSql, caseNo);
+  where {0} = '{1}'";
+            strSql = string.Format(strSql, "caseNo", serialNo);
             DataSet ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
 
             if (ds.Tables[0].Rows.Count == 0)
             {
-                response.ErrorMsg = "单证号不存在！";
-                return response;
+                strSql = string.Format(strSql, "certNo", serialNo);//若是第三方调用撤单接口,则传入参数是正式保单号
+                ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
+
+                if (ds.Tables[0].Rows.Count == 0)
+                {
+                    response.ErrorMsg = "单证号不存在！";
+                    return response;
+                }
             }
-            else
+
+            DataRow dr = ds.Tables[0].Rows[0];
+            string caseOwner = dr["caseOwner"].ToString();
+            if (user.Username != caseOwner)
             {
-                DataRow dr = ds.Tables[0].Rows[0];
-                string caseOwner = dr["caseOwner"].ToString();
-                if (user.Username != caseOwner)
-                {
-                    response.ErrorMsg = "单证号不属于该用户！";
-                    return response;
-                }
-
-                bool isIssuingRequired = Convert.ToBoolean(dr["IsIssuingRequired"]);
-                //bool withdrawOnEffDateEnabled = Convert.ToBoolean(dr["WithdrawOnEffDateEnabled"]);//是否可以在生效当日（起飞前）进行退保操作
-                decimal withdrawRatio = Convert.ToDecimal(dr["WithdrawRatio"]);
-                DateTime dtFlightDate = Convert.ToDateTime(dr["customerFlightDate"]);
-                DateTime dtNow = DateTime.Now;
-
-                if (user.CountConsumed > 100)
-                {
-                    decimal ratio = (decimal)user.CountWithdrawed / (decimal)user.CountConsumed;
-                    if (ratio > withdrawRatio)
-                    {
-                        response.ErrorMsg = "系统检测到您目前的作废率过高，暂无法作废！";
-                        return response;
-                    }
-                }
-
-                if (dtFlightDate < dtNow)
-                {
-                    response.ErrorMsg = "已生效，无法作废！";
-                    return response;
-                }
-                //else if (!withdrawOnEffDateEnabled)
-                //{
-                //    if (dtFlightDate.Date == dtNow.Date)
-                //    {
-                //        response.ErrorMsg = "乘机当日零点起已生效，无法作废！";
-                //        return response;
-                //    }
-                //}
-
-                //bool isOk = true;
-
-                if (isIssuingRequired)
-                {
-                    WithdrawEntity entity = new WithdrawEntity();
-                    entity.CaseNo = caseNo;
-                    entity.PolicyNo = dr["CertNo"].ToString();
-
-                    if (!string.IsNullOrEmpty(entity.PolicyNo))
-                    {
-                        TraceEntity ret;
-
-                        try
-                        {
-                            IAClass.Issuing.IssuingFacade facade = new IAClass.Issuing.IssuingFacade();
-                            ret = facade.Withdraw(entity, dr["IOC_TypeName"].ToString());
-                        }
-                        catch (Exception ee)
-                        {
-                            Common.LogIt(ee.ToString());
-                            ret.ErrorMsg = ee.Message;
-                        }
-                        //若成功退保，则做下标记；若失败，仍然给客户退单
-                        if (string.IsNullOrEmpty(ret.ErrorMsg))
-                        {
-                            Common.DB.Update(Tables.t_Case)
-                                                .AddColumn(Tables.t_Case.isWithdrawed, true)
-                                                .Where(Tables.t_Case.caseNo == caseNo)
-                                                .Execute();
-                        }
-                    }
-                }
-
-                //if (isOk)
-                {
-                    Common.DB.Update(Tables.t_Case)
-                        .AddColumn(Tables.t_Case.enabled, false)
-                        .Where(Tables.t_Case.caseNo == caseNo)
-                        .Execute();
-
-                    string[] parentArray = dr["ParentPath"].ToString().Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-                    if (parentArray.Length > 1)//形如：/admin/tianzhi/bcaaa/bcaaa0150/
-                    {
-                        Common.DB.Update(Tables.t_User)
-                                .AddColumn(Tables.t_User.balance, Tables.t_User.balance + Tables.t_User.price)
-                                .Where(Tables.t_User.username == parentArray[1])
-                                .Execute();
-                    }
-
-                    //不要求完全精确，无需事务处理
-                    Common.DB.Update(Tables.t_User)
-                        .AddColumn(Tables.t_User.CountWithdrawed, Tables.t_User.CountWithdrawed + 1)
-                        .Where(Tables.t_User.username == user.Username)
-                        .Execute();
-                }
-
+                response.ErrorMsg = "单证号不属于该用户！";
                 return response;
             }
+
+            bool isIssuingRequired = Convert.ToBoolean(dr["IsIssuingRequired"]);
+            //bool withdrawOnEffDateEnabled = Convert.ToBoolean(dr["WithdrawOnEffDateEnabled"]);//是否可以在生效当日（起飞前）进行退保操作
+            DateTime dtFlightDate = Convert.ToDateTime(dr["customerFlightDate"]);
+            DateTime dtNow = DateTime.Now;
+
+            if (user.CountConsumed > 100)
+            {
+                decimal withdrawRatio = Convert.ToDecimal(dr["WithdrawRatio"]);
+                decimal ratio = (decimal)user.CountWithdrawed / (decimal)user.CountConsumed;
+                if (ratio > withdrawRatio)
+                {
+                    response.ErrorMsg = "系统检测到您目前的作废率过高，暂无法作废！";
+                    return response;
+                }
+            }
+
+            if (dtFlightDate < dtNow)
+            {
+                response.ErrorMsg = "已生效，无法作废！";
+                return response;
+            }
+            //else if (!withdrawOnEffDateEnabled)
+            //{
+            //    if (dtFlightDate.Date == dtNow.Date)
+            //    {
+            //        response.ErrorMsg = "乘机当日零点起已生效，无法作废！";
+            //        return response;
+            //    }
+            //}
+
+            //bool isOk = true;
+
+            string caseNo = dr["caseNo"].ToString();
+            string policyNo = dr["CertNo"].ToString();
+            if (isIssuingRequired)
+            {
+                WithdrawEntity entity = new WithdrawEntity();
+                entity.CaseNo = caseNo;
+                entity.PolicyNo = policyNo;
+
+                if (!string.IsNullOrEmpty(entity.PolicyNo))
+                {
+                    TraceEntity ret;
+
+                    try
+                    {
+                        IAClass.Issuing.IssuingFacade facade = new IAClass.Issuing.IssuingFacade();
+                        ret = facade.Withdraw(entity, dr["IOC_TypeName"].ToString());
+                    }
+                    catch (Exception ee)
+                    {
+                        Common.LogIt(ee.ToString());
+                        ret.ErrorMsg = ee.Message;
+                    }
+                    //若成功退保，则做下标记；若失败，仍然给客户退单
+                    if (string.IsNullOrEmpty(ret.ErrorMsg))
+                    {
+                        Common.DB.Update(Tables.t_Case)
+                                            .AddColumn(Tables.t_Case.isWithdrawed, true)
+                                            .Where(Tables.t_Case.caseNo == caseNo)
+                                            .Execute();
+                    }
+                }
+            }
+
+            //if (isOk)
+            {
+                int eff = Common.DB.Update(Tables.t_Case)
+                                .AddColumn(Tables.t_Case.enabled, false)
+                                .Where(Tables.t_Case.caseNo == caseNo)
+                                .Execute();
+
+                string[] parentArray = dr["ParentPath"].ToString().Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+                if (parentArray.Length > 1)//形如：/admin/tianzhi/bcaaa/bcaaa0150/
+                {
+                    Common.DB.Update(Tables.t_User)
+                            .AddColumn(Tables.t_User.balance, Tables.t_User.balance + Tables.t_User.price)
+                            .Where(Tables.t_User.username == parentArray[1])
+                            .Execute();
+                }
+
+                //不要求完全精确，无需事务处理
+                Common.DB.Update(Tables.t_User)
+                    .AddColumn(Tables.t_User.CountWithdrawed, Tables.t_User.CountWithdrawed + 1)
+                    .Where(Tables.t_User.username == user.Username)
+                    .Execute();
+            }
+
+            return response;
         }
 
-        public static t_Case Get(int caseID)
+        public static t_Case Get(string caseNo)
         {
             string strSql = @"
 SELECT a.*, b.displayname
   FROM [t_Case] a with(nolock)
   inner join t_user b with(nolock) on a.caseOwner = b.username
-  where a.caseId = '{0}'
+  where a.caseNo = '{0}'
   order by datetime desc";
-            strSql = string.Format(strSql, caseID);
+            strSql = string.Format(strSql, caseNo);
             DataSet ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
 
             t_Case policy = NBear.Mapping.ObjectConvertor.ToObject<t_Case>(ds.Tables[0].Rows[0]);
@@ -488,7 +385,7 @@ SELECT a.*, b.displayname
         public static Policy[] GetList(string username, int pageSize)
         {
             string strSql = @"
-SELECT top {0} caseID, enabled, datetime,
+SELECT top {0} enabled, datetime,
   customerName, customerID, customerFlightNo, customerFlightDate,
   caseNo, CertNo
   FROM [t_Case] a with(nolock)
@@ -504,7 +401,7 @@ SELECT top {0} caseID, enabled, datetime,
         public static Policy[] GetPolicyListBetween(string username, DateTime dtStart, DateTime dtEnd)
         {
             string strSql = @"
-SELECT caseID, a.enabled, datetime,
+SELECT a.enabled, datetime,
   customerName, customerID, customerFlightNo, customerFlightDate, caseNo, CertNo, b.productName
   FROM [t_Case] a with(nolock) inner join t_Product b with(nolock)
   on a.productID = b.productID
@@ -545,11 +442,11 @@ SELECT caseID, a.enabled, datetime,
             DateTime dtEnd = DateTime.Parse(txtEnd).AddDays(1).AddSeconds(-1);//只有日期部分，无需转换
 
             SqlConnection cnn = new SqlConnection(Common.ConnectionString);
-            string sql = string.Format(@"select top {0} caseid,
+            string sql = string.Format(@"select top {0} caseNo,
                                 [datetime], customerName, customerID,
                                 CONVERT(VARCHAR(10),[customerFlightDate],120) as customerFlightDate,
                                 enabled, null as userGroup, null as displayname,
-                                null as caseNo, null as customerPhone, null as customerFlightNo, isSMSent,
+                                null as customerPhone, null as customerFlightNo, isSMSent,
                                 customerBirth,customerGender
                                 from t_case where productId ={1} and isIssued = 1 and enabled = 0 and [datetime] between '{2}' and '{3}'", top, productId, txtStart, dtEnd);
             SqlDataAdapter sda = new SqlDataAdapter(sql, cnn);
@@ -572,7 +469,7 @@ SELECT caseID, a.enabled, datetime,
             if (sb.Length == 0)
                 return dv;
 
-            string sqlUpdate = "update t_case set isIssued = 0 where caseid in (" + sb.ToString().TrimEnd(',') + ")";
+            string sqlUpdate = "update t_case set isIssued = 0 where caseNo in (" + sb.ToString().TrimEnd(',') + ")";
             SqlCommand cmm = new SqlCommand(sqlUpdate, cnn);
             cmm.ExecuteNonQuery();
             cnn.Close();
@@ -591,11 +488,11 @@ SELECT caseID, a.enabled, datetime,
             DateTime dtEnd = DateTime.Parse(txtEnd).AddDays(1).AddSeconds(-1);//只有日期部分，无需转换
 
             SqlConnection cnn = new SqlConnection(Common.ConnectionString);
-            string sql = string.Format(@"select top {0} caseid,
+            string sql = string.Format(@"select top {0} caseNo,
                                 [datetime], customerName, customerID,
                                 CONVERT(VARCHAR(10),[customerFlightDate],120) as customerFlightDate,
                                 enabled, null as userGroup, null as displayname,
-                                null as caseNo, null as customerPhone, null as customerFlightNo, isSMSent,
+                                null as customerPhone, null as customerFlightNo, isSMSent,
                                 customerBirth,customerGender
                                 from t_case where productId ={1} and isIssued = 0 and enabled = 1 and [datetime] between '{2}' and '{3}'", top, productId, txtStart, dtEnd);
             SqlDataAdapter sda = new SqlDataAdapter(sql, cnn);
@@ -618,7 +515,7 @@ SELECT caseID, a.enabled, datetime,
             if (sb.Length == 0)
                 return dv;
 
-            string sqlUpdate = "update t_case set isIssued = 1 where caseid in (" + sb.ToString().TrimEnd(',') + ")";
+            string sqlUpdate = "update t_case set isIssued = 1 where caseNo in (" + sb.ToString().TrimEnd(',') + ")";
             SqlCommand cmm = new SqlCommand(sqlUpdate, cnn);
             cmm.ExecuteNonQuery();
             cnn.Close();

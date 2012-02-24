@@ -20,6 +20,20 @@ namespace IAClass.Entity
         public string Detail;
     }
 
+    public class WithdrawRequest
+    {
+        public string Username;
+        public string Password;
+        /// <summary>
+        /// 正式保单号
+        /// </summary>
+        public string PolicyNo;
+        /// <summary>
+        /// 本系统电子单号
+        /// </summary>
+        public string CaseNo;
+    }
+
     public enum UserType
     {
         AdminPlus = 0, Admin = 1, Default = 2, Insurer = 99
@@ -107,11 +121,15 @@ namespace IAClass.Entity
         /// <summary>
         /// 保险公司正式保单号
         /// </summary>
-        public string SerialNo;
+        public string PolicyNo;
         /// <summary>
         /// 电子单号
         /// </summary>
         public string CaseNo;
+        /// <summary>
+        /// 防伪码,没什么用;之前代替 PolicyNo
+        /// </summary>
+        public string SerialNo;
         /// <summary>
         /// 代理商的名称
         /// </summary>
@@ -172,7 +190,6 @@ namespace IAClass.Entity
         public Policy()
         { }
         #region Model
-        private int _caseid;
         private string _caseno;
         private string _customername;
         private string _customerid;
@@ -183,14 +200,6 @@ namespace IAClass.Entity
         private string _certno;
         private string _productName;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public int caseID
-        {
-            set { _caseid = value; }
-            get { return _caseid; }
-        }
         /// <summary>
         /// 
         /// </summary>

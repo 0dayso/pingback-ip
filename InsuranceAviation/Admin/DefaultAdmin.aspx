@@ -8,10 +8,10 @@
     <style type="text/css">
         .updating
         {
-            background-image: url("../images/spinner03.gif");
+            background-image: url("../images/spinner00.gif");
             background-repeat: no-repeat;
-            width: 16px;
-            height: 16px;
+            width: 32px;
+            height: 32px;
         }
     </style>
     <link href="../Css/Styles.css" type="text/css" rel="stylesheet"/>
@@ -37,9 +37,6 @@
             $('.nyroModal').nm(
             {
                 showCloseButton: true,
-                _loading: true,
-                _transition: false,
-                _animated: false,
                 sizes: {	// Size information
                     minW: 50, 	// width
                     minH: 50		// height
@@ -179,7 +176,7 @@
                                                                 </asp:BoundField>
                                                                 <asp:TemplateField HeaderText="短信">
                                                                     <ItemTemplate>
-                                                                        <a href="SMS_Send.aspx?case=<%# Eval("caseNo")%>&mobile=<%# Eval("customerPhone")%>" target="_blank" class="nyroModal"><%# GetSMStatus(Eval("isSMSent")) %></a>
+                                                                        <a href="SMS_Send.aspx?case=<%# Eval("caseNo")%>&mobile=<%# Eval("customerPhone")%>&name=<%# HttpUtility.UrlEncode(Eval("customerName").ToString())%>&date=<%# Eval("customerFlightDate", "{0:yyyy-MM-dd}") %>" target="_blank" class="nyroModal"><%# GetSMStatus(Eval("isSMSent")) %></a>
                                                                     </ItemTemplate>
                                                                     <ItemStyle HorizontalAlign="Center" />
                                                                 </asp:TemplateField>

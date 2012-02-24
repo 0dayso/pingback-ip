@@ -174,26 +174,7 @@ F$失败原因*/
         /// <returns></returns>
         private static string GetResponse(string requestURL)
         {
-            HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create(requestURL);
-            hwrequest.KeepAlive = true;
-            hwrequest.ContentType = "text/xml";
-            hwrequest.Method = "Get";
-            hwrequest.AllowAutoRedirect = true;
-
-            try
-            {
-                HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse();
-                StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
-                string result = sr.ReadToEnd();
-                res.Close();
-                sr.Close();
-                return result;
-            }
-            catch
-            {
-                Common.LogIt(requestURL);
-                throw;
-            }
+            return Common.HttpGet(requestURL);
         }
     }
 }

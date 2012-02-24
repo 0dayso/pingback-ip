@@ -222,8 +222,8 @@ public partial class DefaultAdmin : NBear.Web.UI.Page
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
-            //e.Row.Attributes.Add("onmouseover", "c=this.style.backgroundColor;this.style.backgroundColor='#ffd7d4'");
-            //e.Row.Attributes.Add("onmouseout", "this.style.backgroundColor=c");
+            e.Row.Attributes.Add("onmouseover", "c=this.style.backgroundColor;this.style.backgroundColor='#ffd7d4'");
+            e.Row.Attributes.Add("onmouseout", "this.style.backgroundColor=c");
 
             int i = 0;
 

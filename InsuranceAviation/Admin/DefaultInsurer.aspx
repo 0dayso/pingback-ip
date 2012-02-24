@@ -13,7 +13,7 @@
         }
         .panelUpdating
         {
-            background-image: url("../images/spinner03.gif");
+            background-image: url("../images/spinner00.gif");
             background-repeat: no-repeat;
             width: 16px;
             height: 16px;

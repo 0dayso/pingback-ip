@@ -40,7 +40,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
-            this.colCaseId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colDatetime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,7 +65,6 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colCaseId,
             this.colEnabled,
             this.colDatetime,
             this.colCustomerName,
@@ -181,15 +179,6 @@
             this.dtpEndDate.Size = new System.Drawing.Size(101, 21);
             this.dtpEndDate.TabIndex = 11;
             // 
-            // colCaseId
-            // 
-            this.colCaseId.DataPropertyName = "caseID";
-            this.colCaseId.HeaderText = "caseId";
-            this.colCaseId.Name = "colCaseId";
-            this.colCaseId.ReadOnly = true;
-            this.colCaseId.Visible = false;
-            this.colCaseId.Width = 47;
-            // 
             // colEnabled
             // 
             this.colEnabled.DataPropertyName = "enabled";
@@ -299,7 +288,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         public System.Windows.Forms.DateTimePicker dtpEndDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCaseId;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colEnabled;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDatetime;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCustomerName;

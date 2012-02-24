@@ -65,7 +65,7 @@ namespace Huayubaoxian
                 result.PolicyNo = ret;
             else
             {
-                string request = Common.XmlSerializer<policy>(po);
+                string request = Common.XmlSerialize<policy>(po);
                 Common.LogIt("投保参数" + request + System.Environment.NewLine + "Huayubaoxian投保：" + ret);
                 result.Trace.ErrorMsg = ret;
             }

@@ -118,35 +118,8 @@ namespace JinHang
             string result = "";
             postValue = "userName=renwox&method=0&xml=" + System.Web.HttpUtility.UrlEncode(postValue);//浏览器的话会自动对xml字符串进行UrlEncode,故要模拟
             byte[] data = Encoding.UTF8.GetBytes(postValue);
-
-            HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create("http://www.poolwin.com/AnLianWeb/test.do");
-            hwrequest.KeepAlive = true;
-            hwrequest.ContentType = "application/x-www-form-urlencoded";// "text/xml"; 注意类型,否则会失败
-            hwrequest.Method = "POST";
-            hwrequest.ContentLength = data.Length;
-            hwrequest.AllowAutoRedirect = true;
-            try
-            {
-                //获取用于请求的数据流
-                using (Stream reqStream = hwrequest.GetRequestStream())
-                {
-                    reqStream.Write(data, 0, data.Length);
-                }
-                //获取回应
-                using (HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse())
-                {
-                    StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
-                    result = sr.ReadToEnd();
-                    sr.Close();
-                }
-
-                return result;
-            }
-            catch
-            {
-                Common.LogIt(hwrequest.RequestUri);
-                throw;
-            }
+            result = Common.HttpPost("http://www.poolwin.com/AnLianWeb/test.do", data);
+            return result;
         }
 
         static Boolean IsLongFN(string firstName)

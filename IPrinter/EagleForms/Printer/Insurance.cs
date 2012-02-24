@@ -236,8 +236,8 @@ namespace EagleForms.Printer
                     //if (!string.IsNullOrEmpty(ret.Trace.Detail))
                     //    MessageBox.Show(ret.Trace.Detail, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    if (!string.IsNullOrEmpty(ret.SerialNo))//由原来防伪码(没什么作用)改为正式保单号
-                        txtCode.Text = ret.SerialNo;
+                    if (!string.IsNullOrEmpty(ret.PolicyNo))//正式保单号
+                        txtCode.Text = ret.PolicyNo;
                     if (!string.IsNullOrEmpty(ret.CaseNo))
                         txtENumber.Text = ret.CaseNo;
                     if (!string.IsNullOrEmpty(ret.AgentName))

@@ -25,6 +25,7 @@
     font-size: 1px;
 }
 
+.redWarning{color:Red}
 hr{height: 1px; background:#7f9db9 }
 
 body, td
@@ -74,7 +75,6 @@ img
 	border-right: 0 solid #6699CC;
 	border-bottom: 1px solid #6699CC;
 	border-collapse: separate;
-	
 	background-image: url(../images/DeSelectedTab_1x1.gif);
 	background-repeat: repeat-y;
 	background-position: 0 0;
@@ -90,7 +90,6 @@ img
 	border-top: 1px solid #6699CC;
 	border-right: 0 solid #6699CC;
 	border-bottom: 1px solid #6699CC;
-	
 	font-size:14px;
 	color: #000000;
 	font-weight: normal;
@@ -107,91 +106,10 @@ img
 	border-top: 0 solid #6699CC;
 	border-right: 0 solid #6699CC;
 	border-bottom: 1px solid #6699CC;
-	
-
 	background-image: url(../images/DeSelectedTab_1x1.gif);
 	background-repeat: repeat-y;
 	background-position: top right;
 	cursor:hand;
-}
-
-.gridRowStyle {
-    background-color:#FFFFFF;
-     
-    font-size:14px;
-    color: black; 
-    letter-spacing:0; 
-    padding-left:30; 
-    padding-right: 20; 
-    padding-top: 3;
-    padding-bottom: 3;
-    
-}
-
-.gridRowStyle8 {
-    background-color:#FFFFFF;
-    font-size:12px;
-     
-    color: black; 
-    letter-spacing:0; 
-    padding-left:30; 
-    padding-right: 20; 
-    padding-top: 3;
-    padding-bottom: 3;
-    
-}
-
-
-.gridPagerStyle {
-    color:#000000; 
-    background-color:#EEEEEE; 
-    font-size:14px;
-    padding-left:30; 
-    padding-right: 20; 
-    padding-top: 3;
-    padding-bottom: 3;
-}
-
-.gridAlternatingRowStyle {
-     
-    font-size:14px;
-    color: black; 
-    letter-spacing:0; 
-    padding-left:30; 
-    padding-right: 20; 
-    padding-top: 3;
-    padding-bottom: 3;
-    background-color: #CADBED; 
-    border-left: 1px solid #CCDDEF;
-    border-right: 1px solid #CCDDEF;
-}
-
-.gridAlternatingRowStyle8 {
-     
-    font-size:12px;
-    color: black; 
-    letter-spacing:0; 
-    padding-left:30; 
-    padding-right: 20; 
-    padding-top: 3;
-    padding-bottom: 3;
-    background-color: #CADBED; 
-    border-left: 1px solid #CCDDEF;
-    border-right: 1px solid #CCDDEF;
-}
-
-.gridSelectedRowStyle {
-    background-color:#3266cc;
-     
-    font-size:14px;
-    color: white;
-    letter-spacing:0; 
-    padding-left:30; 
-    padding-right: 20; 
-    padding-top: 3;
-    padding-bottom: 3;
-    border-left: 1px solid #CCDDEF;
-    border-right: 1px solid #CCDDEF;
 }
 
 /*
@@ -203,7 +121,6 @@ img
 	background-position: left top;
 }
 
-
 /*
     Hover style.  The left most cell that contains the tab left corner .gif
 */
@@ -214,7 +131,6 @@ img
 	border-right: 0 solid #6699CC;
 	border-bottom: 1px solid #6699CC;
 	border-collapse: separate;
-	
 	background-image: url(../images/DeSelectedTab_1x1.gif);
 	background-repeat: repeat-y;
 	background-position: 0 0;
@@ -230,7 +146,6 @@ img
 	border-top: 1px solid #6699CC;
 	border-right: 0 solid #6699CC;
 	border-bottom: 1px solid #6699CC;
-	
 	font-size:14px;
 	color: #000000;
 	font-weight: normal;
@@ -247,14 +162,11 @@ img
 	border-top: 0 solid #6699CC;
 	border-right: 0 solid #6699CC;
 	border-bottom: 1px solid #6699CC;
-	
-
 	background-image: url(../images/DeSelectedTab_1x1.gif);
 	background-repeat: repeat-y;
 	background-position: top right;
 	cursor:hand;
 }
-
 
 /*
      Selected tab.  The left most cell that contains the tab left corner .gif
@@ -265,11 +177,9 @@ img
 	border-top: 0 solid #6699CC;
 	border-right: 0 solid #6699CC;
 	border-bottom: 0 solid #ffffff;
-	
 	background-image: url(../images/selectedTab_1x1.gif);
 	background-repeat: repeat-y;
 	background-position: top left;
-	
 	cursor:default;
 }
 
@@ -282,7 +192,6 @@ img
 	border-top: 1px solid #6699CC;
 	border-right: 0 solid #6699CC;
 	border-bottom: 0 solid #ffffff;
-	
 	font-size:14px;
 	color: #000000;
 	font-weight: bold;
@@ -299,7 +208,6 @@ img
 	border-top: 0 solid #6699CC;
 	border-right: 0 solid #6699CC;
 	border-bottom: 0 solid #ffffff;
-	
 	background-image: url(../images/selectedTab_1x1.gif);
 	background-repeat: repeat-y;
 	background-position: top right;
@@ -314,38 +222,16 @@ img
 	border-bottom: 1px solid #6699CC;
 }
 
-/*
-*  For
-*/
-
 a.helpHyperLink:hover {
 	color: #ffffff;
-	
 	font-size:14px;
 }
 
 a.helpHyperLink:link {
 	color: #ffffff;
-	
 	font-size:14px;
 }
 a.helpHyperLink:visited {
 	color: #ffffff;
-	
 	font-size:14px;
-}
-
-/*************************************
- *
- * Obsolete, need to be replaced in 
- * pages
- *
- *************************************/
- 
-a.gridSelectedRowStyle:visited {
-    color:white;
-}
-
-a.gridSelectedRowStyle:link {
-    color:white;
 }

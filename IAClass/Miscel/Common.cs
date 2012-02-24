@@ -10,6 +10,9 @@ using System.IO;
 using System.Threading;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Formatters.Soap;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 using log4net;
 
 //namespace IAClass
@@ -389,7 +392,7 @@ using log4net;
 
         public static void ExportExcelFromGridView(System.Web.UI.WebControls.GridView gv)
         {
-            string filename = HttpUtility.UrlEncode("IA" + DateTime.Now.ToString("yyyy-MM-dd-hhmmss") + ".xls", System.Text.Encoding.GetEncoding("utf-8"));
+            string filename = HttpUtility.UrlEncode("IA" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".xls", System.Text.Encoding.GetEncoding("utf-8"));
             HttpContext.Current.Response.Clear();
             HttpContext.Current.Response.Write("<meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">");
             HttpContext.Current.Response.AddHeader("content-disposition", "attachment;filename=" + filename);
@@ -459,7 +462,7 @@ using log4net;
 
             sw.Close();
 
-            string filename = DateTime.Now.ToString("yyyy-MM-dd-hhmmss") + ".csv";
+            string filename = DateTime.Now.ToString("yyyyMMddhhmmss") + ".csv";
             filename = HttpUtility.UrlEncode(filename, System.Text.Encoding.GetEncoding("GB2312"));
 
             HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment; filename=" + filename);
@@ -506,7 +509,6 @@ using log4net;
             //catch { }
             log.Debug(obj);
         }
-
 
         /// <summary>
         /// 若字串中有全角则替换成半角
@@ -584,12 +586,12 @@ using log4net;
         }
 
         /// <summary>
-        /// 序列化一个类的实例
+        /// XML序列化一个类的实例
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string XmlSerializer<T>(T t)
+        public static string XmlSerialize<T>(T t)
         {
             if (t == null)
                 throw new Exception("对象的实例为空，无法序列化！");
@@ -598,9 +600,27 @@ using log4net;
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add(string.Empty, string.Empty);
 
-            StringWriter sw = new StringWriter();
-            serializer.Serialize(sw, t, ns);
-            return sw.ToString();
+            using (StringWriter sw = new StringWriter())
+            {
+                serializer.Serialize(sw, t, ns);
+                return sw.ToString();
+            }
+        }
+
+        /// <summary>
+        /// 反序列化一个XML字符串
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static T XmlDeserialize<T>(string xml)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StringReader sw = new StringReader(xml))
+            {
+                object obj = serializer.Deserialize(sw);
+                return (T)obj;
+            }
         }
 
         public static string SoapSerialize<T>(T t)
@@ -610,9 +630,88 @@ using log4net;
 
             SoapFormatter serializer = new SoapFormatter();
 
-            MemoryStream stream = new MemoryStream();
-            serializer.Serialize(stream, t);
-            return Encoding.UTF8.GetString(stream.ToArray());//Encoding.Default 序列化“证件类型”IdentityType类的时候出现乱码
+            using (MemoryStream stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, t);
+                return Encoding.UTF8.GetString(stream.ToArray());//Encoding.Default 序列化“证件类型”IdentityType类的时候出现乱码
+            }
+        }
+
+        public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            return true;
+        }
+
+        public static string HttpPost(string url, byte[] data)
+        {
+            return HttpPost(url, data, null);
+        }
+
+        public static string HttpPost(string url, byte[] data, X509Certificate2 cert)
+        {
+            string result = "";
+            HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create(url);
+            hwrequest.KeepAlive = true;
+            hwrequest.ContentType = "application/x-www-form-urlencoded";// "text/xml"; 注意类型,否则会失败
+            hwrequest.Method = "POST";
+            hwrequest.ContentLength = data.Length;
+            hwrequest.AllowAutoRedirect = true;
+
+            if (cert != null)
+            {
+                hwrequest.ClientCertificates.Add(cert);
+                hwrequest.CookieContainer = new CookieContainer();
+                if(System.Net.ServicePointManager.ServerCertificateValidationCallback == null)
+                    System.Net.ServicePointManager.ServerCertificateValidationCallback =
+                        new System.Net.Security.RemoteCertificateValidationCallback(ValidateServerCertificate);
+            }
+
+            try
+            {
+                //获取用于请求的数据流
+                using (Stream reqStream = hwrequest.GetRequestStream())
+                {
+                    reqStream.Write(data, 0, data.Length);
+                }
+                //获取回应
+                using (HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse())
+                {
+                    StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
+                    result = sr.ReadToEnd();
+                    sr.Close();
+                }
+
+                return result;
+            }
+            catch
+            {
+                Common.LogIt(hwrequest.RequestUri);
+                throw;
+            }
+        }
+
+        public static string HttpGet(string url)
+        {
+            HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create(url);
+            hwrequest.KeepAlive = true;
+            hwrequest.ContentType = "text/xml";
+            hwrequest.Method = "Get";
+            hwrequest.AllowAutoRedirect = true;
+
+            try
+            {
+                HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse();
+                StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
+                string result = sr.ReadToEnd();
+                res.Close();
+                sr.Close();
+                return result;
+            }
+            catch
+            {
+                Common.LogIt(url);
+                throw;
+            }
         }
     }
 //}

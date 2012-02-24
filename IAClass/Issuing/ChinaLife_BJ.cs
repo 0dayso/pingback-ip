@@ -91,7 +91,7 @@ namespace ChinaLife_BJ
                     result.PolicyNo = ret.policyNo;
             else
             {
-                string request = Common.XmlSerializer<TransportAccidentForSaveRequsetDto>(dto);
+                string request = Common.XmlSerialize<TransportAccidentForSaveRequsetDto>(dto);
                 Common.LogIt("投保参数" + request + System.Environment.NewLine + "北京国寿投保：" + ret.error);
                 result.Trace.ErrorMsg = ret.error;
             }
