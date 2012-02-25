@@ -374,6 +374,7 @@
             // 
             // btnGetCardNo
             // 
+            this.btnGetCardNo.BackColor = System.Drawing.SystemColors.Control;
             this.btnGetCardNo.Enabled = false;
             this.btnGetCardNo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetCardNo.Location = new System.Drawing.Point(430, 34);
@@ -381,7 +382,7 @@
             this.btnGetCardNo.Size = new System.Drawing.Size(25, 21);
             this.btnGetCardNo.TabIndex = 5;
             this.btnGetCardNo.Text = "取";
-            this.btnGetCardNo.UseVisualStyleBackColor = true;
+            this.btnGetCardNo.UseVisualStyleBackColor = false;
             this.btnGetCardNo.Click += new System.EventHandler(this.btnGetCardNo_Click);
             // 
             // lb乘机日

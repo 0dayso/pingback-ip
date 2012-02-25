@@ -328,7 +328,7 @@ namespace IAClass.WebService
                     catch (Exception ee)
                     {
                         isValidIpLocation = false;
-                        ipLocation = ee.Message;
+                        ipLocation = ee.Message.Substring(0, 20);
                     }
 
                     response.AgentName = userLogin.DisplayName;

@@ -369,6 +369,7 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
 
         public static t_Case Get(string caseNo)
         {
+            Common.LogIt(caseNo);
             string strSql = @"
 SELECT a.*, b.displayname
   FROM [t_Case] a with(nolock)
