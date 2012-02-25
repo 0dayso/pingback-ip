@@ -20,14 +20,6 @@ namespace IAMessageQ
 {
     public partial class FormQueue : Form
     {
-        /// <summary>
-        /// 最小重发延迟时间,单位:分钟
-        /// </summary>
-        public int DelayMinutesMin = 30;
-        /// <summary>
-        /// 最大重发次数
-        /// </summary>
-        public int RedeliveryCountMax = 3;
         int countRunningThread;
         bool IsRunning = false;
         //SmartThreadPool stp = new SmartThreadPool();
@@ -159,20 +151,20 @@ namespace IAMessageQ
                         //if (IsRunning)
                         {
                             MessageEntity entity = amqMsg.Body as MessageEntity;
-                            if (entity.RedeliveryCount < this.RedeliveryCountMax)
+                            if (entity.RedeliveryCount < entity.MaxRedelivery)
                             {
                                 //重发,并设置延迟时间,每次重发延迟时间加倍
                                 entity.RedeliveryCount++;
-                                MQClient.EnqueueObject(entity, 60 * 1000 * DelayMinutesMin * entity.RedeliveryCount);
+                                MQClient.EnqueueObject(entity, 60 * 1000 * entity.MinDelayMinutes * entity.RedeliveryCount);
                                 message.Acknowledge();//事务结束
                                 sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                                sb.AppendLine(string.Format(" {0}分钟后重发!", DelayMinutesMin * entity.RedeliveryCount));
+                                sb.AppendLine(string.Format(" {0}分钟后重发!", entity.MinDelayMinutes * entity.RedeliveryCount));
                             }
                             else
                             {
                                 message.Acknowledge();//事务结束
                                 sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                                sb.AppendLine(string.Format(" {0}次重发失败,放弃!", RedeliveryCountMax));
+                                sb.AppendLine(string.Format(" {0}次重发失败,放弃!", entity.MaxRedelivery));
                                 Common.LogIt(sb.ToString());
                             }
                         }
@@ -240,32 +232,6 @@ namespace IAMessageQ
             public int a;
             public string b;
             public bool c;
-        }
-
-        private void FormQueue_Load(object sender, EventArgs e)
-        {
-            IAClass.Entity.PurchaseRequestEntity req = new PurchaseRequestEntity();
-            req.username = "user001";
-            req.password = "pass001";
-            req.InsuranceCode = "pd001";
-            req.customerName = "张山";
-            req.customerID = "352224198201110013";
-            req.customerIDType = IdentityType.身份证;
-            req.customerGender = Gender.Male;
-            req.customerBirth = DateTime.Parse("1982-1-11");
-            req.customerPhone = "13888888888";
-            req.flightDate = DateTime.Parse("2012-3-15");
-            req.flightNo = "HU3213";
-
-            this.txtLogInfo.Text = Common.XmlSerialize<IAClass.Entity.PurchaseRequestEntity>(req);
-            
-            
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            IAClass.Entity.PurchaseRequestEntity a = Common.XmlDeserialize<IAClass.Entity.PurchaseRequestEntity>(txtLogInfo.Text);
-            return;
         }
     }
 }

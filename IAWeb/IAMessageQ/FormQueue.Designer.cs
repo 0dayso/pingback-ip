@@ -35,7 +35,6 @@
             this.txtLogInfo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblCountIdle = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nudThreads)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,22 +115,11 @@
             this.lblCountIdle.TabIndex = 13;
             this.lblCountIdle.Text = "0";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(323, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 14;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // FormQueue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(558, 308);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.lblCountIdle);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnIssueStop);
@@ -143,7 +131,6 @@
             this.Name = "FormQueue";
             this.Text = "FormQueue";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormQueue_FormClosing);
-            this.Load += new System.EventHandler(this.FormQueue_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudThreads)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -159,6 +146,5 @@
         private System.Windows.Forms.TextBox txtLogInfo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblCountIdle;
-        private System.Windows.Forms.Button button1;
     }
 }

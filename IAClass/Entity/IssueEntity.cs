@@ -16,6 +16,14 @@ namespace IAClass.Entity
         /// 消息已被重发的次数
         /// </summary>
         public int RedeliveryCount;
+        /// <summary>
+        /// 消息的最大重发次数,默认5次
+        /// </summary>
+        public int MaxRedelivery = 5;
+        /// <summary>
+        /// 最小重发延迟时间,单位:分钟,默认30分钟
+        /// </summary>
+        public int MinDelayMinutes = 30;
     }
 
     /// <summary>
