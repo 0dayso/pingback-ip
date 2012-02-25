@@ -34,7 +34,7 @@ namespace IAMessageQ
         /// <summary>
         /// 失败后的处理消息实体方法
         /// </summary>
-        Func<object, string> FailureWork;
+        Func<object, TraceEntity, string> FailureWork;
         /// <summary>
         /// 显示消息实体的方法
         /// </summary>
@@ -47,15 +47,19 @@ namespace IAMessageQ
         /// <param name="normalWork">正常处理消息实体的方法</param>
         /// <param name="failureWork">失败后的处理消息实体方法</param>
         /// <param name="messageToString">显示消息实体的方法</param>
-        public FormQueue(string queueName, Func<object, TraceEntity> normalWork, Func<object, string> failureWork, Func<object, string> messageToString)
+        public FormQueue(string queueName, Func<object, TraceEntity> normalWork, Func<object, TraceEntity, string> failureWork, Func<object, string> messageToString)
         {
             InitializeComponent();
 
             this.Text += " - " + AppName;
             this.QueueName = queueName;
             this.NormalWork = normalWork;
-            this.FailureWork = failureWork;
             this.MessageToString = messageToString;
+
+            if (failureWork != null)
+                this.FailureWork = failureWork;
+            else
+                this.FailureWork = defaultFailureWork;
         }
 
         /// <summary>
@@ -143,30 +147,16 @@ namespace IAMessageQ
                     if (string.IsNullOrEmpty(result.ErrorMsg))
                     {
                         message.Acknowledge();//事务结束,出队列确认
-                        sb.Append(" 出单成功！");
+                        sb.Append(" 完成！");
                         sb.AppendLine(result.Detail);//显示保单号
                     }
                     else
                     {
                         //if (IsRunning)
                         {
-                            MessageEntity entity = amqMsg.Body as MessageEntity;
-                            if (entity.RedeliveryCount < entity.MaxRedelivery)
-                            {
-                                //重发,并设置延迟时间,每次重发延迟时间加倍
-                                entity.RedeliveryCount++;
-                                MQClient.EnqueueObject(entity, 60 * 1000 * entity.MinDelayMinutes * entity.RedeliveryCount);
-                                message.Acknowledge();//事务结束
-                                sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                                sb.AppendLine(string.Format(" {0}分钟后重发!", entity.MinDelayMinutes * entity.RedeliveryCount));
-                            }
-                            else
-                            {
-                                message.Acknowledge();//事务结束
-                                sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                                sb.AppendLine(string.Format(" {0}次重发失败,放弃!", entity.MaxRedelivery));
-                                Common.LogIt(sb.ToString());
-                            }
+                            string fail = FailureWork(amqMsg.Body, result);
+                            message.Acknowledge();//事务结束
+                            sb.AppendLine(fail);
                         }
                         //else
                         //{
@@ -203,6 +193,31 @@ namespace IAMessageQ
             { SetRunningThreadCount(false); }
         }
 
+        string defaultFailureWork(object objEntity, TraceEntity result)
+        {
+            StringBuilder sb = new StringBuilder();
+            MessageEntity entity = objEntity as MessageEntity;
+
+            if (entity.RedeliveryCount < entity.MaxRedelivery)
+            {
+                //重发,并设置延迟时间,每次重发延迟时间加倍
+                entity.RedeliveryCount++;
+                MQClient.EnqueueObject(entity, 60 * 1000 * entity.MinDelayMinutes * entity.RedeliveryCount);
+                //message.Acknowledge();//事务结束
+                sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
+                sb.Append(string.Format(" {0}分钟后重发!", entity.MinDelayMinutes * entity.RedeliveryCount));
+            }
+            else
+            {
+                //message.Acknowledge();//事务结束
+                sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
+                sb.Append(string.Format(" {0}次重发失败,放弃!", entity.MaxRedelivery));
+                Common.LogIt(sb.ToString());
+            }
+
+            return sb.ToString();
+        }
+
         private void btnIssueStop_Click(object sender, EventArgs e)
         {
             UpdateControls(false);
@@ -224,14 +239,6 @@ namespace IAMessageQ
         {
             if(MQClient != null)
                 MQClient.Close();
-        }
-
-        [Serializable]
-        public class test
-        {
-            public int a;
-            public string b;
-            public bool c;
         }
     }
 }

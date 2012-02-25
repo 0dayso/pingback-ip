@@ -32,7 +32,7 @@ namespace IAMessageQ
 
         void AddForm(TabPage page, string queueName)
         {
-            FormQueue fm = new FormQueue(queueName, Issue, Issue_Failure, IssueMessageToString);
+            FormQueue fm = new FormQueue(queueName, Issue, null, IssueMessageToString);
             fm.TopLevel = false;
             fm.Dock = DockStyle.Fill;
             page.Controls.Add(fm);
@@ -44,11 +44,6 @@ namespace IAMessageQ
             IssueEntity entity = (IssueEntity)message;
             IssuingResultEntity result = Case.IssueAsync(entity);
             return result.Trace;
-        }
-
-        string Issue_Failure(object message)
-        {
-            return string.Empty;
         }
 
         string IssueMessageToString(object message)
