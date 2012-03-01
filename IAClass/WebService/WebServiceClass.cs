@@ -300,6 +300,7 @@ namespace IAClass.WebService
                         }
                     }
                     string IOC_TypeName = drProduct["IOC_TypeName"].ToString();
+                    object interface_Id = drProduct["interface_Id"];
                     object caseSupplier = drProduct["productSupplier"];
                     int caseDuration = Convert.ToInt32(drProduct["productDuration"]);
                     object productName = drProduct["productName"];
@@ -398,16 +399,18 @@ namespace IAClass.WebService
                                 strSql = @"
 insert into t_Case
 (caseNo,caseOwner,caseSupplier,productID,customerFlightDate,customerFlightNo,customerID,customerName,customerPhone,
-    parentPath,datetime,isPrinted,enabled,caseDuration, ip, IpLocation, reserved, customerGender, customerBirth)
+    parentPath,datetime,isPrinted,enabled,caseDuration, ip, IpLocation, reserved, customerGender, customerBirth, interface_Id)
 output inserted.caseID
-values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}', '{16}', '{17}', '{18}');";
+values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}', '{16}', '{17}', '{18}', '{19}');";
 
                                 string parentPath = userLogin.ParentPath + request.username + "/";//用于判定单证的层级归属
                                 string gender = request.customerGender == Gender.Female ? "女" : "男";
+                                //if (interface_Id == null)//无需判断,空值、空格使用单引号括起插入到int型字段的时候，数据库会自动转成0值
+                                //    interface_Id = 0;
 
                                 strSql = string.Format(strSql, caseNo, request.username, drSerial["caseSupplier"], request.InsuranceCode.Trim(),
                                     request.flightDate, request.flightNo.Trim(), request.customerID.Trim(), request.customerName.Trim(), request.customerPhone.Trim(), parentPath, dtNow.ToString(),
-                                    0, 1, caseDuration, ip, ipLocation, request.PNR, gender, request.customerBirth);
+                                    0, 1, caseDuration, ip, ipLocation, request.PNR, gender, request.customerBirth, interface_Id);
                                 cmm.CommandText = strSql;
                                 int caseId = Convert.ToInt32(cmm.ExecuteScalar());//返回自增列id
                                 //cmm.ExecuteNonQuery();

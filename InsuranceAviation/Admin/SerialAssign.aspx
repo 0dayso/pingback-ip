@@ -92,9 +92,9 @@
                                                     <asp:TemplateField HeaderText="已消耗">
                                                         <ItemTemplate>
                                                             <asp:Panel ID="pnlConsumed" runat="server" CssClass="panelNormal">
-                                                                <asp:Label ID="lblConsumed" runat="server">查询</asp:Label>
+                                                                查询
                                                                 <ajaxToolkit:DynamicPopulateExtender ID="lblConsumed_DynamicPopulateExtender" runat="server"
-                                                                    ContextKey='<%# Eval("username") %>' PopulateTriggerControlID="lblConsumed" ServiceMethod="GetConsumed"
+                                                                    ContextKey='<%# Eval("username") %>' PopulateTriggerControlID="pnlConsumed" ServiceMethod="GetConsumed"
                                                                     TargetControlID="pnlConsumed" UpdatingCssClass="panelUpdating">
                                                                 </ajaxToolkit:DynamicPopulateExtender>
                                                             </asp:Panel>
@@ -103,9 +103,9 @@
                                                     <asp:TemplateField HeaderText="作废">
                                                         <ItemTemplate>
                                                             <asp:Panel ID="pnlDiscarded" runat="server" CssClass="panelNormal">
-                                                                <asp:Label ID="lblDiscarded" runat="server">查询</asp:Label>
+                                                                查询
                                                                 <ajaxToolkit:DynamicPopulateExtender ID="lblDiscarded_DynamicPopulateExtender" runat="server"
-                                                                    ContextKey='<%# Eval("username") %>' PopulateTriggerControlID="lblDiscarded" ServiceMethod="GetDiscarded"
+                                                                    ContextKey='<%# Eval("username") %>' PopulateTriggerControlID="pnlDiscarded" ServiceMethod="GetDiscarded"
                                                                     TargetControlID="pnlDiscarded" UpdatingCssClass="panelUpdating">
                                                                 </ajaxToolkit:DynamicPopulateExtender>
                                                             </asp:Panel>

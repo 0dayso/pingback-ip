@@ -15,6 +15,11 @@ public partial class Admin_Statistics : System.Web.UI.Page
     {
         if (!UserClass.IsAdmin(User.Identity.Name))
             Response.End();
+
+        if (!IsPostBack)
+        {
+            txtDateStart.Text = txtDateEnd.Text = DateTime.Today.ToShortDateString();
+        }
     }
     protected void btnCount_Click(object sender, EventArgs e)
     {
@@ -23,23 +28,5 @@ public partial class Admin_Statistics : System.Web.UI.Page
     protected void btnHot_Click(object sender, EventArgs e)
     {
         this.gvHot.DataSourceID = "sdsHot";
-    }
-    protected void btnExport_Click(object sender, EventArgs e)
-    {
-        this.gvCount.PageSize = 999;
-        this.gvCount.DataBind();
-        Common.ExportExcelFromGridView(this.gvCount);
-    }
-    public override void VerifyRenderingInServerForm(Control control)
-    {
-        // Confirms that an HtmlForm control is rendered for
-    }
-    protected void gvCount_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        if (e.Row.RowType == DataControlRowType.DataRow)
-        {
-            e.Row.Cells[0].Attributes.Add("style", "vnd.ms-excel.numberformat: @");// 文本格式
-            e.Row.Cells[4].Attributes.Add("style", "vnd.ms-excel.numberformat: @");// 文本格式
-        }
     }
 }

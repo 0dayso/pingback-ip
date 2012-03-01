@@ -60,7 +60,7 @@ namespace EagleForms.Printer
         private void FrmInsuranceList_Load(object sender, EventArgs e)
         {
             this.dataGridView1.AutoGenerateColumns = false;
-            this.dtpStartDate.Value = DateTime.Today.AddDays(-2);
+            this.dtpStartDate.Value = DateTime.Today.AddDays(-6);
             this.dtpEndDate.Value = DateTime.Today;
         }
 

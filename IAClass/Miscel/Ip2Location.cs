@@ -46,11 +46,6 @@ namespace Ip2Location
             SetDbFilePath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "QQWry.Dat"));
         }
 
-        ~Ip2Location()
-        {
-            this.Dispose();
-        }
-
         //使用二分法查找索引区，初始化查找区间
         private void Initialize()
         {
@@ -61,14 +56,14 @@ namespace Ip2Location
         //关闭文件
         public void Dispose()
         {
+            IsIpDatabaseInitialized = false;
+
             if (MemStream != null)
             {
                 MemStream.Close();
                 MemStream = null;
             }
-
         }
-
 
         private static void SetDbFilePath(string dbFilePath)
         {

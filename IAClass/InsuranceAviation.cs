@@ -18,6 +18,8 @@
 
         public static @__a.t_Feedback_Columns t_Feedback = new @__a.t_Feedback_Columns();
 
+        public static @__a.t_Interface_Columns t_Interface = new @__a.t_Interface_Columns();
+
         public static @__a.t_Log_Columns t_Log = new @__a.t_Log_Columns();
 
         public static @__a.t_Payment_Columns t_Payment = new @__a.t_Payment_Columns();
@@ -93,6 +95,8 @@ namespace @__a
         private static NBearLite.QueryColumn _IpLocation = new NBearLite.QueryColumn((___TABLE_NAME + ".IpLocation"), System.Data.DbType.AnsiString);
 
         private static NBearLite.QueryColumn _CertNo = new NBearLite.QueryColumn((___TABLE_NAME + ".CertNo"), System.Data.DbType.AnsiString);
+
+        private static NBearLite.QueryColumn _interface_Id = new NBearLite.QueryColumn((___TABLE_NAME + ".interface_Id"), System.Data.DbType.Int16);
 
         private static NBearLite.QueryColumn _IssuingFailed = new NBearLite.QueryColumn((___TABLE_NAME + ".IssuingFailed"), System.Data.DbType.AnsiString);
 
@@ -468,6 +472,21 @@ namespace @__a
                 else
                 {
                     return new NBearLite.QueryColumn((this.___aliasName + ".CertNo"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn interface_Id
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _interface_Id;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".interface_Id"), System.Data.DbType.Int16);
                 }
             }
         }
@@ -950,6 +969,85 @@ namespace @__a
         }
     }
 
+    public class t_Interface_Columns : NBearLite.IQueryTable
+    {
+
+        private const string ___TABLE_NAME = "t_Interface";
+
+        private string ___aliasName;
+
+        private static NBearLite.QueryColumn _Id = new NBearLite.QueryColumn((___TABLE_NAME + ".Id"), System.Data.DbType.Int16);
+
+        private static NBearLite.QueryColumn _IOC_TypeName = new NBearLite.QueryColumn((___TABLE_NAME + ".IOC_TypeName"), System.Data.DbType.AnsiString);
+
+        private static NBearLite.QueryColumn _Description = new NBearLite.QueryColumn((___TABLE_NAME + ".Description"), System.Data.DbType.AnsiString);
+
+        public t_Interface_Columns(string aliasName)
+        {
+            this.___aliasName = aliasName;
+        }
+
+        public t_Interface_Columns()
+        {
+            this.___aliasName = ___TABLE_NAME;
+        }
+
+        public NBearLite.QueryColumn Id
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _Id;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".Id"), System.Data.DbType.Int16);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn IOC_TypeName
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _IOC_TypeName;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".IOC_TypeName"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn Description
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _Description;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".Description"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
+        public string ___GetTableName()
+        {
+            return ___TABLE_NAME;
+        }
+
+        public @__a.t_Interface_Columns @__Alias(string aliasName)
+        {
+            return new @__a.t_Interface_Columns(aliasName);
+        }
+    }
+
     public class t_Log_Columns : NBearLite.IQueryTable
     {
 
@@ -1108,6 +1206,8 @@ namespace @__a
 
         private static NBearLite.QueryColumn _gateway = new NBearLite.QueryColumn((___TABLE_NAME + ".gateway"), System.Data.DbType.AnsiString);
 
+        private static NBearLite.QueryColumn _website = new NBearLite.QueryColumn((___TABLE_NAME + ".website"), System.Data.DbType.AnsiString);
+
         private static NBearLite.QueryColumn _amount = new NBearLite.QueryColumn((___TABLE_NAME + ".amount"), System.Data.DbType.Decimal);
 
         private static NBearLite.QueryColumn _payer = new NBearLite.QueryColumn((___TABLE_NAME + ".payer"), System.Data.DbType.AnsiString);
@@ -1160,6 +1260,21 @@ namespace @__a
                 else
                 {
                     return new NBearLite.QueryColumn((this.___aliasName + ".gateway"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn website
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _website;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".website"), System.Data.DbType.AnsiString);
                 }
             }
         }
@@ -1326,7 +1441,7 @@ namespace @__a
 
         private static NBearLite.QueryColumn _IsIssuingRequired = new NBearLite.QueryColumn((___TABLE_NAME + ".IsIssuingRequired"), System.Data.DbType.Boolean);
 
-        private static NBearLite.QueryColumn _IOC_TypeName = new NBearLite.QueryColumn((___TABLE_NAME + ".IOC_TypeName"), System.Data.DbType.AnsiString);
+        private static NBearLite.QueryColumn _Interface_Id = new NBearLite.QueryColumn((___TABLE_NAME + ".Interface_Id"), System.Data.DbType.Int16);
 
         private static NBearLite.QueryColumn _IsIssuingLazyEnabled = new NBearLite.QueryColumn((___TABLE_NAME + ".IsIssuingLazyEnabled"), System.Data.DbType.Boolean);
 
@@ -1524,17 +1639,17 @@ namespace @__a
             }
         }
 
-        public NBearLite.QueryColumn IOC_TypeName
+        public NBearLite.QueryColumn Interface_Id
         {
             get
             {
                 if ((this.___aliasName == ___TABLE_NAME))
                 {
-                    return _IOC_TypeName;
+                    return _Interface_Id;
                 }
                 else
                 {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".IOC_TypeName"), System.Data.DbType.AnsiString);
+                    return new NBearLite.QueryColumn((this.___aliasName + ".Interface_Id"), System.Data.DbType.Int16);
                 }
             }
         }

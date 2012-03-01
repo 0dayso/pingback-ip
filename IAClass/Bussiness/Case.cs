@@ -134,14 +134,83 @@ using IAClass.Issuing;
                 new object[] { caseNo });
         }
 
-        public static object TopEveryday(DateTime date, string productId)
+        /// <summary>
+        /// Flash图表:用户每日出单总量
+        /// </summary>
+        /// <param name="dateStart"></param>
+        /// <param name="username">用户名</param>
+        /// <returns></returns>
+        public static string FlashCountEveryday(string dateStart, string username)
+        {
+            StringBuilder xmlData = new StringBuilder();
+            xmlData.Append("<chart caption='每日出单总量' showAboutMenuItem='0' showValues='1' labelDisplay='Stagger' formatNumberScale='0' showBorder='0' outCnvBaseFontSize='12'>");
+
+            DateTime dtToday = DateTime.Today;
+            const int len = 7;
+
+            if (dateStart != string.Empty)
+            {
+                dtToday = DateTime.Parse(dateStart);
+            }
+
+            for (int i = 0; i < len; i++)
+            {
+                DateTime dt = dtToday.AddDays(1 - len + i);
+                string strDate = dt.ToString("M月d日");
+                string strValue = Case.CountEnabledIncludingChild(username, dt).ToString();
+
+                xmlData.AppendFormat("<set label='{0}' value='{1}' />", strDate, strValue);
+            }
+
+            xmlData.Append(@"<styles><definition><style type='font' name='myToolTipFont' size='12' /></definition><application><apply toObject='ToolTip' styles='myToolTipFont' /></application></styles>");
+            xmlData.Append("</chart>");
+
+            return InfoSoftGlobal.FusionCharts.RenderChartHTML("../images/Column3D.swf", "", xmlData.ToString(), "myNext", "400", "200", false, true);
+        }
+
+        /// <summary>
+        /// Flash图表:产品每日出单总量
+        /// </summary>
+        /// <param name="dateStart"></param>
+        /// <param name="productId">产品编号</param>
+        /// <returns></returns>
+        public static string FlashCountEveryday(string dateStart, int productId)
+        {
+            StringBuilder xmlData = new StringBuilder();
+            xmlData.Append("<chart caption='每日出单总量' showAboutMenuItem='0' showValues='1' labelDisplay='Stagger' formatNumberScale='0' showBorder='0' outCnvBaseFontSize='12' >");
+
+            DateTime dtToday = DateTime.Today;
+            const int len = 7;
+
+            if (dateStart != string.Empty)
+            {
+                dtToday = DateTime.Parse(dateStart);
+            }
+
+            for (int i = 0; i < len; i++)
+            {
+                DateTime dt = dtToday.AddDays(1 - len + i);
+                string strDate = dt.ToString("M月d日");
+                object strValue;
+                strValue = Case.CountEveryday(dt, productId);
+
+                xmlData.AppendFormat("<set label='{0}' value='{1}' />", strDate, strValue);
+            }
+
+            xmlData.Append(@"<styles><definition><style type='font' name='myToolTipFont' size='12' /></definition><application><apply toObject='ToolTip' styles='myToolTipFont' /></application></styles>");
+            xmlData.Append("</chart>");
+            //2011.9.21 为配合ajax，改RenderCharT为RenderCharTHTML
+            return InfoSoftGlobal.FusionCharts.RenderChartHTML("../images/Column3D.swf", "", xmlData.ToString(), "TopEveryday", "400", "200", false, true);
+        }
+
+        public static object CountEveryday(DateTime date, int productId)
         {
             string strSql = @"
 select COUNT(caseNo) from t_Case with(nolock)
 where datetime between '{0}' and '{1}'
 and enabled = 1";
 
-            if (productId == "0")//所有产品
+            if (productId == 0)//所有产品
                 strSql = string.Format(strSql, date, date.AddDays(1).AddSeconds(-1));
             else
             {
@@ -152,7 +221,40 @@ and enabled = 1";
             return SqlHelper.ExecuteScalar(Common.ConnectionString, CommandType.Text, strSql);
         }
 
-        public static DataSet TopToday(string dateStart, string dateEnd, string productId)
+        /// <summary>
+        /// Flash图表:出单量排名
+        /// </summary>
+        /// <param name="dateStart"></param>
+        /// <param name="dateEnd"></param>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public static string FlashTopRange(string dateStart, string dateEnd, int productId)
+        {
+            StringBuilder xmlData = new StringBuilder();
+            xmlData.Append("<chart caption='每日出单排名' showAboutMenuItem='0' showValues='1' formatNumberScale='0' showBorder='0' outCnvBaseFontSize='12' >");
+
+            DataSet ds = Case.TopRange(dateStart, dateEnd, productId);
+
+            xmlData.Append("<categories>");
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                xmlData.AppendFormat("<category label='{0}' />", dr[0]);
+            }
+            xmlData.Append("</categories>");
+
+            xmlData.Append("<dataset showValues='1'>");
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                xmlData.AppendFormat("<set value='{0}' />", dr[1]);
+            }
+            xmlData.Append("</dataset>");
+
+            xmlData.Append(@"<styles><definition><style type='font' name='myToolTipFont' size='12' /></definition><application><apply toObject='ToolTip' styles='myToolTipFont' /></application></styles>");
+            xmlData.Append("</chart>");
+            return InfoSoftGlobal.FusionCharts.RenderChartHTML("../images/MSBar3D.swf", "", xmlData.ToString(), "TopToday", "400", "200", false, true);
+        }
+
+        public static DataSet TopRange(string dateStart, string dateEnd, int productId)
         {
             string strSql = @"
 SELECT     TOP 5 b.displayname, COUNT(a.datetime) AS count
@@ -162,7 +264,7 @@ WHERE     (a.enabled = 1) and (a.datetime between @date1 and @date2) {0}
 GROUP BY b.displayname
 ORDER BY count DESC";
 
-            if (productId == "0")
+            if (productId == 0)
                 strSql = string.Format(strSql, string.Empty);
             else
                 strSql = string.Format(strSql, " and a.productID = '" + productId + "'");
@@ -249,9 +351,10 @@ and enabled = 1";
 
             string strSql = @"
 SELECT caseID, caseNo, customerFlightDate, CertNo,
-		b.IsIssuingRequired, IOC_TypeName, WithdrawRatio, caseOwner, ParentPath
-  FROM [t_Case] a with(nolock) inner join t_Product b
-  on a.productID = b.productID
+		b.IsIssuingRequired, c.IOC_TypeName, WithdrawRatio, caseOwner, ParentPath
+  FROM [t_Case] a with(nolock)
+  INNER JOIN t_Product b on a.productID = b.productID
+  LEFT JOIN t_Interface c on a.interface_id = c.id
   where {0} = '{1}'";
             strSql = string.Format(strSql, "caseNo", serialNo);
             DataSet ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
@@ -369,7 +472,6 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
 
         public static t_Case Get(string caseNo)
         {
-            Common.LogIt(caseNo);
             string strSql = @"
 SELECT a.*, b.displayname
   FROM [t_Case] a with(nolock)

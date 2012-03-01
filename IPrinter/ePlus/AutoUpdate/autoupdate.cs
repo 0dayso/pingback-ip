@@ -48,6 +48,8 @@ namespace ePlus
                 if (File.Exists(file))
                     Directory.Move(file, fileBak);
                 Directory.Move(fileTemp, file);
+                try { File.Delete(fileBak); }
+                catch { }
             }
             catch (Exception ee)
             {

@@ -24,7 +24,7 @@ namespace IAClass
                 IssueEntity entity = (IssueEntity)r;
 
                 entity.ProductId = 6;// int.Parse(request.InsuranceCode);
-                entity.IOC_TypeName = "JinHang";
+                entity.IOC_TypeName = "test";
 
                 IAClass.Issuing.IssuingFacade facade = new Issuing.IssuingFacade();
                 IssuingResultEntity result = facade.Issue(entity);

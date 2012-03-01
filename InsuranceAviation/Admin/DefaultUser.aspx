@@ -27,13 +27,15 @@
         }
     </style>
     <link href="../Css/Styles.css" type="text/css" rel="stylesheet" />
-    <script language="javascript" src="../Script/Cal.aspx" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="../css/jscal2.css" />
+    <script type="text/javascript" src="../script/jscal2.js"></script>
+    <script type="text/javascript" src="../script/cn.js"></script>
     <script type="text/javascript" src="../Script/jquery.min.js"></script>
     <script type="text/javascript" src="../Script/jquery.timeago.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             timeAgo();
-            PageMethods.TopEveryday($get("txtDateStart").value, callbackTop1);
+            $.get("ajax.aspx", { func: "FlashCountEveryday", dateStart: $get("txtDateStart").value }, callbackTop1);
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(timeAgo);
         });
 
@@ -66,7 +68,7 @@
                             <asp:Parameter Name="caseOwner" Type="String" />
                         </SelectParameters>
                     </asp:SqlDataSource>
-                    <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePageMethods="true">
+                    <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
                     </ajaxToolkit:ToolkitScriptManager>
                 </td>
             </tr>
@@ -188,9 +190,9 @@
                                             </td>
                                             <td>
                                                 <asp:Panel ID="pnlConsumed" runat="server" CssClass="panelNormal" Style="float: left">
-                                                    <asp:Label ID="lblConsumed" runat="server">查询</asp:Label>
+                                                    查询
                                                     <ajaxToolkit:DynamicPopulateExtender ID="lblConsumed_DynamicPopulateExtender" runat="server"
-                                                        PopulateTriggerControlID="lblConsumed" ServiceMethod="GetConsumed" TargetControlID="pnlConsumed"
+                                                        PopulateTriggerControlID="pnlConsumed" ServiceMethod="GetConsumed" TargetControlID="pnlConsumed"
                                                         UpdatingCssClass="panelUpdating">
                                                     </ajaxToolkit:DynamicPopulateExtender>
                                                 </asp:Panel>
@@ -202,9 +204,9 @@
                                             </td>
                                             <td>
                                                 <asp:Panel ID="pnlDiscarded" runat="server" CssClass="panelNormal" Style="float: left">
-                                                    <asp:Label ID="lblDiscarded" runat="server">查询</asp:Label>
+                                                    查询
                                                     <ajaxToolkit:DynamicPopulateExtender ID="lblDiscarded_DynamicPopulateExtender" runat="server"
-                                                        PopulateTriggerControlID="lblDiscarded" ServiceMethod="GetDiscarded" TargetControlID="pnlDiscarded"
+                                                        PopulateTriggerControlID="pnlDiscarded" ServiceMethod="GetDiscarded" TargetControlID="pnlDiscarded"
                                                         UpdatingCssClass="panelUpdating">
                                                     </ajaxToolkit:DynamicPopulateExtender>
                                                 </asp:Panel>
@@ -219,12 +221,24 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                开始日期：<asp:TextBox ID="txtDateStart" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
+                                                开始日期：<asp:TextBox ID="txtDateStart" runat="server" Width="80px"></asp:TextBox>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                截止日期：<asp:TextBox ID="txtDateEnd" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
+                                                截止日期：<asp:TextBox ID="txtDateEnd" runat="server" Width="80px"></asp:TextBox>
+                                                <script type="text/javascript">
+                                                    Calendar.setup({
+                                                        trigger: "txtDateStart",
+                                                        inputField: "txtDateStart",
+                                                        onSelect: function () { this.hide() }
+                                                    });
+                                                    Calendar.setup({
+                                                        trigger: "txtDateEnd",
+                                                        inputField: "txtDateEnd",
+                                                        onSelect: function () { this.hide() }
+                                                    });
+                                                        </script>
                                             </td>
                                         </tr>
                                         <tr>

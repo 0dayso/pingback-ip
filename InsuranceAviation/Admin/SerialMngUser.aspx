@@ -5,8 +5,9 @@
 <head>
     <title>:::商务会员:::</title>
     <link href="../Css/Styles.css" type="text/css" rel="stylesheet">
-    <script language="javascript" src="../Script/Cal.aspx" type="text/javascript"></script>
-</head>
+    <link rel="stylesheet" type="text/css" href="../css/jscal2.css" />
+    <script type="text/javascript" src="../script/jscal2.js"></script>
+    <script type="text/javascript" src="../script/cn.js"></script></head>
 <body leftmargin="0" topmargin="0">
     <form id="form1" runat="server">
     <table cellspacing="0" cellpadding="0" width="100%" align="left" border="0">
@@ -62,8 +63,20 @@
                                                             日期范围：
                                                         </td>
                                                         <td>
-                                                            <asp:TextBox ID="txtDateStart" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
-                                                            &nbsp;－ <asp:TextBox ID="txtDateEnd" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
+                                                            <asp:TextBox ID="txtDateStart" runat="server" Width="80px"></asp:TextBox>
+                                                            &nbsp;－ <asp:TextBox ID="txtDateEnd" runat="server" Width="80px"></asp:TextBox>
+                                                            <script type="text/javascript">
+                                                                Calendar.setup({
+                                                                    trigger: "txtDateStart",
+                                                                    inputField: "txtDateStart",
+                                                                    onSelect: function () { this.hide() }
+                                                                });
+                                                                Calendar.setup({
+                                                                    trigger: "txtDateEnd",
+                                                                    inputField: "txtDateEnd",
+                                                                    onSelect: function () { this.hide() }
+                                                                });
+                                                        </script>
                                                         </td>
                                                         &nbsp;
                                                         <td>

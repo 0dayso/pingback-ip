@@ -11,8 +11,13 @@ using System.Web;
 
 namespace JinHang
 {
-    class Issuing : IAClass.Issuing.IIssuing
+    public abstract class IssuingAll : IAClass.Issuing.IIssuing
     {
+        public abstract string merchantID { get; }
+        public abstract string merchantPass { get; }
+        public abstract string productId { get; }
+        public abstract string userName { get; }
+
         public TraceEntity Validate(IssueEntity entity)
         {
             return new TraceEntity();
@@ -57,10 +62,11 @@ namespace JinHang
                 + paraNew.SelectSingleNode("effDate").InnerText
                 + paraNew.SelectSingleNode("phId").InnerText
                 + paraNew.SelectSingleNode("phId").InnerText;
-            paraNew.SelectSingleNode("Signature").InnerText = EncryptStringByAES(sig, "poolwin");
-
+            paraNew.SelectSingleNode("Signature").InnerText = EncryptStringByAES(sig, merchantPass);
+            paraNew.SelectSingleNode("productId").InnerText = productId;
             para.ParentNode.AppendChild(paraNew);
             para.ParentNode.RemoveChild(para);
+            policy.SelectSingleNode("message/merchantID").InnerText = merchantID;
 
             string ret = "";
             //try
@@ -113,10 +119,10 @@ namespace JinHang
             return result;
         }
 
-        static string GetResponse(string postValue)
+        public string GetResponse(string postValue)
         {
             string result = "";
-            postValue = "userName=renwox&method=0&xml=" + System.Web.HttpUtility.UrlEncode(postValue);//浏览器的话会自动对xml字符串进行UrlEncode,故要模拟
+            postValue = "userName=" + userName + "&method=0&xml=" + System.Web.HttpUtility.UrlEncode(postValue);//浏览器的话会自动对xml字符串进行UrlEncode,故要模拟
             byte[] data = Encoding.UTF8.GetBytes(postValue);
             result = Common.HttpPost("http://www.poolwin.com/AnLianWeb/test.do", data);
             return result;
@@ -193,6 +199,52 @@ namespace JinHang
             return Convert.ToBase64String(cipherBytes);
         }
 
+    }
+
+    public class Issuing : IssuingAll
+    {
+        public override string merchantID
+        {
+            get { return "jinhang"; }
+        }
+
+        public override string merchantPass
+        {
+            get { return "poolwin"; }
+        }
+
+        public override string productId
+        {
+            get { return "ASXY_6"; }
+        }
+
+        public override string userName
+        {
+            get { return "renwox"; }
+        }
+    }
+
+    public class Issuing_v2 : IssuingAll
+    {
+        public override string merchantID
+        {
+            get { return "renwoxing"; }
+        }
+
+        public override string merchantPass
+        {
+            get { return "888888"; }
+        }
+
+        public override string productId
+        {
+            get { return "ASXY_5"; }
+        }
+
+        public override string userName
+        {
+            get { return "ququ"; }
+        }
     }
 
     class XMLString

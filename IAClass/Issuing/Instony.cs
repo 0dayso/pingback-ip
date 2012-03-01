@@ -7,10 +7,13 @@ using System.Xml;
 
 namespace Instony
 {
-    class Issuing : IAClass.Issuing.IIssuing
+    public abstract class IssuingALL : IAClass.Issuing.IIssuing
     {
         static InstonyService ws = new InstonyService();
-        static string key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing"];
+        public abstract string key
+        {
+            get;
+        }
 
         public TraceEntity Validate(IssueEntity entity)
         {
@@ -131,18 +134,49 @@ namespace Instony
         }
     }
 
+    public class Issuing : IssuingALL
+    {
+        static string _key;
+        public override string key
+        { 
+            get { 
+                if(string.IsNullOrEmpty(_key))
+                    _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing"];
+                return _key;
+            }
+        }
+    }
+
+    public class Issuing7 : IssuingALL
+    {
+        static string _key;
+        public override string key
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_key))
+                    _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing7"];
+                return _key;
+            }
+        }
+    }
+
     class IssuingXML
     {
+        private static object mutex = new object();
         static XmlDocument issuing;
 
         static public XmlDocument Issuing
         {
             get
             {
-                if (issuing == null)
+                lock (mutex)
                 {
-                    issuing = new XmlDocument();
-                    issuing.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/Instony/CreatePolicy.xml"));
+                    if (issuing == null)
+                    {
+                        issuing = new XmlDocument();
+                        issuing.Load(System.IO.Path.Combine(Common.BaseDirectory, "App_Data/Instony/CreatePolicy.xml"));
+                    }
                 }
 
                 return issuing;

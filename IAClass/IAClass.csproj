@@ -95,6 +95,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -105,6 +106,7 @@
     <Compile Include="Alipay\AlipayService.cs" />
     <Compile Include="Alipay\AlipaySubmit.cs" />
     <Compile Include="Bussiness\Case.cs" />
+    <Compile Include="Bussiness\InterfaceStat.cs" />
     <Compile Include="Bussiness\Payment.cs" />
     <Compile Include="Bussiness\Product.cs" />
     <Compile Include="Bussiness\Serial.cs" />

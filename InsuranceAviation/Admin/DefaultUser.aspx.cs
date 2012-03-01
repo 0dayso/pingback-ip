@@ -32,38 +32,6 @@ public partial class DefaultUser : NBear.Web.UI.Page
         }
     }
 
-    /// <summary>
-    /// 每天提交量
-    /// </summary>
-    [System.Web.Services.WebMethod]
-    public static string TopEveryday(string dateStart)
-    {
-        StringBuilder xmlData = new StringBuilder();
-        xmlData.Append("<chart caption='每日出单总量' showAboutMenuItem='0' showValues='1' labelDisplay='Stagger' formatNumberScale='0' showBorder='0' outCnvBaseFontSize='12'>");
-
-        DateTime dtToday = DateTime.Today;
-        const int len = 7;
-
-        if (dateStart != string.Empty)
-        {
-            dtToday = DateTime.Parse(dateStart);
-        }
-
-        for (int i = 0; i < len; i++)
-        {
-            DateTime dt = dtToday.AddDays(1 - len + i);
-            string strDate = dt.ToString("M月d日");
-            string strValue = Case.CountEnabledIncludingChild(HttpContext.Current.User.Identity.Name, dt).ToString();
-
-            xmlData.AppendFormat("<set label='{0}' value='{1}' />", strDate, strValue);
-        }
-
-        xmlData.Append(@"<styles><definition><style type='font' name='myToolTipFont' size='12' /></definition><application><apply toObject='ToolTip' styles='myToolTipFont' /></application></styles>");
-        xmlData.Append("</chart>");
-
-        return FusionCharts.RenderChartHTML("../images/Column3D.swf", "", xmlData.ToString(), "myNext", "400", "200", false, true);
-    }
-
     public System.Drawing.Color DiscardedColor(object enabled)
     {
         bool isEnabled = Convert.ToBoolean(enabled);

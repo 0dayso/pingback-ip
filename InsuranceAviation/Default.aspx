@@ -14,7 +14,7 @@
             showCloseButton: false,
             _transition: true
     });
-    $('.nyroModal').click()
+//    $('.nyroModal').click()
 });
 </script>
     <style type="text/css">

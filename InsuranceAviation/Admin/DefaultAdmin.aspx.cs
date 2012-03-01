@@ -11,8 +11,6 @@ using System.Web.UI.HtmlControls;
 using System.IO;
 using System.Data.SqlClient;
 using System.Text;
-using InfoSoftGlobal;
-
 
 public partial class DefaultAdmin : NBear.Web.UI.Page
 {
@@ -43,69 +41,6 @@ public partial class DefaultAdmin : NBear.Web.UI.Page
             this.lblCount.Text = count;
             this.lblBalance.Text = balance;
         }
-    }
-
-    /// <summary>
-    /// 每天出单总量
-    /// </summary>
-    [System.Web.Services.WebMethod]
-    public static string TopEveryday(string dateStart, string productId)
-    {
-        StringBuilder xmlData = new StringBuilder();
-        xmlData.Append("<chart caption='每日出单总量' showAboutMenuItem='0' showValues='1' labelDisplay='Stagger' formatNumberScale='0' showBorder='0' outCnvBaseFontSize='12' >");
-
-        DateTime dtToday = DateTime.Today;
-        const int len = 7;
-
-        if (dateStart != string.Empty)
-        {
-            dtToday = DateTime.Parse(dateStart);
-        }
-
-        for (int i = 0; i < len; i++)
-        {
-            DateTime dt = dtToday.AddDays(1 - len + i);
-            string strDate = dt.ToString("M月d日");
-            object strValue;
-            strValue = Case.TopEveryday(dt, productId);
-
-            xmlData.AppendFormat("<set label='{0}' value='{1}' />", strDate, strValue);
-        }
-
-        xmlData.Append(@"<styles><definition><style type='font' name='myToolTipFont' size='12' /></definition><application><apply toObject='ToolTip' styles='myToolTipFont' /></application></styles>");
-        xmlData.Append("</chart>");
-        //2011.9.21 为配合ajax，改RenderCharT为RenderCharTHTML
-        return FusionCharts.RenderChartHTML("../images/Column3D.swf", "", xmlData.ToString(), "TopEveryday", "400", "200", false, true);
-    }
-
-    /// <summary>
-    /// 每日排名
-    /// </summary>
-    [System.Web.Services.WebMethod]
-    public static string TopToday(string dateStart, string dateEnd, string productId)
-    {
-        StringBuilder xmlData = new StringBuilder();
-        xmlData.Append("<chart caption='每日出单量排名' showAboutMenuItem='0' showValues='1' formatNumberScale='0' showBorder='0' outCnvBaseFontSize='12' >");
-
-        DataSet ds = Case.TopToday(dateStart, dateEnd, productId);
-
-        xmlData.Append("<categories>");
-        foreach (DataRow dr in ds.Tables[0].Rows)
-        {
-            xmlData.AppendFormat("<category label='{0}' />", dr[0]);
-        }
-        xmlData.Append("</categories>");
-
-        xmlData.Append("<dataset showValues='1'>");
-        foreach (DataRow dr in ds.Tables[0].Rows)
-        {
-            xmlData.AppendFormat("<set value='{0}' />", dr[1]);
-        }
-        xmlData.Append("</dataset>");
-
-        xmlData.Append(@"<styles><definition><style type='font' name='myToolTipFont' size='12' /></definition><application><apply toObject='ToolTip' styles='myToolTipFont' /></application></styles>");
-        xmlData.Append("</chart>");
-        return FusionCharts.RenderChartHTML("../images/MSBar3D.swf", "", xmlData.ToString(), "TopToday", "400", "200", false, true);
     }
 
     public System.Drawing.Color DiscardedColor(object enabled)

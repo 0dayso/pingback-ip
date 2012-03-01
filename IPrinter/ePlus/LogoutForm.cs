@@ -61,6 +61,12 @@ namespace ePlus
                 {
                     System.IO.File.Delete(file);
                 }
+
+                files = System.IO.Directory.GetFiles(".", "*.bak");
+                foreach (string file in files)
+                {
+                    System.IO.File.Delete(file);
+                }
             }
             catch (Exception ee)
             {

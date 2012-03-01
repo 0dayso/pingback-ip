@@ -15,14 +15,15 @@
         {
             background-image: url("../images/spinner00.gif");
             background-repeat: no-repeat;
-            width: 16px;
-            height: 16px;
+            width: 32px;
+            height: 32px;
         }
     </style>
     <link href="../Css/Styles.css" type="text/css" rel="stylesheet">
 
-    <script language="javascript" src="../Script/Cal.aspx" type="text/javascript"></script>
-
+    <link rel="stylesheet" type="text/css" href="../css/jscal2.css" />
+    <script type="text/javascript" src="../script/jscal2.js"></script>
+    <script type="text/javascript" src="../script/cn.js"></script>
     <script language="Javascript" src="../Script/FusionCharts.js"></script>
     
     <script type="text/javascript" src="../Script/jquery.min.js"></script>
@@ -153,7 +154,7 @@
                                     <asp:Panel ID="pnlConsumed" runat="server" CssClass="panelNormal">
                                         <asp:Image ID="imgConsumed" runat="server" ImageUrl="~/images/info.gif" />
                                         <ajaxToolkit:DynamicPopulateExtender ID="lblConsumed_DynamicPopulateExtender" runat="server"
-                                            PopulateTriggerControlID="imgConsumed" ServiceMethod="GetConsumed"
+                                            PopulateTriggerControlID="pnlConsumed" ServiceMethod="GetConsumed"
                                             TargetControlID="pnlConsumed" UpdatingCssClass="panelUpdating">
                                         </ajaxToolkit:DynamicPopulateExtender>
                                     </asp:Panel>
@@ -166,12 +167,24 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                开始日期：<asp:TextBox ID="txtDateStart" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
+                                                开始日期：<asp:TextBox ID="txtDateStart" runat="server" Width="80px"></asp:TextBox>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                截止日期：<asp:TextBox ID="txtDateEnd" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
+                                                截止日期：<asp:TextBox ID="txtDateEnd" runat="server" Width="80px"></asp:TextBox>
+                                                <script type="text/javascript">
+                                                    Calendar.setup({
+                                                        trigger: "txtDateStart",
+                                                        inputField: "txtDateStart",
+                                                        onSelect: function () { this.hide() }
+                                                    });
+                                                    Calendar.setup({
+                                                        trigger: "txtDateEnd",
+                                                        inputField: "txtDateEnd",
+                                                        onSelect: function () { this.hide() }
+                                                    });
+                                                        </script>
                                             </td>
                                         </tr>
                                         <tr>

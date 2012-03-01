@@ -193,6 +193,12 @@ namespace IAMessageQ
             { SetRunningThreadCount(false); }
         }
 
+        /// <summary>
+        /// 失败后的默认处理方法
+        /// </summary>
+        /// <param name="objEntity">消息实体</param>
+        /// <param name="result">NormalWork的返回结果</param>
+        /// <returns>反馈信息</returns>
         string defaultFailureWork(object objEntity, TraceEntity result)
         {
             StringBuilder sb = new StringBuilder();

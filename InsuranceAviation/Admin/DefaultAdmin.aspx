@@ -15,19 +15,20 @@
         }
     </style>
     <link href="../Css/Styles.css" type="text/css" rel="stylesheet"/>
-    <script type="text/javascript" src="../Script/Cal.aspx"></script>
+    <link rel="stylesheet" href="../Css/nyroModal.css" type="text/css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="../css/jscal2.css" />
+    <script type="text/javascript" src="../script/jscal2.js"></script>
+    <script type="text/javascript" src="../script/cn.js"></script>
     <script type="text/javascript" src="../Script/jquery.min.js"></script>
     <script type="text/javascript" src="../Script/jquery.timeago.js"></script>
-
-    <link rel="stylesheet" href="../Css/nyroModal.css" type="text/css" media="screen" />
     <script type="text/javascript" src="../Script/jquery.nyroModal.custom.min.js"></script>
     <script type="text/javascript">
 <!--
         $(document).ready(function () {
             timeAgo();
             SMSModal();
-            PageMethods.TopEveryday($get("txtDateStart").value, $get("ddlProduct").value, callbackTop1);
-            PageMethods.TopToday($get("txtDateStart").value, $get("txtDateEnd").value, $get("ddlProduct").value, callbackTop2);
+            $.get("ajax.aspx", { func: "FlashTopEverydayTotal", dateStart: $get("txtDateStart").value, productId: $get("ddlProduct").value }, callbackTop1);
+            $.get("ajax.aspx", { func: "FlashTopRange", dateStart: $get("txtDateStart").value, dateEnd: $get("txtDateEnd").value, productId: $get("ddlProduct").value }, callbackTop2);
             //每次ajax翻页完成后，调用该方法，否则timeago效果会消失
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(timeAgo);
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(SMSModal);
@@ -73,7 +74,7 @@
                 <td valign="top" style="height: 50px">
                     
                     
-                    <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" EnablePageMethods="True">
+                    <ajaxToolkit:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
                     </ajaxToolkit:ToolkitScriptManager>
                     <asp:SqlDataSource ID="sdsProduct" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
                         SelectCommand="SELECT productID, productName FROM t_Product ORDER BY productName">
@@ -389,12 +390,26 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                开始日期：<asp:TextBox ID="txtDateStart" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
+                                                开始日期：<asp:TextBox ID="txtDateStart" runat="server" Width="80px"></asp:TextBox>
+                                                <script type="text/javascript">
+                                                    Calendar.setup({
+                                                        trigger: "txtDateStart",
+                                                        inputField: "txtDateStart",
+                                                        onSelect: function () { this.hide() }
+                                                    });
+                                    </script>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                截止日期：<asp:TextBox ID="txtDateEnd" runat="server" onclick="ShowCalendar(this)" Width="80px"></asp:TextBox>
+                                                截止日期：<asp:TextBox ID="txtDateEnd" runat="server" Width="80px"></asp:TextBox>
+                                                <script type="text/javascript">
+                                                    Calendar.setup({
+                                                        trigger: "txtDateEnd",
+                                                        inputField: "txtDateEnd",
+                                                        onSelect: function () { this.hide() }
+                                                    });
+                                    </script>
                                             </td>
                                         </tr>
                                         <tr>

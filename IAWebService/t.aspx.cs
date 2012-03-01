@@ -14,6 +14,7 @@ public partial class t : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        Response.Write(HttpContext.Current.Request.Url.Host);
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
