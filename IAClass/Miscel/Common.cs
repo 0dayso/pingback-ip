@@ -650,7 +650,7 @@ using log4net;
         public static string HttpPost(string url, byte[] data, X509Certificate2 cert)
         {
             string result = "";
-            HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create(url);
+            HttpWebRequest hwrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             hwrequest.KeepAlive = true;
             hwrequest.ContentType = "application/x-www-form-urlencoded";// "text/xml"; 注意类型,否则会失败
             hwrequest.Method = "POST";
@@ -692,7 +692,7 @@ using log4net;
 
         public static string HttpGet(string url)
         {
-            HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create(url);
+            HttpWebRequest hwrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             hwrequest.KeepAlive = true;
             hwrequest.ContentType = "text/xml";
             hwrequest.Method = "Get";

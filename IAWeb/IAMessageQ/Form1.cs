@@ -13,42 +13,47 @@ namespace IAMessageQ
 {
     public partial class Form1 : Form
     {
-        string AppName = ConfigurationManager.AppSettings["AppName"];
         bool exit = false;
 
         public Form1()
         {
             InitializeComponent();
-            this.Text += " - " + AppName;
             this.notifyIcon1.Text = this.Text;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            AddForm(tabPage1, Common.Queue_Issuing);
-            AddForm(tabPage2, Common.Queue_SMS);
-            AddForm(tabPage3, Common.Queue_Withdraw);
+            XMLConfigMQ configList = new XMLConfigMQ().Read() as XMLConfigMQ;
+
+            foreach (var config in configList.MessageConfigList)
+            {
+                AddForm(config);
+            }
         }
 
-        void AddForm(TabPage page, string queueName)
+        void AddForm(MessageConfig config)
         {
-            FormQueue fm = new FormQueue(queueName, Issue, null, IssueMessageToString);
+            TabPage page = new System.Windows.Forms.TabPage();
+            page.Text = config.AppName;
+            page.UseVisualStyleBackColor = true;
+            tabControl1.Controls.Add(page);
+
+            FormQueue fm = new FormQueue(config, Issue, null, IssueMessageToString);
             fm.TopLevel = false;
             fm.Dock = DockStyle.Fill;
             page.Controls.Add(fm);
             fm.Show();
         }
 
-        TraceEntity Issue(object message)
+        TraceEntity Issue(MessageEntity message)
         {
-            IssueEntity entity = (IssueEntity)message;
-            IssuingResultEntity result = Case.IssueAsync(entity);
+            IssuingResultEntity result = Case.IssueAsync(message);
             return result.Trace;
         }
 
-        string IssueMessageToString(object message)
+        string IssueMessageToString(MessageEntity message)
         {
-            IssueEntity entity = (IssueEntity)message;
+            IssueEntity entity = message as IssueEntity;
             StringBuilder sb = new StringBuilder();
             sb.Append(DateTime.Now.ToLongTimeString());
             sb.Append(" : 线程"); sb.Append(Thread.CurrentThread.ManagedThreadId);

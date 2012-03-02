@@ -25,20 +25,19 @@ namespace IAMessageQ
         //SmartThreadPool stp = new SmartThreadPool();
         ActiveMQClient MQClient;
         Thread workItemsProducerThread;
-        string AppName = ConfigurationManager.AppSettings["AppName"];
-        string QueueName;
+        MessageConfig messageConfig;
         /// <summary>
         /// 正常处理消息实体的方法
         /// </summary>
-        Func<object, TraceEntity> NormalWork;
+        Func<MessageEntity, TraceEntity> NormalWork;
         /// <summary>
         /// 失败后的处理消息实体方法
         /// </summary>
-        Func<object, TraceEntity, string> FailureWork;
+        Func<MessageEntity, TraceEntity, string> FailureWork;
         /// <summary>
         /// 显示消息实体的方法
         /// </summary>
-        Func<object, string> MessageToString;
+        Func<MessageEntity, string> MessageToString;
 
         /// <summary>
         /// 构造函数
@@ -47,12 +46,11 @@ namespace IAMessageQ
         /// <param name="normalWork">正常处理消息实体的方法</param>
         /// <param name="failureWork">失败后的处理消息实体方法</param>
         /// <param name="messageToString">显示消息实体的方法</param>
-        public FormQueue(string queueName, Func<object, TraceEntity> normalWork, Func<object, TraceEntity, string> failureWork, Func<object, string> messageToString)
+        public FormQueue(MessageConfig messageConfig, Func<MessageEntity, TraceEntity> normalWork, Func<MessageEntity, TraceEntity, string> failureWork, Func<MessageEntity, string> messageToString)
         {
             InitializeComponent();
 
-            this.Text += " - " + AppName;
-            this.QueueName = queueName;
+            this.messageConfig = messageConfig;
             this.NormalWork = normalWork;
             this.MessageToString = messageToString;
 
@@ -102,7 +100,7 @@ namespace IAMessageQ
             try
             {
                 if(MQClient == null)
-                    MQClient = new ActiveMQClient(this.QueueName, (int)nudThreads.Value);
+                    MQClient = new ActiveMQClient(messageConfig.QueueName, (int)nudThreads.Value);
                 MQClient.Start();
                 MQClient.Dequeue(consumer_Listener);
             }
@@ -138,12 +136,15 @@ namespace IAMessageQ
             {
                 SetRunningThreadCount(true);
                 IObjectMessage amqMsg = message as IObjectMessage;
-                sb.Append(MessageToString(amqMsg.Body));
+                MessageEntity entity = amqMsg.Body as MessageEntity;
+                sb.Append(MessageToString(entity));
 
                 if (IsRunning)
                 {
+                    if(string.IsNullOrEmpty(entity.ConnectionString))
+                        entity.ConnectionString = messageConfig.ConnectionString;//附加上对应的数据库连接字符串(在此处附加而非在源Producer附加,是为了减小消息体的大小)
                     //事务开始
-                    TraceEntity result = NormalWork(amqMsg.Body);
+                    TraceEntity result = NormalWork(entity);
                     if (string.IsNullOrEmpty(result.ErrorMsg))
                     {
                         message.Acknowledge();//事务结束,出队列确认
@@ -154,7 +155,7 @@ namespace IAMessageQ
                     {
                         //if (IsRunning)
                         {
-                            string fail = FailureWork(amqMsg.Body, result);
+                            string fail = FailureWork(entity, result);
                             message.Acknowledge();//事务结束
                             sb.AppendLine(fail);
                         }

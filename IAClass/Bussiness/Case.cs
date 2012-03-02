@@ -95,16 +95,16 @@ using IAClass.Issuing;
                     {
                         result.Trace.ErrorMsg = "投保失败，没有返回保单号！？";
                         strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
-                        SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql,
+                        SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
                             new string[] { "@IssuingFailed", "@caseNo" },
-                            new object[] { result.Trace.ErrorMsg, entity.CaseNo });
+                            new object[] { result.Trace.ErrorMsg.Substring(0, 100), entity.CaseNo });
                     }
                     else
                     {
                         //主键更新,不会阻塞  保存返回的正式保单号
                         strSql = "update t_case set certNo = '{0}', [isIssued] = 1 where caseNo = '{1}'";
                         strSql = string.Format(strSql, result.PolicyNo, entity.CaseNo);
-                        int eff = SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql);
+                        int eff = SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql);
                         if (eff == 0)
                             Common.LogIt("ExecuteNonQuery影响行数为0 : " + strSql);
                     }
@@ -112,9 +112,9 @@ using IAClass.Issuing;
                 else
                 {
                     strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
-                    SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql,
+                    SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
                         new string[] { "@IssuingFailed", "@caseNo" },
-                        new object[] { result.Trace.ErrorMsg, entity.CaseNo });
+                        new object[] { result.Trace.ErrorMsg.Substring(0, 100), entity.CaseNo });
                 }
 
                 return result;

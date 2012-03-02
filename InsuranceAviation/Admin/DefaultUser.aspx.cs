@@ -13,8 +13,6 @@ using InfoSoftGlobal;
 
 public partial class DefaultUser : NBear.Web.UI.Page
 {
-    public string strJavascript = string.Empty;
-
     protected void Page_Load(object sender, EventArgs e)
     {
         this.SqlDataSource1.SelectParameters["caseOwner"].DefaultValue = User.Identity.Name;
