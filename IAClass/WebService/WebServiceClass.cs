@@ -299,7 +299,7 @@ namespace IAClass.WebService
                             return response;
                         }
                     }
-                    string IOC_TypeName = drProduct["IOC_TypeName"].ToString();
+                    
                     object interface_Id = drProduct["interface_Id"];
                     object caseSupplier = drProduct["productSupplier"];
                     int caseDuration = Convert.ToInt32(drProduct["productDuration"]);
@@ -418,6 +418,8 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                 if (isIssuingRequired)
                                 {
                                     #region 投保数据对接
+                                    string IOC_Class_Alias = drProduct["IOC_Class_Alias"].ToString();
+                                    string IOC_Class_Parameters = drProduct["IOC_Class_Parameters"].ToString();
                                     IssueEntity entity = new IssueEntity();
                                     entity.Name = request.customerName;
                                     entity.ID = request.customerID;
@@ -432,7 +434,8 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
 
                                     entity.IsLazyIssue = isIssuingLazyEnabled;
                                     entity.DbCommand = cmm;
-                                    entity.IOC_TypeName = IOC_TypeName;
+                                    entity.IOC_Class_Alias = IOC_Class_Alias;
+                                    entity.IOC_Class_Parameters = IOC_Class_Parameters;
                                     entity.CaseNo = caseNo;
                                     entity.CaseId = caseId.ToString();
 
@@ -443,6 +446,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                         {
                                             //Thread th = new Thread(Case.IssueAsync);
                                             //th.Start(entity);
+                                            entity.ConnectionString = Common.ConnectionString;
                                             entity.MaxRedelivery = 3;
                                             Common.MessageQ.EnqueueObject(entity);
                                         }

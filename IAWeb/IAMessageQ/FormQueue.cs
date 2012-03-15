@@ -141,10 +141,18 @@ namespace IAMessageQ
 
                 if (IsRunning)
                 {
-                    if(string.IsNullOrEmpty(entity.ConnectionString))
-                        entity.ConnectionString = messageConfig.ConnectionString;//附加上对应的数据库连接字符串(在此处附加而非在源Producer附加,是为了减小消息体的大小)
                     //事务开始
-                    TraceEntity result = NormalWork(entity);
+                    TraceEntity result = new TraceEntity();
+                    try
+                    {
+                        result = NormalWork(entity);
+                    }
+                    catch(Exception e)
+                    {
+                        Common.LogIt(e.ToString());
+                        result.ErrorMsg = e.Message;
+                    }
+
                     if (string.IsNullOrEmpty(result.ErrorMsg))
                     {
                         message.Acknowledge();//事务结束,出队列确认
@@ -180,7 +188,7 @@ namespace IAMessageQ
             catch (Exception e)
             {
                 string error = string.Format("{3}{0} : 消息{1} {2}{4}   发生异常,消息事务回滚!",
-                    DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.ToString(), Environment.NewLine, Environment.NewLine);
+                    DateTime.Now.ToLongTimeString(), message.NMSMessageId, e.Message, Environment.NewLine, Environment.NewLine);
                 Common.LogIt(error);
                 sb.AppendLine(error);
                 this.BeginInvoke(new MethodInvoker(delegate
@@ -188,7 +196,7 @@ namespace IAMessageQ
                     txtLogInfo.AppendText(sb.ToString());
                 }));
 
-                throw;//直接抛出异常,引发Redelivery(默认最多7次,之后被移至死信队列)
+                throw;//直接抛出异常,将立即触发Redelivery(ActiveMQ默认最多7次,之后被移至死信队列)
             }
             finally
             { SetRunningThreadCount(false); }

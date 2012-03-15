@@ -51,7 +51,7 @@
                         </SelectParameters>
                     </asp:SqlDataSource>
                     <asp:SqlDataSource ID="sdsProduct" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
-                        SelectCommand="SELECT b.Description, a.productID, a.productName, a.productSupplier, a.productDuration, a.productComment, a.PrintingConfig, a.FilterInclude, a.FilterExclude, a.FilterComment, a.Timespan, a.Enabled, a.IsIssuingRequired, a.Interface_Id, a.IsIssuingLazyEnabled, a.IsMobileNoRequired, a.WithdrawRatio FROM t_Product AS a LEFT OUTER JOIN t_Interface AS b ON a.Interface_Id = b.Id WHERE (a.productID = @productID) AND (a.productSupplier = @productSupplier)"
+                        SelectCommand="SELECT b.interface_Name, a.productID, a.productName, a.productSupplier, a.productDuration, a.productComment, a.PrintingConfig, a.FilterInclude, a.FilterExclude, a.FilterComment, a.Timespan, a.Enabled, a.IsIssuingRequired, a.Interface_Id, a.IsIssuingLazyEnabled, a.IsMobileNoRequired, a.WithdrawRatio FROM t_Product AS a LEFT OUTER JOIN t_Interface AS b ON a.Interface_Id = b.Id WHERE (a.productID = @productID) AND (a.productSupplier = @productSupplier)"
                         InsertCommand="INSERT INTO t_Product(Enabled, productName, productSupplier, productDuration, productComment, PrintingConfig, FilterInclude, FilterExclude, FilterComment, IsIssuingRequired, Interface_Id, IsIssuingLazyEnabled, IsMobileNoRequired, WithdrawRatio) VALUES (@Enabled, @productName, @productSupplier, @productDuration, @productComment, @PrintingConfig, @FilterInclude, @FilterExclude, @FilterComment, @IsIssuingRequired, @Interface_Id, @IsIssuingLazyEnabled, @IsMobileNoRequired, @WithdrawRatio)"
                         
                         UpdateCommand="UPDATE t_Product SET Enabled = @Enabled, productName = @productName, productDuration = @productDuration, productComment = @productComment, PrintingConfig = @PrintingConfig, FilterInclude = @FilterInclude, FilterExclude = @FilterExclude, FilterComment = @FilterComment, IsIssuingRequired = @IsIssuingRequired, Interface_Id = @Interface_Id, IsIssuingLazyEnabled = @IsIssuingLazyEnabled, IsMobileNoRequired = @IsMobileNoRequired, WithdrawRatio = @WithdrawRatio WHERE (productID = @productID)" 
@@ -100,11 +100,11 @@
                     <asp:SqlDataSource ID="sdsInterfaceList" runat="server" 
                         ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>" 
                         
-                        SelectCommand="SELECT 0 AS Id, NULL AS IOC_TypeName, NULL AS Description UNION SELECT Id, IOC_TypeName, Description FROM t_Interface"></asp:SqlDataSource>
+                        SelectCommand="SELECT 0 AS Id, NULL AS IOC_Class_Alias, NULL AS interface_Name UNION SELECT Id, IOC_Class_Alias, interface_Name FROM t_Interface"></asp:SqlDataSource>
                     <asp:SqlDataSource ID="sdsProductList" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
                         ProviderName="<%$ ConnectionStrings:InsuranceAviation.ProviderName %>" 
                         
-                        SelectCommand="SELECT a.Enabled, a.productID, a.productName, a.productDuration, b.Description FROM t_Product AS a LEFT OUTER JOIN t_Interface AS b ON a.Interface_Id = b.Id WHERE (a.productSupplier = @productSupplier)">
+                        SelectCommand="SELECT a.Enabled, a.productID, a.productName, a.productDuration, b.interface_Name FROM t_Product AS a LEFT OUTER JOIN t_Interface AS b ON a.Interface_Id = b.Id WHERE (a.productSupplier = @productSupplier)">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="gvInsurerList" Name="productSupplier" 
                                 PropertyName="SelectedValue" />
@@ -212,7 +212,7 @@
                                                                             <asp:BoundField DataField="productID" HeaderText="产品编号" />
                                                                             <asp:BoundField DataField="productName" HeaderText="产品名称" />
                                                                             <asp:BoundField DataField="productDuration" HeaderText="产品期限" />
-                                                                            <asp:BoundField DataField="Description" HeaderText="数据接口" />
+                                                                            <asp:BoundField DataField="interface_Name" HeaderText="数据接口" />
                                                                         </Columns>
                                                                         <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
                                                                         <EmptyDataTemplate>
@@ -260,16 +260,16 @@
                                                                             <asp:TemplateField HeaderText="数据接口">
                                                                                 <InsertItemTemplate>
                                                                                     <asp:DropDownList ID="ddlInterface" runat="server" 
-                                                                                        DataSourceID="sdsInterfaceList" DataTextField="Description" 
+                                                                                        DataSourceID="sdsInterfaceList" DataTextField="interface_Name" 
                                                                                         DataValueField="id" SelectedValue='<%# Bind("interface_id") %>'>
                                                                                     </asp:DropDownList>
                                                                                 </InsertItemTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <asp:Label ID="Label1" runat="server" Text='<%# Eval("Description") %>'></asp:Label>
+                                                                                    <asp:Label ID="Label1" runat="server" Text='<%# Eval("interface_Name") %>'></asp:Label>
                                                                                 </ItemTemplate>
                                                                                 <EditItemTemplate>
                                                                                     <asp:DropDownList ID="ddlInterface" runat="server" 
-                                                                                        DataSourceID="sdsInterfaceList" DataTextField="Description" 
+                                                                                        DataSourceID="sdsInterfaceList" DataTextField="interface_Name" 
                                                                                         DataValueField="id" SelectedValue='<%# Bind("interface_id") %>'>
                                                                                     </asp:DropDownList>
                                                                                 </EditItemTemplate>

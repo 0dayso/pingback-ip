@@ -34,7 +34,7 @@ public partial class Admin_SMS_Send : System.Web.UI.Page
                 sms.MobilePhone = txtMobile.Text.Trim();
                 sms.Content = txtContent.Text.Trim();
                 sms.CaseNo = txtCaseNo.Text.Trim();
-                sms.IOC_TypeName = "ShangTong";
+                sms.IOC_Class_Alias = "ShangTong";
                 TraceEntity result = SMS.Send(sms);
 
                 if (!string.IsNullOrEmpty(result.ErrorMsg))

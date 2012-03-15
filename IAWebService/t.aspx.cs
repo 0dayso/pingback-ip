@@ -27,7 +27,7 @@ public partial class t : System.Web.UI.Page
         entity.Gender = Gender.Male;
         entity.EffectiveDate = DateTime.Today;//.AddDays(3);
         entity.ExpiryDate = DateTime.Today.AddDays(4);
-        entity.IOC_TypeName = "PingAn";
+        entity.IOC_Class_Alias = "PingAn";
         Response.Write(Common.SoapSerialize<IssueEntity>(entity));
 
         IssuingResultEntity ret = new IssuingFacade().Issue(entity);
@@ -50,7 +50,7 @@ public partial class t : System.Web.UI.Page
             entity.ExpiryDate = DateTime.Today.AddDays(4);
             entity.CaseNo = "PIC" + i.ToString().PadLeft(25, '0');
             //entity.CaseId = "1234239";
-            entity.IOC_TypeName = txtIOC.Text.Trim();
+            entity.IOC_Class_Alias = txtIOC.Text.Trim();
             Common.MessageQ.EnqueueObject(entity);
         }
     }

@@ -315,15 +315,7 @@ namespace Pingan
             try
             {
                 xmlRet = Issue(cert);
-            }
-            catch
-            {
-                Common.LogIt(url);
-                throw;
-            }
 
-            try
-            {
                 if (string.IsNullOrEmpty(xmlRet))
                     throw new Exception("平安投保返回为空!");
 

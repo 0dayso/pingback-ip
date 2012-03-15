@@ -35,7 +35,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             timeAgo();
-            $.get("ajax.aspx", { func: "FlashTopEverydayUser", dateStart: $get("txtDateStart").value }, callbackTop1);
+            $.get("ajax.aspx?t=" + new Date(), { func: "FlashTopEverydayUser", dateStart: $get("txtDateStart").value }, callbackTop1);
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(timeAgo);
         });
 

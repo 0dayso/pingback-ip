@@ -978,7 +978,11 @@ namespace @__a
 
         private static NBearLite.QueryColumn _Id = new NBearLite.QueryColumn((___TABLE_NAME + ".Id"), System.Data.DbType.Int16);
 
-        private static NBearLite.QueryColumn _IOC_TypeName = new NBearLite.QueryColumn((___TABLE_NAME + ".IOC_TypeName"), System.Data.DbType.AnsiString);
+        private static NBearLite.QueryColumn _Interface_Name = new NBearLite.QueryColumn((___TABLE_NAME + ".Interface_Name"), System.Data.DbType.AnsiString);
+
+        private static NBearLite.QueryColumn _IOC_Class_Alias = new NBearLite.QueryColumn((___TABLE_NAME + ".IOC_Class_Alias"), System.Data.DbType.AnsiString);
+
+        private static NBearLite.QueryColumn _IOC_Class_Parameters = new NBearLite.QueryColumn((___TABLE_NAME + ".IOC_Class_Parameters"), System.Data.DbType.AnsiString);
 
         private static NBearLite.QueryColumn _Description = new NBearLite.QueryColumn((___TABLE_NAME + ".Description"), System.Data.DbType.AnsiString);
 
@@ -1007,17 +1011,47 @@ namespace @__a
             }
         }
 
-        public NBearLite.QueryColumn IOC_TypeName
+        public NBearLite.QueryColumn Interface_Name
         {
             get
             {
                 if ((this.___aliasName == ___TABLE_NAME))
                 {
-                    return _IOC_TypeName;
+                    return _Interface_Name;
                 }
                 else
                 {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".IOC_TypeName"), System.Data.DbType.AnsiString);
+                    return new NBearLite.QueryColumn((this.___aliasName + ".Interface_Name"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn IOC_Class_Alias
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _IOC_Class_Alias;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".IOC_Class_Alias"), System.Data.DbType.AnsiString);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn IOC_Class_Parameters
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _IOC_Class_Parameters;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".IOC_Class_Parameters"), System.Data.DbType.AnsiString);
                 }
             }
         }

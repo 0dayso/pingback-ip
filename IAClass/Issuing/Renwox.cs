@@ -9,9 +9,7 @@ namespace Renwox
 {
     class Issuing : IIssuing
     {
-        static string username = "feng";
-        static string password = "123456";
-        static string insuranceCode = "1";
+        //config: username, password, insuranceCode
         static WebServiceForExternal ws = new WebServiceForExternal();
 
         public IssuingResultEntity Issue(IssueEntity entity)
@@ -27,9 +25,10 @@ namespace Renwox
             req.flightDate = entity.EffectiveDate;
             req.flightNo = entity.FlightNo;
 
-            req.InsuranceCode = insuranceCode;
-            req.password = password;
-            req.username = username;
+            string[] config = entity.IOC_Class_Parameters.Split(',');
+            req.InsuranceCode = config[2];
+            req.password = config[1];
+            req.username = config[0];
 
             string xml = Common.XmlSerialize<PurchaseRequestEntity>(req);
             string ret = ws.Issue(xml);
@@ -53,8 +52,9 @@ namespace Renwox
             TraceEntity result = new TraceEntity();
 
             WithdrawRequest req = new WithdrawRequest();
-            req.Username = username;
-            req.Password = password;
+            string[] config = entity.IOC_Class_Parameters.Split(',');
+            req.Username = config[0];
+            req.Password = config[1];
             req.PolicyNo = entity.PolicyNo;
             req.CaseNo = entity.CaseNo;
             string xml = Common.XmlSerialize<WithdrawRequest>(req);

@@ -40,27 +40,66 @@ namespace IAClass.WebService
   </Trace>
 </PurchaseResponseEntity>
              */
-            PurchaseRequestEntity request = Common.XmlDeserialize<PurchaseRequestEntity>(requestXML);
-            PurchaseResponseEntity resp = WebServiceClass.Purchase(request, true);
-            string ret = Common.XmlSerialize<PurchaseResponseEntity>(resp);
+            PurchaseRequestEntity request;
+            PurchaseResponseEntity resp;
+            string ret;
+
+            try
+            {
+                request = Common.XmlDeserialize<PurchaseRequestEntity>(requestXML);
+            }
+            catch(Exception e)
+            {
+                Common.LogIt(requestXML + Environment.NewLine + e.ToString());
+                resp = new PurchaseResponseEntity();
+                resp.Trace.ErrorMsg = "服务器异常,请稍后重试!";
+                ret = Common.XmlSerialize<PurchaseResponseEntity>(resp);
+                return ret;
+            }
+
+            resp = WebServiceClass.Purchase(request, true);
+            ret = Common.XmlSerialize<PurchaseResponseEntity>(resp);
             return ret;
         }
 
         public static string DiscardIt(string requestXML)
         {
-            /*
+            /*请求参数
+<?xml version="1.0" encoding="utf-16"?>
+<WithdrawRequest>
+  <Username>feng</username>
+  <Password>123456</password>
+  <PolicyNo>PC00013234234</PolicyNo>
+</WithdrawRequest>
+             * 返回参数
 <?xml version="1.0" encoding="utf-16"?>
 <TraceEntity>
   <ErrorMsg />
   <Detail>成功</Detail>
 </TraceEntity>
              */
-            WithdrawRequest request = Common.XmlDeserialize<WithdrawRequest>(requestXML);
-            TraceEntity trace = WebServiceClass.DiscardIt(request.Username, request.Password, request.PolicyNo);//此处只能使用正式保单号撤单
+            WithdrawRequest request;
+            TraceEntity trace;
+            string ret;
+
+            try
+            {
+                request = Common.XmlDeserialize<WithdrawRequest>(requestXML);
+            }
+            catch (Exception e)
+            {
+                Common.LogIt(requestXML + Environment.NewLine + e.ToString());
+                trace = new TraceEntity();
+                trace.ErrorMsg = "服务器异常,请稍后重试!";
+                ret = Common.XmlSerialize<TraceEntity>(trace);
+                return ret;
+            }
+
+            trace = WebServiceClass.DiscardIt(request.Username, request.Password, request.PolicyNo);//此处只能使用正式保单号撤单
             if (string.IsNullOrEmpty(trace.ErrorMsg))
                 trace.ErrorMsg = string.Empty;//置为空字符串,否则序列化时Null类型将被忽略
 
-            string ret = Common.XmlSerialize<TraceEntity>(trace);
+            ret = Common.XmlSerialize<TraceEntity>(trace);
             return ret;
         }
     }

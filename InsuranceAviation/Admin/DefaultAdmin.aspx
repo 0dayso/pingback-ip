@@ -27,8 +27,9 @@
         $(document).ready(function () {
             timeAgo();
             SMSModal();
-            $.get("ajax.aspx", { func: "FlashTopEverydayTotal", dateStart: $get("txtDateStart").value, productId: $get("ddlProduct").value }, callbackTop1);
-            $.get("ajax.aspx", { func: "FlashTopRange", dateStart: $get("txtDateStart").value, dateEnd: $get("txtDateEnd").value, productId: $get("ddlProduct").value }, callbackTop2);
+            //使用t参数来避免 AJAX Get 的缓存效果
+            $.get("ajax.aspx?t=" + new Date(), { func: "FlashTopEverydayTotal", dateStart: $get("txtDateStart").value, productId: $get("ddlProduct").value }, callbackTop1);
+            $.get("ajax.aspx?t=" + new Date(), { func: "FlashTopRange", dateStart: $get("txtDateStart").value, dateEnd: $get("txtDateEnd").value, productId: $get("ddlProduct").value }, callbackTop2);
             //每次ajax翻页完成后，调用该方法，否则timeago效果会消失
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(timeAgo);
             Sys.WebForms.PageRequestManager.getInstance().add_endRequest(SMSModal);

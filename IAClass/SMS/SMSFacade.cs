@@ -62,7 +62,7 @@ namespace IAClass.SMS
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<ISMS>(entity.IOC_TypeName);
+                issuingInstance = container.Resolve<ISMS>(entity.IOC_Class_Alias);
             }
             catch (Exception e)
             {
@@ -74,12 +74,12 @@ namespace IAClass.SMS
             return result;
         }
 
-        public int GetBalance(string IOC_TypeName)
+        public int GetBalance(string IOC_Class_Alias)
         {
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<ISMS>(IOC_TypeName);
+                issuingInstance = container.Resolve<ISMS>(IOC_Class_Alias);
             }
             catch (Exception e)
             {
@@ -87,7 +87,7 @@ namespace IAClass.SMS
                 throw;
             }
 
-            int result = issuingInstance.GetBalance(IOC_TypeName);
+            int result = issuingInstance.GetBalance(IOC_Class_Alias);
             return result;
         }
     }

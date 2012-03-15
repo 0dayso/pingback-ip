@@ -27,7 +27,7 @@ namespace IAClass
             try
             {
                 fs = new FileStream(fileName, FileMode.Open);
-                data = (XMLConfig)serializer.Deserialize(fs);
+                data = serializer.Deserialize(fs) as XMLConfig;
                 fs.Close();
             }
             catch (Exception e)
@@ -36,7 +36,7 @@ namespace IAClass
                     fs.Close();
                 Common.LogIt(e.ToString());
                 //System.Windows.Forms.MessageBox.Show("读取 " + fileName + " 配置文件失败，将使用默认值。", "警告", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Warning);
-                data = (XMLConfig)Activator.CreateInstance(this.GetType());
+                data = Activator.CreateInstance(this.GetType()) as XMLConfig;
             }
 
             return data;

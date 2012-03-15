@@ -25,10 +25,10 @@ namespace IAClass.Issuing
         /// <summary>
         /// 普通构造函数
         /// </summary>
-        public IssuingFacade()
-        {
-            Initiate();
-        }
+        //public IssuingFacade()
+        //{
+        //    Initiate();
+        //}
 
         /// <summary>
         /// 初始化，注册容器。
@@ -69,7 +69,7 @@ namespace IAClass.Issuing
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<IIssuing>(entity.IOC_TypeName);
+                issuingInstance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
             }
             catch (Exception e)
             {
@@ -86,14 +86,14 @@ namespace IAClass.Issuing
         /// </summary>
         /// <param name="policyNo"></param>
         /// <returns></returns>
-        public TraceEntity Withdraw(WithdrawEntity entity, string IOC_TypeName)
+        public TraceEntity Withdraw(WithdrawEntity entity)
         {
             TraceEntity result = new TraceEntity();
 
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<IIssuing>(IOC_TypeName);
+                issuingInstance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
             }
             catch (Exception e)
             {
@@ -117,7 +117,7 @@ namespace IAClass.Issuing
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<IIssuing>(entity.IOC_TypeName);
+                issuingInstance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
             }
             catch (Exception e)
             {

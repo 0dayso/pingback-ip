@@ -10,6 +10,8 @@ namespace IAMessageQ
     {
         /// <summary>
         /// 应用的名称
+        /// XmlAttribute 标签:指示该字段将序列成为一个XML属性,例如<MessageConfig AppName="测试" />
+        /// XmlElement 标签:指示该字段将序列化成一个XML元素,例如<MessageConfig><AppName>测试</AppName></MessageConfig>
         /// </summary>
         [XmlAttribute]
         public string AppName { get; set; }
@@ -19,12 +21,6 @@ namespace IAMessageQ
         /// </summary>
         [XmlAttribute]
         public string QueueName { get; set; }
-
-        /// <summary>
-        /// 数据库连接字符串
-        /// </summary>
-        [XmlAttribute]
-        public string ConnectionString { get; set; }
     }
 
     public class MessageConfigList : List<MessageConfig>

@@ -12,7 +12,7 @@ using NBearLite;
     {
         public static DataSet GetProduct(string productId)
         {
-            DataSet ds = Common.DB.Select(Tables.t_Product, QueryColumn.All(Tables.t_Product), Tables.t_Interface.IOC_TypeName)
+            DataSet ds = Common.DB.Select(Tables.t_Product, QueryColumn.All(Tables.t_Product), Tables.t_Interface.IOC_Class_Alias, Tables.t_Interface.IOC_Class_Parameters)
                                     .LeftJoin(Tables.t_Interface, Tables.t_Product.Interface_Id == Tables.t_Interface.Id)
                                     .Where(Tables.t_Product.productID == productId)
                                     .Where(Tables.t_Product.Enabled == true)

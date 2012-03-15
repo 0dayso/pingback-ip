@@ -39,7 +39,7 @@ namespace IAClass.Entity
         public string MobilePhone;
         public string Content;
         public string CaseNo;
-        public string IOC_TypeName;
+        public string IOC_Class_Alias;
     }
 
     /// <summary>
@@ -76,7 +76,11 @@ namespace IAClass.Entity
         /// <summary>
         /// IOC容器中注册的对象名称（name属性，非类名）
         /// </summary>
-        public string IOC_TypeName;
+        public string IOC_Class_Alias;
+        /// <summary>
+        /// 接口类所需要的参数
+        /// </summary>
+        public string IOC_Class_Parameters;
         /// <summary>
         /// 当前出单记录的数据库ID
         /// </summary>
@@ -115,5 +119,13 @@ namespace IAClass.Entity
         /// 本系统电子单号
         /// </summary>
         public string CaseNo;
+        /// <summary>
+        /// IOC容器中注册的对象名称（name属性，非类名）
+        /// </summary>
+        public string IOC_Class_Alias;
+        /// <summary>
+        /// 接口类所需要的参数
+        /// </summary>
+        public string IOC_Class_Parameters;
     }
 }

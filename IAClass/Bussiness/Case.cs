@@ -33,26 +33,17 @@ using IAClass.Issuing;
 
             if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
             {
-                string strSql = "";
-
                 if (string.IsNullOrEmpty(result.PolicyNo))//没有保单号
                 {
-                    result.Trace.ErrorMsg = "投保失败，没有返回保单号！";
+                    result.Trace.ErrorMsg = "投保失败：没有返回保单号！";
                 }
                 else
                 {
                     //主键更新,不会阻塞  保存返回的正式保单号
-                    strSql = "update t_case set certNo = '{0}', [isIssued] = 1 where caseNo = '{1}'";
+                    string strSql = "update t_case set certNo = '{0}', [isIssued] = 1 where caseNo = '{1}'";
                     strSql = string.Format(strSql, result.PolicyNo, entity.CaseNo);
-                    if (entity.DbCommand != null)
-                    {
-                        entity.DbCommand.CommandText = strSql;
-                        entity.DbCommand.ExecuteNonQuery();
-                    }
-                    else
-                    {
-                        SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strSql);
-                    }
+                    entity.DbCommand.CommandText = strSql;
+                    entity.DbCommand.ExecuteNonQuery();
                 }
 
                 return result;
@@ -97,7 +88,7 @@ using IAClass.Issuing;
                         strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
                         SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
                             new string[] { "@IssuingFailed", "@caseNo" },
-                            new object[] { result.Trace.ErrorMsg.Substring(0, 100), entity.CaseNo });
+                            new object[] { result.Trace.ErrorMsg, entity.CaseNo });
                     }
                     else
                     {
@@ -111,17 +102,19 @@ using IAClass.Issuing;
                 }
                 else
                 {
+                    int len = result.Trace.ErrorMsg.Length;
+                    len = len > 100 ? 100 : len;
                     strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
                     SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
                         new string[] { "@IssuingFailed", "@caseNo" },
-                        new object[] { result.Trace.ErrorMsg.Substring(0, 100), entity.CaseNo });
+                        new object[] { result.Trace.ErrorMsg.Substring(0, len), entity.CaseNo });
                 }
 
                 return result;
             }
             catch(Exception e)
             {
-                Common.LogIt("IssueAsync异常：" + Environment.NewLine + strSql + Environment.NewLine + e.ToString());
+                Common.LogIt(e.ToString());
                 throw;
             }
         }
@@ -351,7 +344,7 @@ and enabled = 1";
 
             string strSql = @"
 SELECT caseID, caseNo, customerFlightDate, CertNo,
-		b.IsIssuingRequired, c.IOC_TypeName, WithdrawRatio, caseOwner, ParentPath
+		b.IsIssuingRequired, c.IOC_Class_Alias, c.IOC_Class_Parameters, WithdrawRatio, caseOwner, ParentPath
   FROM [t_Case] a with(nolock)
   INNER JOIN t_Product b on a.productID = b.productID
   LEFT JOIN t_Interface c on a.interface_id = c.id
@@ -418,6 +411,8 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
                 WithdrawEntity entity = new WithdrawEntity();
                 entity.CaseNo = caseNo;
                 entity.PolicyNo = policyNo;
+                entity.IOC_Class_Alias = dr["IOC_Class_Alias"].ToString();
+                entity.IOC_Class_Parameters = dr["IOC_Class_Parameters"].ToString();
 
                 if (!string.IsNullOrEmpty(entity.PolicyNo))
                 {
@@ -426,7 +421,7 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
                     try
                     {
                         IAClass.Issuing.IssuingFacade facade = new IAClass.Issuing.IssuingFacade();
-                        ret = facade.Withdraw(entity, dr["IOC_TypeName"].ToString());
+                        ret = facade.Withdraw(entity);
                     }
                     catch (Exception ee)
                     {

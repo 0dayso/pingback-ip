@@ -10,6 +10,6 @@ namespace IAClass.SMS
     {
         TraceEntity Send(SMSEntity entity);
 
-        int GetBalance(string IOC_TypeName);
+        int GetBalance(string IOC_Class_Alias);
     }
 }

@@ -104,9 +104,9 @@ namespace Jiandanbao
                 Common.LogIt(msg);
                 result.Trace.ErrorMsg = msg;
                 return result;
-                //entity.IOC_TypeName = "chinalife_bj";
+                //entity.IOC_Class_Alias = "chinalife_bj";
                 //string msg = "jiandanbao_all核保未通过：id={0}, phone={1}  转入其他接口：{2}";
-                //msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_TypeName);
+                //msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_Class_Alias);
                 //Common.LogIt(msg);
 
                 //result = new IAClass.Issuing.IssuingFacade().Issue(entity);
@@ -262,9 +262,9 @@ namespace Jiandanbao
                 Common.LogIt("step1---------" + System.Environment.NewLine + e.ToString());
                 //result.Trace.Detail = "简单保DataCheck访问失败！";
                 //return result;
-                entity.IOC_TypeName = "JinHang";
+                entity.IOC_Class_Alias = "JinHang";
                 //string msg = "简单保核保未通过：id={0}, phone={1}  转入其他接口：{2}";
-                //msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_TypeName);
+                //msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_Class_Alias);
                 //Common.LogIt(msg);
 
                 try
@@ -278,7 +278,7 @@ namespace Jiandanbao
                 catch(Exception ee)
                 {
                     Common.LogIt("step2---------" + System.Environment.NewLine + ee.ToString());
-                    entity.IOC_TypeName = "chinalife_bj";
+                    entity.IOC_Class_Alias = "chinalife_bj";
                     result = new IAClass.Issuing.IssuingFacade().Issue(entity);
                 }
             }

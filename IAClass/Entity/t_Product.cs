@@ -122,7 +122,7 @@ namespace IAClass.Entity
         /// <summary>
         /// 
         /// </summary>
-        public string IOC_TypeName
+        public string IOC_Class_Alias
         {
             set { _ioc_typename = value; }
             get { return _ioc_typename; }
