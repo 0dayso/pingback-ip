@@ -6,7 +6,7 @@ using IAClass.Entity;
 
 namespace IAClass.SMS
 {
-    public interface ISMS
+    interface ISMS
     {
         TraceEntity Send(SMSEntity entity);
 

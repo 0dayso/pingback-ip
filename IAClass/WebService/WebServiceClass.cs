@@ -236,18 +236,9 @@ namespace IAClass.WebService
 
                 if (!string.IsNullOrEmpty(request.customerPhone))
                 {
-                    if (Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
+                    if (!Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
                     {
-                        //处理销售点仅用一个手机号给所有乘客出保险的偷懒行为
-                        if (Case.CountMobile(request.customerPhone, request.username) > 5)
-                        {
-                            response.Trace.ErrorMsg = "该手机号码已重复使用多次，请如实填写乘客的手机号码，以提供短信服务！";
-                            return response;
-                        }
-                    }
-                    else
-                    {
-                        response.Trace.ErrorMsg = "手机号码不正确！";
+                        response.Trace.ErrorMsg = "手机号码格式不正确！";
                         return response;
                     }
                 }
@@ -293,9 +284,18 @@ namespace IAClass.WebService
                     bool isMobileNoRequired = Convert.ToBoolean(drProduct["IsMobileNoRequired"]);
                     if (isMobileNoRequired)
                     {
-                        if (!Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
+                        if (Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
                         {
-                            response.Trace.ErrorMsg = "该款产品必须填写手机号！";
+                            //处理销售点仅用一个手机号给所有乘客出保险的偷懒行为
+                            if (Case.CountMobile(request.customerPhone, request.username) > 5)
+                            {
+                                response.Trace.ErrorMsg = "该手机号已重复使用多次，请如实填写以提供短信服务！";
+                                return response;
+                            }
+                        }
+                        else
+                        {
+                            response.Trace.ErrorMsg = "该款产品必须提供手机号,请检查是否正确！";
                             return response;
                         }
                     }
@@ -335,6 +335,7 @@ namespace IAClass.WebService
                     response.AgentName = userLogin.DisplayName;
                     //response.ValidationPhoneNumber = UserClass.GetValidationPhoneNumber(request.username);
 
+                    #region 数据库事务
                     //2008.4.19 改用全手工方式 因为 Nbear 的事务处理似乎不能及时释放掉connection,越来越的连接…满负荷…导致客户端访问webservice连接超时
                     using (SqlConnection cnn = new SqlConnection(Common.ConnectionString))
                     {
@@ -514,7 +515,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                             }
                         }
                     }
-
+#endregion
                     return response;
                 }
                 else

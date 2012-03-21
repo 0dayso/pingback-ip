@@ -38,7 +38,7 @@ namespace Jiandanbao
         /// <remarks/>
         public MyWebService()
         {
-            this.Url = "http://test.jiandanbao.com:5230/MyWebService.asmx";
+            this.Url = "http://test.jiandanbao.com:5555/MyWebService.asmx";
         }
 
         /// <remarks/>

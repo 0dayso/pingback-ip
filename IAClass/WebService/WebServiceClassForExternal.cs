@@ -9,6 +9,11 @@ namespace IAClass.WebService
 {
     public class WebServiceClassForExternal
     {
+        /// <summary>
+        /// 投保接口,本接口对 XML 节点名称大小写敏感
+        /// </summary>
+        /// <param name="requestXML"></param>
+        /// <returns></returns>
         public static string Issue(string requestXML)
         {
             /* 请求参数
@@ -62,6 +67,11 @@ namespace IAClass.WebService
             return ret;
         }
 
+        /// <summary>
+        /// 退保接口,本接口对 XML 节点名称大小写敏感
+        /// </summary>
+        /// <param name="requestXML"></param>
+        /// <returns></returns>
         public static string DiscardIt(string requestXML)
         {
             /*请求参数

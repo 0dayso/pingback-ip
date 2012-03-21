@@ -76,6 +76,10 @@ namespace @__a
 
         private static NBearLite.QueryColumn _datetime = new NBearLite.QueryColumn((___TABLE_NAME + ".datetime"), System.Data.DbType.DateTime);
 
+        private static NBearLite.QueryColumn _dateDiscarded = new NBearLite.QueryColumn((___TABLE_NAME + ".dateDiscarded"), System.Data.DbType.DateTime);
+
+        private static NBearLite.QueryColumn _dateQueryed = new NBearLite.QueryColumn((___TABLE_NAME + ".dateQueryed"), System.Data.DbType.DateTime);
+
         private static NBearLite.QueryColumn _isIssued = new NBearLite.QueryColumn((___TABLE_NAME + ".isIssued"), System.Data.DbType.Boolean);
 
         private static NBearLite.QueryColumn _isPrinted = new NBearLite.QueryColumn((___TABLE_NAME + ".isPrinted"), System.Data.DbType.Boolean);
@@ -85,8 +89,6 @@ namespace @__a
         private static NBearLite.QueryColumn _isQueryed = new NBearLite.QueryColumn((___TABLE_NAME + ".isQueryed"), System.Data.DbType.Boolean);
 
         private static NBearLite.QueryColumn _isWithdrawed = new NBearLite.QueryColumn((___TABLE_NAME + ".isWithdrawed"), System.Data.DbType.Boolean);
-
-        private static NBearLite.QueryColumn _QueryedDatetime = new NBearLite.QueryColumn((___TABLE_NAME + ".QueryedDatetime"), System.Data.DbType.DateTime);
 
         private static NBearLite.QueryColumn _enabled = new NBearLite.QueryColumn((___TABLE_NAME + ".enabled"), System.Data.DbType.Boolean);
 
@@ -326,6 +328,36 @@ namespace @__a
             }
         }
 
+        public NBearLite.QueryColumn dateDiscarded
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _dateDiscarded;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".dateDiscarded"), System.Data.DbType.DateTime);
+                }
+            }
+        }
+
+        public NBearLite.QueryColumn dateQueryed
+        {
+            get
+            {
+                if ((this.___aliasName == ___TABLE_NAME))
+                {
+                    return _dateQueryed;
+                }
+                else
+                {
+                    return new NBearLite.QueryColumn((this.___aliasName + ".dateQueryed"), System.Data.DbType.DateTime);
+                }
+            }
+        }
+
         public NBearLite.QueryColumn isIssued
         {
             get
@@ -397,21 +429,6 @@ namespace @__a
                 else
                 {
                     return new NBearLite.QueryColumn((this.___aliasName + ".isWithdrawed"), System.Data.DbType.Boolean);
-                }
-            }
-        }
-
-        public NBearLite.QueryColumn QueryedDatetime
-        {
-            get
-            {
-                if ((this.___aliasName == ___TABLE_NAME))
-                {
-                    return _QueryedDatetime;
-                }
-                else
-                {
-                    return new NBearLite.QueryColumn((this.___aliasName + ".QueryedDatetime"), System.Data.DbType.DateTime);
                 }
             }
         }

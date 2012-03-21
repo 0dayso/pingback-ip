@@ -9,7 +9,7 @@ namespace IAClass.Issuing
     /// <summary>
     /// 投保操作类接口定义
     /// </summary>
-    public interface IIssuing
+    interface IIssuing
     {
         /// <summary>
         /// 投保

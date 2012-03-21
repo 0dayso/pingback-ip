@@ -25,10 +25,10 @@ namespace IAClass.SMS
         /// <summary>
         /// 普通构造函数
         /// </summary>
-        public SMSFacade()
-        {
-            Initiate();
-        }
+        //public SMSFacade()
+        //{
+        //    Initiate();
+        //}
 
         /// <summary>
         /// 初始化，注册容器。

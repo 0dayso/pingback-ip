@@ -235,6 +235,11 @@ namespace IAMessageQ
 
         private void btnIssueStop_Click(object sender, EventArgs e)
         {
+            Stop();
+        }
+
+        private void Stop()
+        {
             UpdateControls(false);
 
             new Thread(() =>
@@ -252,8 +257,16 @@ namespace IAMessageQ
 
         private void FormQueue_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(MQClient != null)
+            if (MQClient != null)
+            {
+                Stop();
+                while (countRunningThread != 0 || IsRunning)
+                {
+                    Thread.Sleep(5000);
+                }
+
                 MQClient.Close();
+            }
         }
     }
 }

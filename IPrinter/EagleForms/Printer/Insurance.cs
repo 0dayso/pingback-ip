@@ -159,32 +159,33 @@ namespace EagleForms.Printer
                 GetInsuranceSeq();
                 printHandle.Print(this);
             }
-            catch (System.Drawing.Printing.InvalidPrinterException)
+            catch (System.Drawing.Printing.InvalidPrinterException e)
             {
                 this.BeginInvoke(new MethodInvoker(delegate()
                     {
-                        MessageBox.Show("打印失败！" + System.Environment.NewLine
+                        MessageBox.Show("无法连接打印机！" + System.Environment.NewLine
                                             + System.Environment.NewLine
-                                            + "请查询出单记录，可进行补打。", "本地提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                            + "请用记事本、Word等办公软件测试打印机是否正常工作。", "本地提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }));
+                EagleString.EagleFileIO.LogWrite(e.ToString());
             }
             catch (System.Net.WebException e1)
             {
                 this.BeginInvoke(new MethodInvoker(delegate()
                 {
-                    MessageBox.Show(e1.Message + System.Environment.NewLine
+                    MessageBox.Show("出单异常，" + System.Environment.NewLine
                                             + System.Environment.NewLine
-                                            + "请查询出单记录，若已出单可进行补打。", "本地提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                            + "请查询出单记录，若已出单可进行补打；若未出单请重新尝试。", "本地提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }));
                 EagleString.EagleFileIO.LogWrite(e1.ToString());
             }
-            catch (Exception ex)
+            catch (Exception e2)
             {
                 this.BeginInvoke(new MethodInvoker(delegate()
                     {
-                        MessageBox.Show(ex.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(e2.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }));
-                EagleString.EagleFileIO.LogWrite(ex.ToString());
+                EagleString.EagleFileIO.LogWrite(e2.ToString());
             }
 
             this.Invoke(new MethodInvoker(delegate()

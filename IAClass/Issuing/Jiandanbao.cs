@@ -55,7 +55,7 @@ namespace Jiandanbao
             bool retCheck;//默认为false
             try
             {
-                retCheck = wsCheck.DataCheck(entity.ID, entity.PhoneNumber, "ALL");
+                retCheck = wsCheck.DataCheck(entity.ID, entity.PhoneNumber, "");
                 //if (retCheck == null)
                 //    throw new Exception("WebService返回为空！");
             }
@@ -102,7 +102,8 @@ namespace Jiandanbao
                 string msg = "dataCheck未通过(id={0}, phone={1})";
                 msg = string.Format(msg, entity.ID, entity.PhoneNumber);
                 Common.LogIt(msg);
-                result.Trace.ErrorMsg = msg;
+                //result.Trace.ErrorMsg = msg;
+                result.PolicyNo = "Z";
                 return result;
                 //entity.IOC_Class_Alias = "chinalife_bj";
                 //string msg = "jiandanbao_all核保未通过：id={0}, phone={1}  转入其他接口：{2}";
@@ -215,7 +216,7 @@ namespace Jiandanbao
             bool retCheck;//默认为false
             try
             {
-                retCheck = wsCheck.DataCheck(entity.ID, entity.PhoneNumber, "ALL");
+                retCheck = wsCheck.DataCheck(entity.ID, entity.PhoneNumber, "");
                 //if (retCheck == null)
                 //    throw new Exception("WebService返回为空！");
 
@@ -254,35 +255,42 @@ namespace Jiandanbao
                 }
                 else
                 {
-                    throw new Exception("核保未通过！");
+                    string msg = "dataCheck未通过(id={0}, phone={1})";
+                    msg = string.Format(msg, entity.ID, entity.PhoneNumber);
+                    Common.LogIt(msg);
+                    //result.Trace.ErrorMsg = msg;
+                    result.PolicyNo = "Z";
+                    return result;
                 }
             }
             catch (Exception e)
             {
-                Common.LogIt("step1---------" + System.Environment.NewLine + e.ToString());
-                //result.Trace.Detail = "简单保DataCheck访问失败！";
-                //return result;
-                entity.IOC_Class_Alias = "JinHang";
-                //string msg = "简单保核保未通过：id={0}, phone={1}  转入其他接口：{2}";
-                //msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_Class_Alias);
-                //Common.LogIt(msg);
+                Common.LogIt(e.ToString());
+                //Common.LogIt("step1---------" + System.Environment.NewLine + e.ToString());
+                ////result.Trace.Detail = "简单保DataCheck访问失败！";
+                ////return result;
+                //entity.IOC_Class_Alias = "JinHang";
+                ////string msg = "简单保核保未通过：id={0}, phone={1}  转入其他接口：{2}";
+                ////msg = string.Format(msg, entity.ID, entity.PhoneNumber, entity.IOC_Class_Alias);
+                ////Common.LogIt(msg);
 
-                try
-                {
-                    result = new IAClass.Issuing.IssuingFacade().Issue(entity);
-                    if (!string.IsNullOrEmpty(result.Trace.ErrorMsg))
-                    {
-                        throw new Exception(result.Trace.ErrorMsg);
-                    }
-                }
-                catch(Exception ee)
-                {
-                    Common.LogIt("step2---------" + System.Environment.NewLine + ee.ToString());
-                    entity.IOC_Class_Alias = "chinalife_bj";
-                    result = new IAClass.Issuing.IssuingFacade().Issue(entity);
-                }
+                //try
+                //{
+                //    result = new IAClass.Issuing.IssuingFacade().Issue(entity);
+                //    if (!string.IsNullOrEmpty(result.Trace.ErrorMsg))
+                //    {
+                //        throw new Exception(result.Trace.ErrorMsg);
+                //    }
+                //}
+                //catch(Exception ee)
+                //{
+                //    Common.LogIt("step2---------" + System.Environment.NewLine + ee.ToString());
+                //    entity.IOC_Class_Alias = "chinalife_bj";
+                //    result = new IAClass.Issuing.IssuingFacade().Issue(entity);
+                //}
             }
 
+            result.PolicyNo = "Z";
             return result;
         }
 

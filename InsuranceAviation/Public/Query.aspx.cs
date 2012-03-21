@@ -51,7 +51,7 @@ public partial class Public_Query : System.Web.UI.Page
 
             Common.DB.Update(Tables.t_Case)
                 .AddColumn(Tables.t_Case.isQueryed, true)
-                .AddColumn(Tables.t_Case.QueryedDatetime, DateTime.Now)
+                .AddColumn(Tables.t_Case.dateQueryed, DateTime.Now)
                 .Where(Tables.t_Case.customerID == idendity)
                 .Execute();
             //}

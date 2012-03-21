@@ -68,46 +68,57 @@ using IAClass.Issuing;
         }
 
         /// <summary>
-        /// 延迟投保，可以追溯
+        /// 延迟投保（追溯？）
         /// </summary>
         /// <param name="entityObj"></param>
         public static IssuingResultEntity IssueAsync(object entityObj)
         {
             string strSql = "";
+            IssuingResultEntity result = new IssuingResultEntity();
+
             try
             {
                 IssueEntity entity = (IssueEntity)entityObj;
-                IssuingFacade facade = new IssuingFacade();
-                IssuingResultEntity result = facade.Issue(entity);
+                t_Case policy = Case.Get(entity.CaseNo, entity.ConnectionString);
 
-                if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
+                if (policy.enabled)
                 {
-                    if (string.IsNullOrEmpty(result.PolicyNo))//没有保单号
+                    IssuingFacade facade = new IssuingFacade();
+                    result = facade.Issue(entity);
+
+                    if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
                     {
-                        result.Trace.ErrorMsg = "投保失败，没有返回保单号！？";
-                        strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
-                        SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
-                            new string[] { "@IssuingFailed", "@caseNo" },
-                            new object[] { result.Trace.ErrorMsg, entity.CaseNo });
+                        if (string.IsNullOrEmpty(result.PolicyNo))//没有保单号
+                        {
+                            result.Trace.ErrorMsg = "投保失败，没有返回保单号！？";
+                            strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
+                            SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
+                                new string[] { "@IssuingFailed", "@caseNo" },
+                                new object[] { result.Trace.ErrorMsg, entity.CaseNo });
+                        }
+                        else
+                        {
+                            //主键更新,不会阻塞  保存返回的正式保单号
+                            strSql = "update t_case set certNo = '{0}', [isIssued] = 1 where caseNo = '{1}'";
+                            strSql = string.Format(strSql, result.PolicyNo, entity.CaseNo);
+                            int eff = SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql);
+                            if (eff == 0)
+                                Common.LogIt("ExecuteNonQuery影响行数为0 : " + strSql);
+                        }
                     }
                     else
                     {
-                        //主键更新,不会阻塞  保存返回的正式保单号
-                        strSql = "update t_case set certNo = '{0}', [isIssued] = 1 where caseNo = '{1}'";
-                        strSql = string.Format(strSql, result.PolicyNo, entity.CaseNo);
-                        int eff = SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql);
-                        if (eff == 0)
-                            Common.LogIt("ExecuteNonQuery影响行数为0 : " + strSql);
+                        int len = result.Trace.ErrorMsg.Length;
+                        len = len > 100 ? 100 : len;
+                        strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
+                        SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
+                            new string[] { "@IssuingFailed", "@caseNo" },
+                            new object[] { result.Trace.ErrorMsg.Substring(0, len), entity.CaseNo });
                     }
                 }
                 else
                 {
-                    int len = result.Trace.ErrorMsg.Length;
-                    len = len > 100 ? 100 : len;
-                    strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
-                    SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
-                        new string[] { "@IssuingFailed", "@caseNo" },
-                        new object[] { result.Trace.ErrorMsg.Substring(0, len), entity.CaseNo });
+                    result.Trace.Detail = "投保已撤销。";
                 }
 
                 return result;
@@ -443,6 +454,7 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
             {
                 int eff = Common.DB.Update(Tables.t_Case)
                                 .AddColumn(Tables.t_Case.enabled, false)
+                                .AddColumn(Tables.t_Case.dateDiscarded, dtNow)
                                 .Where(Tables.t_Case.caseNo == caseNo)
                                 .Execute();
 
@@ -467,6 +479,11 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
 
         public static t_Case Get(string caseNo)
         {
+            return Get(caseNo, Common.ConnectionString);
+        }
+
+        public static t_Case Get(string caseNo, string connectionString)
+        {
             string strSql = @"
 SELECT a.*, b.displayname
   FROM [t_Case] a with(nolock)
@@ -474,7 +491,7 @@ SELECT a.*, b.displayname
   where a.caseNo = '{0}'
   order by datetime desc";
             strSql = string.Format(strSql, caseNo);
-            DataSet ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
+            DataSet ds = SqlHelper.ExecuteDataset(connectionString, CommandType.Text, strSql);
 
             t_Case policy = NBear.Mapping.ObjectConvertor.ToObject<t_Case>(ds.Tables[0].Rows[0]);
             return policy;

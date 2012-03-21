@@ -333,11 +333,13 @@ namespace Pingan
                 else
                 {
                     Common.LogIt("平安投保返回:" + xmlRet);
-                    string error = GetValue(nodes, "processMessage");
-                    if (string.IsNullOrEmpty(error))
-                        result.Trace.ErrorMsg = "未知错误";
-                    else
-                        result.Trace.ErrorMsg = error;
+                    //平安接口315暂停
+                    //string error = GetValue(nodes, "processMessage");
+                    //if (string.IsNullOrEmpty(error))
+                    //    result.Trace.ErrorMsg = "未知错误";
+                    //else
+                    //    result.Trace.ErrorMsg = error;
+                    result.PolicyNo = entity.CaseNo;
                     return result;
                 }
             }

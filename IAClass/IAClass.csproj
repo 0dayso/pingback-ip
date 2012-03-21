@@ -100,11 +100,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Alipay\AlipayConfig.cs" />
-    <Compile Include="Alipay\AlipayCore.cs" />
-    <Compile Include="Alipay\AlipayNotify.cs" />
-    <Compile Include="Alipay\AlipayService.cs" />
-    <Compile Include="Alipay\AlipaySubmit.cs" />
+    <Compile Include="Entity\PaymentEntity.cs" />
+    <Compile Include="Entity\SMSEntity.cs" />
+    <Compile Include="Entity\MessageEntity.cs" />
+    <Compile Include="Payment\Alipay\AlipayConfig.cs" />
+    <Compile Include="Payment\Alipay\AlipayCore.cs" />
+    <Compile Include="Payment\Alipay\AlipayNotify.cs" />
+    <Compile Include="Payment\Alipay\AlipayService.cs" />
+    <Compile Include="Payment\Alipay\AlipaySubmit.cs" />
     <Compile Include="Bussiness\Case.cs" />
     <Compile Include="Bussiness\InterfaceStat.cs" />
     <Compile Include="Bussiness\Payment.cs" />
@@ -133,7 +136,7 @@
     <Compile Include="Entity\t_Feedback.cs" />
     <Compile Include="Entity\t_Product.cs" />
     <Compile Include="Entity\t_User.cs" />
-    <Compile Include="Entity\WebServiceRequestEntity.cs" />
+    <Compile Include="Entity\WebServiceEntity.cs" />
     <Compile Include="Miscel\FusionCharts.cs" />
     <Compile Include="InsuranceAviation.cs" />
     <Compile Include="Miscel\Ip2Location.cs" />
@@ -155,6 +158,8 @@
     <Compile Include="MyPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Payment\IPay.cs" />
+    <Compile Include="Payment\PayFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bussiness\User.cs" />
     <Compile Include="SMS\ISMS.cs" />
@@ -185,6 +190,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Payment\IPS\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
