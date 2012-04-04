@@ -53,7 +53,7 @@ namespace Com.Alipay
             Dictionary<string, string> dicArray = new Dictionary<string, string>();
             foreach (KeyValuePair<string, string> temp in dicArrayPre)
             {
-                if (temp.Key.ToLower() != "sign" && temp.Key.ToLower() != "sign_type" && temp.Value != "" && temp.Value != null)
+                if (temp.Key.ToLower() != "aspxautodetectcookiesupport" && temp.Key.ToLower() != "sign" && temp.Key.ToLower() != "sign_type" && temp.Value != "" && temp.Value != null)
                 {
                     dicArray.Add(temp.Key.ToLower(), temp.Value);
                 }

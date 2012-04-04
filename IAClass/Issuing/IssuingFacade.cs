@@ -9,51 +9,9 @@ using Microsoft.Practices.Unity.Configuration;
 
 namespace IAClass.Issuing
 {
-    public class IssuingFacade
+    public class IssuingFacade : Unity
     {
-        static IUnityContainer container;
-        IIssuing issuingInstance;
-
-        /// <summary>
-        /// 静态构造函数,优先于普通构造函数，只执行一次，被所有实例共享
-        /// </summary>
-        static IssuingFacade()
-        {
-            Initiate();
-        }
-
-        /// <summary>
-        /// 普通构造函数
-        /// </summary>
-        //public IssuingFacade()
-        //{
-        //    Initiate();
-        //}
-
-        /// <summary>
-        /// 初始化，注册容器。
-        /// 注意：所有配置文件中的注册的对象，需已经存在，否则出错
-        /// </summary>
-        static void Initiate()
-        {
-            if (container == null)
-            {
-                try
-                {
-
-                    //注册对象
-                    container = new UnityContainer();
-                    UnityConfigurationSection section = ConfigurationManager.GetSection("unity") as UnityConfigurationSection;
-                    section.Containers.Default.Configure(container);
-                }
-                catch (Exception e)
-                {
-                    container = null;
-                    Common.LogIt(e.ToString());
-                    throw;
-                }
-            }
-        }
+        IIssuing instance;
 
         /// <summary>
         /// 投保代理
@@ -69,7 +27,7 @@ namespace IAClass.Issuing
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
+                instance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
             }
             catch (Exception e)
             {
@@ -77,7 +35,7 @@ namespace IAClass.Issuing
                 throw;
             }
 
-            result = issuingInstance.Issue(entity);
+            result = instance.Issue(entity);
             return result;
         }
 
@@ -93,7 +51,7 @@ namespace IAClass.Issuing
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
+                instance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
             }
             catch (Exception e)
             {
@@ -101,7 +59,7 @@ namespace IAClass.Issuing
                 throw;
             }
 
-            result = issuingInstance.Withdraw(entity);
+            result = instance.Withdraw(entity);
             return result;
         }
 
@@ -117,7 +75,7 @@ namespace IAClass.Issuing
             try
             {
                 //注入实例
-                issuingInstance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
+                instance = container.Resolve<IIssuing>(entity.IOC_Class_Alias);
             }
             catch (Exception e)
             {
@@ -125,7 +83,7 @@ namespace IAClass.Issuing
                 throw;
             }
 
-            result = issuingInstance.Validate(entity);
+            result = instance.Validate(entity);
             return result;
         }
     }

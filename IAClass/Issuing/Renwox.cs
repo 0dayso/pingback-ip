@@ -36,7 +36,7 @@ namespace Renwox
 
             if (string.IsNullOrEmpty(resp.Trace.ErrorMsg))
             {
-                result.PolicyNo = result.Trace.Detail = resp.SerialNo;
+                result.PolicyNo = result.Trace.Detail = resp.PolicyNo;
             }
             else
             {

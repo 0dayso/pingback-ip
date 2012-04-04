@@ -34,7 +34,14 @@ namespace Jiandanbao
 
         public TraceEntity Validate(IssueEntity entity)
         {
-            return new TraceEntity();
+            TraceEntity ret = new TraceEntity();
+
+            //if (entity.EffectiveDate.Date == DateTime.Today)
+            //{
+            //    ret.ErrorMsg = "该产品不支持当日投保.";
+            //}
+
+            return ret;
         }
 
         /// <summary>
@@ -45,6 +52,12 @@ namespace Jiandanbao
         public IssuingResultEntity Issue(IssueEntity entity)
         {
             IssuingResultEntity result = new IssuingResultEntity();
+
+            if (entity.EffectiveDate.Date == DateTime.Today)
+            {//该产品不支持当日投保.留待手工处理
+                result.PolicyNo = "Z";
+                return result;
+            }
 
             if (!Regex.IsMatch(entity.PhoneNumber, "^1[3458][0-9]{9}$"))
             {

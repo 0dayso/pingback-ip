@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="IPS_Notify.aspx.cs" Inherits="Public_IPS_Notify" %>

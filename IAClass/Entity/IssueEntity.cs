@@ -34,18 +34,6 @@ namespace IAClass.Entity
         [NonSerialized]
         public System.Data.Common.DbCommand DbCommand;
         /// <summary>
-        /// 产品编号,用于存取当前产品的投保流水号(Chinalife使用)
-        /// </summary>
-        public int ProductId;
-        /// <summary>
-        /// IOC容器中注册的对象名称（name属性，非类名）
-        /// </summary>
-        public string IOC_Class_Alias;
-        /// <summary>
-        /// 接口类所需要的参数
-        /// </summary>
-        public string IOC_Class_Parameters;
-        /// <summary>
         /// 当前出单记录的数据库ID
         /// </summary>
         public string CaseId;

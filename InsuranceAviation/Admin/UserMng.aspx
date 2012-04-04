@@ -33,9 +33,10 @@
                     <td valign="top" style="height: 50px">
                         
                         
-                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
-                            SelectCommand="SELECT username, password, displayname, address, phone, enabled, userGroup, enabled_Issuing, price FROM t_User with(nolock) WHERE (parent = @parent) AND (usertype &lt;&gt; 99) AND (username LIKE '%' + @keyword + '%') OR (parent = @parent) AND (usertype &lt;&gt; 99) AND (displayname LIKE '%' + @keyword + '%') OR (username = @parent) ORDER BY usertype, datetime DESC"
+                        <asp:SqlDataSource ID="sdsUserList" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
+                            SelectCommand="SELECT username, password, displayname, address, phone, enabled, userGroup, enabled_Issuing, price, balance FROM t_User WITH (nolock) WHERE (parent = @parent) AND (usertype &lt;&gt; 99) AND (username LIKE '%' + @keyword + '%') OR (parent = @parent) AND (usertype &lt;&gt; 99) AND (displayname LIKE '%' + @keyword + '%') OR (username = @parent) ORDER BY usertype, datetime DESC"
                             InsertCommand="INSERT INTO t_User(username, password, displayname, phone, address, enabled, parent, usertype, userGroup, parentPath, distributor, price) VALUES (@username, @password, @displayname, @phone, @address, @enabled, @parent, @usertype, @userGroup, @parentPath, @distributor, @price)"
+                            
                             
                             
                             UpdateCommand="UPDATE t_User SET displayname = @displayname, phone = @phone, address = @address, enabled = @enabled, password = @password, userGroup = @userGroup, enabled_Issuing = @enabled_Issuing, price = @price WHERE (username = @username)">
@@ -102,7 +103,7 @@
                                         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                             <ContentTemplate>
                                                 <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AutoGenerateColumns="False"
-                                                    DataKeyNames="username" DataSourceID="SqlDataSource1" BackColor="White" BorderColor="#DEDFDE"
+                                                    DataKeyNames="username" DataSourceID="sdsUserList" BackColor="White" BorderColor="#DEDFDE"
                                                     BorderStyle="Solid" BorderWidth="1px" CellPadding="4" ForeColor="Black" GridLines="Vertical"
                                                     ShowFooter="True" OnRowDataBound="GridView1_RowDataBound" 
                                                     OnDataBound="GridView1_DataBound" onrowupdating="GridView1_RowUpdating">
@@ -169,6 +170,7 @@
                                                             </FooterTemplate>
                                                         </asp:TemplateField>
                                                         <asp:BoundField DataField="price" DataFormatString="{0:c}" HeaderText="单价" />
+                                                        <asp:BoundField DataField="balance" DataFormatString="{0:c}" HeaderText="余额" />
                                                         <asp:TemplateField HeaderText="用户组">
                                                             <EditItemTemplate>
                                                                 <asp:TextBox ID="TextBox5" runat="server" Text='<%# Bind("userGroup") %>'></asp:TextBox>

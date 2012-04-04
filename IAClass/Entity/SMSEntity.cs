@@ -14,6 +14,5 @@ namespace IAClass.Entity
         public string MobilePhone;
         public string Content;
         public string CaseNo;
-        public string IOC_Class_Alias;
     }
 }

@@ -169,22 +169,18 @@ namespace EagleForms.Printer
                     }));
                 EagleString.EagleFileIO.LogWrite(e.ToString());
             }
-            catch (System.Net.WebException e1)
-            {
-                this.BeginInvoke(new MethodInvoker(delegate()
-                {
-                    MessageBox.Show("出单异常，" + System.Environment.NewLine
-                                            + System.Environment.NewLine
-                                            + "请查询出单记录，若已出单可进行补打；若未出单请重新尝试。", "本地提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }));
-                EagleString.EagleFileIO.LogWrite(e1.ToString());
-            }
+            //catch (System.Net.WebException e1)
+            //{
+                
+            //}
             catch (Exception e2)
             {
                 this.BeginInvoke(new MethodInvoker(delegate()
-                    {
-                        MessageBox.Show(e2.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }));
+                {
+                    MessageBox.Show("出单异常，请查询出单记录。" + System.Environment.NewLine
+                                            + System.Environment.NewLine
+                                            + "若已出单可进行补打；若未出单请稍后重新尝试。", "本地提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }));
                 EagleString.EagleFileIO.LogWrite(e2.ToString());
             }
 

@@ -62,7 +62,9 @@ namespace IAClass.WebService
                 return ret;
             }
 
-            resp = WebServiceClass.Purchase(request, true);
+            resp = WebServiceClass.Purchase(request, true, true);
+            if (string.IsNullOrEmpty(resp.PolicyNo))
+                resp.PolicyNo = resp.CaseNo;
             ret = Common.XmlSerialize<PurchaseResponseEntity>(resp);
             return ret;
         }

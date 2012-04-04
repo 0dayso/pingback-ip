@@ -23,7 +23,7 @@ namespace IAClass
             {
                 IssueEntity entity = (IssueEntity)r;
 
-                entity.ProductId = 6;// int.Parse(request.InsuranceCode);
+                //entity.ProductId = 6;// int.Parse(request.InsuranceCode);
                 entity.IOC_Class_Alias = "test";
 
                 IAClass.Issuing.IssuingFacade facade = new Issuing.IssuingFacade();

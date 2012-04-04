@@ -158,13 +158,18 @@ namespace IAClass.WebService
             return Purchase(request, false);
         }
 
+        public static PurchaseResponseEntity Purchase(PurchaseRequestEntity request, bool isExternal)
+        {
+            return Purchase(request, false, false);
+        }
+
         /// <summary>
         /// 出单
         /// </summary>
         /// <param name="request"></param>
         /// <param name="isExternal">是否外部(第三方机构)调用</param>
         /// <returns></returns>
-        public static PurchaseResponseEntity Purchase(PurchaseRequestEntity request, bool isExternal)
+        public static PurchaseResponseEntity Purchase(PurchaseRequestEntity request, bool isExternal, bool isSync)
         {
             PurchaseResponseEntity response = new PurchaseResponseEntity();
 
@@ -177,72 +182,75 @@ namespace IAClass.WebService
             {
                 DateTime dtNow = Common.GetDatetime();//DateTime.Now;
 
-                #region 有效性验证
-                if (request.flightDate < dtNow.AddMinutes(Common.IssuingDeadline))//如果填写的起飞时间已过
+                if (!isSync)
                 {
-                    if (request.flightDate.Date == dtNow.Date)//当日起飞，则进行时间部分的验证
+                    #region 有效性验证
+                    if (request.flightDate < dtNow.AddMinutes(Common.IssuingDeadline))//如果填写的起飞时间已过
                     {
-                        if (request.flightDate.TimeOfDay.Ticks > 0)
-                            response.Trace.ErrorMsg = "请输入准确的起飞时间！";
-                        else//时间部分为零（PNR未能导入）
-                            response.Trace.ErrorMsg = "请输入起飞时间！";
+                        if (request.flightDate.Date == dtNow.Date)//当日起飞，则进行时间部分的验证
+                        {
+                            if (request.flightDate.TimeOfDay.Ticks > 0)
+                                response.Trace.ErrorMsg = "请输入准确的起飞时间！";
+                            else//时间部分为零（PNR未能导入）
+                                response.Trace.ErrorMsg = "请输入起飞时间！";
+                            return response;
+                        }
+                        else//日期是昨天、昨天以前
+                        {
+                            response.Trace.ErrorMsg = "请输入正确的乘机日期！";
+                            return response;
+                        }
+                    }
+                    else if ((request.flightDate - dtNow) > new TimeSpan(180, 0, 0, 0, 0))
+                    {
+                        response.Trace.ErrorMsg = "乘机时间太过遥远（已超过180天）！";
                         return response;
                     }
-                    else//日期是昨天、昨天以前
-                    {
-                        response.Trace.ErrorMsg = "请输入正确的乘机日期！";
-                        return response;
-                    }
-                }
-                else if ((request.flightDate - dtNow) > new TimeSpan(180, 0, 0, 0, 0))
-                {
-                    response.Trace.ErrorMsg = "乘机时间太过遥远（已超过180天）！";
-                    return response;
-                }
 
-                if (string.IsNullOrEmpty(request.flightNo))
-                {
-                    response.Trace.ErrorMsg = "航班号不能为空！";
-                    return response;
-                }
-
-                if (string.IsNullOrEmpty(request.customerID))
-                {
-                    response.Trace.ErrorMsg = "乘客证件号码不能为空！";
-                    return response;
-                }
-                else
-                {
-                    if (request.customerIDType == IdentityType.身份证 && !Common.CheckIDCard(request.customerID))
+                    if (string.IsNullOrEmpty(request.flightNo))
                     {
-                        response.Trace.ErrorMsg = "身份证号码填写有误,请核对！";
+                        response.Trace.ErrorMsg = "航班号不能为空！";
                         return response;
                     }
-                }
 
-                if (string.IsNullOrEmpty(request.customerName))
-                {
-                    response.Trace.ErrorMsg = "乘客姓名不能为空！";
-                    return response;
-                }
-                else
-                {
-                    if (request.customerName.Contains("  "))
+                    if (string.IsNullOrEmpty(request.customerID))
                     {
-                        response.Trace.ErrorMsg = "客户名称不合法: 姓名不能有连续空格！";
+                        response.Trace.ErrorMsg = "乘客证件号码不能为空！";
                         return response;
                     }
-                }
-
-                if (!string.IsNullOrEmpty(request.customerPhone))
-                {
-                    if (!Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
+                    else
                     {
-                        response.Trace.ErrorMsg = "手机号码格式不正确！";
+                        if (request.customerIDType == IdentityType.身份证 && !Common.CheckIDCard(request.customerID))
+                        {
+                            response.Trace.ErrorMsg = "身份证号码填写有误,请核对！";
+                            return response;
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(request.customerName))
+                    {
+                        response.Trace.ErrorMsg = "乘客姓名不能为空！";
                         return response;
                     }
+                    else
+                    {
+                        if (request.customerName.Contains("  "))
+                        {
+                            response.Trace.ErrorMsg = "客户名称不合法: 姓名不能有连续空格！";
+                            return response;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(request.customerPhone))
+                    {
+                        if (!Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
+                        {
+                            response.Trace.ErrorMsg = "手机号码格式不正确！";
+                            return response;
+                        }
+                    }
+                    #endregion
                 }
-                #endregion
 
                 UserLoginResponse userLogin = UserClass.AccessCheck(request.username, request.password);
 
@@ -260,14 +268,10 @@ namespace IAClass.WebService
                     //    return response;
                     //}
 
-                    DataSet dsSerial;
-                    if (!Common.IsDuplicable)
+                    if (Case.IsIssued(request.flightDate, request.customerName, request.customerID))
                     {
-                        if (Case.IsIssued(request.flightDate, request.customerID))
-                        {
-                            response.Trace.ErrorMsg = "该旅客信息已经入库，请勿重复打印！";
-                            return response;
-                        }
+                        response.Trace.ErrorMsg = "该旅客信息已经入库，请勿重复打印！";
+                        return response;
                     }
 
                     DataSet dsProduct = Product.GetProduct(request.InsuranceCode);
@@ -360,7 +364,7 @@ namespace IAClass.WebService
   deleted.locationInclude, deleted.locationExclude, deleted.locationComment
   where caseOwner = '{0}' and caseSupplier = '{1}'";
                                 strSql = string.Format(strSql, request.username, caseSupplier);
-                                dsSerial = new DataSet();
+                                DataSet dsSerial = new DataSet();
                                 SqlCommand cmm = new SqlCommand("", cnn, tran);
                                 cmm.CommandText = strSql;
                                 SqlDataAdapter sda = new SqlDataAdapter(cmm);
@@ -369,7 +373,7 @@ namespace IAClass.WebService
                                 if (dsSerial.Tables[0].Rows.Count == 0)
                                 {
                                     tran.Rollback();
-                                    response.Trace.ErrorMsg = "下单失败，没有可用的单证号！";
+                                    response.Trace.ErrorMsg = "没有可用的单证号，请联系相关业务人员！";
                                     return response;
                                 }
 
@@ -431,7 +435,6 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                     entity.ExpiryDate = request.flightDate.AddDays(caseDuration - 1);
                                     entity.PhoneNumber = request.customerPhone;
                                     entity.FlightNo = request.flightNo;
-                                    entity.ProductId = int.Parse(request.InsuranceCode);
 
                                     entity.IsLazyIssue = isIssuingLazyEnabled;
                                     entity.DbCommand = cmm;
@@ -449,7 +452,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                             //th.Start(entity);
                                             entity.ConnectionString = Common.ConnectionString;
                                             entity.MaxRedelivery = 3;
-                                            Common.MessageQ.EnqueueObject(entity);
+                                            Common.AQ_Issuing.EnqueueObject(entity);
                                         }
                                         else
                                         {

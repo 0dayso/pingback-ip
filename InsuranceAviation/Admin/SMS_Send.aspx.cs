@@ -9,7 +9,7 @@ using IAClass.SMS;
 
 public partial class Admin_SMS_Send : System.Web.UI.Page
 {
-    static string smsContent = "$name$您好,您的航空意外保险已生效,生效期为$date$零时起至24时止,保单号:***********,可查询95511中国平安";
+    static string smsContent = "$name$的航空保险生效期$date$零时起至24时止保单号***********查询95511中国平安";
     
     protected void Page_Load(object sender, EventArgs e)
     {

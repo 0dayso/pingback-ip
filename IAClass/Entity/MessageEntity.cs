@@ -6,10 +6,10 @@ using System.Text;
 namespace IAClass.Entity
 {
     /// <summary>
-    /// 消息队列中实体的父类
+    /// 消息队列中实体的抽象基类
     /// </summary>
     [Serializable]
-    public abstract class MessageEntity
+    public abstract class MessageEntity : UnityEntity
     {
         /// <summary>
         /// 消息已被重发的次数

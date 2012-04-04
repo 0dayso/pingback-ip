@@ -293,6 +293,16 @@ namespace Pingan
             return new TraceEntity();
         }
 
+        //若是中文名,去除*CHD等字样
+        private string GetChineseName(string source)
+        {
+            string cname = Common.InterceptChinese(source);
+            if (string.IsNullOrEmpty(cname))
+                return source;//英文名字
+            else
+                return cname;
+        }
+
         public IssuingResultEntity Issue(IssueEntity entity)
         {
             IssuingResultEntity result = new IssuingResultEntity();
@@ -307,7 +317,7 @@ namespace Pingan
             cert[0].idNo = entity.ID;
             cert[0].idType = GetIdType(entity.IDType);
             cert[0].matuDate = entity.ExpiryDate.ToString("yyyyMMdd");
-            cert[0].name = entity.Name;
+            cert[0].name = GetChineseName(entity.Name);
             cert[0].units = "1";
             cert[0].mobile = entity.PhoneNumber;
             string xmlRet = "";
@@ -334,12 +344,11 @@ namespace Pingan
                 {
                     Common.LogIt("平安投保返回:" + xmlRet);
                     //平安接口315暂停
-                    //string error = GetValue(nodes, "processMessage");
-                    //if (string.IsNullOrEmpty(error))
-                    //    result.Trace.ErrorMsg = "未知错误";
-                    //else
-                    //    result.Trace.ErrorMsg = error;
-                    result.PolicyNo = entity.CaseNo;
+                    string error = GetValue(nodes, "processMessage");
+                    if (string.IsNullOrEmpty(error))
+                        result.Trace.ErrorMsg = "未知错误";
+                    else
+                        result.Trace.ErrorMsg = error;
                     return result;
                 }
             }

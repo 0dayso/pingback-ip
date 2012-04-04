@@ -10,10 +10,10 @@ namespace Instony
     public abstract class IssuingALL : IAClass.Issuing.IIssuing
     {
         static InstonyService ws = new InstonyService();
-        public abstract string key
-        {
-            get;
-        }
+        //public abstract string key
+        //{
+        //    get;
+        //}
 
         public TraceEntity Validate(IssueEntity entity)
         {
@@ -49,7 +49,8 @@ namespace Instony
             string response = "";
             try
             {
-                response = ws.doSaleService(xmlDoc.OuterXml, key);
+                string[] config = entity.IOC_Class_Parameters.Split(',');
+                response = ws.doSaleService(xmlDoc.OuterXml, config[0]);
                 if(string.IsNullOrEmpty(response))
                     throw new Exception("意时网投保WebService返回为空！");
             }
@@ -89,7 +90,8 @@ namespace Instony
             string response = "";
             try
             {
-                response = ws.CannelPolicyByPolicyNos(entity.PolicyNo, key);
+                string[] config = entity.IOC_Class_Parameters.Split(',');
+                response = ws.CannelPolicyByPolicyNos(entity.PolicyNo, config[0]);
                 if (string.IsNullOrEmpty(response))
                     throw new Exception("意时网退保WebService返回为空！");
             }
@@ -136,29 +138,29 @@ namespace Instony
 
     public class Issuing : IssuingALL
     {
-        static string _key;
-        public override string key
-        { 
-            get { 
-                if(string.IsNullOrEmpty(_key))
-                    _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing"];
-                return _key;
-            }
-        }
+        //static string _key;
+        //public override string key
+        //{ 
+        //    get { 
+        //        if(string.IsNullOrEmpty(_key))
+        //            _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing"];
+        //        return _key;
+        //    }
+        //}
     }
 
     public class Issuing7 : IssuingALL
     {
-        static string _key;
-        public override string key
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_key))
-                    _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing7"];
-                return _key;
-            }
-        }
+        //static string _key;
+        //public override string key
+        //{
+        //    get
+        //    {
+        //        if (string.IsNullOrEmpty(_key))
+        //            _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing7"];
+        //        return _key;
+        //    }
+        //}
     }
 
     class IssuingXML

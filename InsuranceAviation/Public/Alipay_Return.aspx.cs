@@ -11,6 +11,7 @@ public partial class Public_Alipay_Return : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Common.LogIt(Request.Url.ToString());
         SortedDictionary<string, string> sPara = GetRequestGet();
 
         if (sPara.Count > 0)//判断是否有带返回参数
@@ -38,16 +39,16 @@ public partial class Public_Alipay_Return : System.Web.UI.Page
                     //判断该笔订单是否在商户网站中已经做过处理
                     //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
                     //如果有做过处理，不执行商户的业务程序
-                    IAClass.Bussiness.Payment.Pay(order_no, trade_no);
+                    if(IAClass.Bussiness.Payment.Callback(order_no, trade_no))
+                        Response.Write("付款成功");
+                    else
+                        Response.Write("订单确认失败,请联系管理员进行人工核对!");
                 }
                 else
                 {
                     Response.Write("trade_status=" + Request.QueryString["trade_status"]);
+                    Response.Write("trade_no=" + trade_no);
                 }
-
-                //打印页面
-                Response.Write("验证成功<br />");
-                Response.Write("trade_no=" + trade_no);
 
                 //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 

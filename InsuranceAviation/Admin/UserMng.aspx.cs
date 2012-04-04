@@ -13,7 +13,7 @@ public partial class Admin_UserMng : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        this.SqlDataSource1.SelectParameters[0].DefaultValue = User.Identity.Name;
+        this.sdsUserList.SelectParameters[0].DefaultValue = User.Identity.Name;
     }
     protected void btnNewUser_Click(object sender, EventArgs e)
     {
@@ -25,13 +25,13 @@ public partial class Admin_UserMng : System.Web.UI.Page
         string phone = ((TextBox)this.GridView1.FooterRow.FindControl("txtPhone")).Text.Trim();
         string userGroup = ((DropDownList)this.GridView1.FooterRow.FindControl("ddlUserCity")).SelectedItem.Text.Trim();
 
-        this.SqlDataSource1.InsertParameters[0].DefaultValue = username;
-        this.SqlDataSource1.InsertParameters[1].DefaultValue = password;
-        this.SqlDataSource1.InsertParameters[2].DefaultValue = displayname;
-        this.SqlDataSource1.InsertParameters[3].DefaultValue = address;
-        this.SqlDataSource1.InsertParameters[4].DefaultValue = phone;
-        this.SqlDataSource1.InsertParameters[5].DefaultValue = "true";
-        this.SqlDataSource1.InsertParameters[6].DefaultValue = User.Identity.Name;
+        this.sdsUserList.InsertParameters[0].DefaultValue = username;
+        this.sdsUserList.InsertParameters[1].DefaultValue = password;
+        this.sdsUserList.InsertParameters[2].DefaultValue = displayname;
+        this.sdsUserList.InsertParameters[3].DefaultValue = address;
+        this.sdsUserList.InsertParameters[4].DefaultValue = phone;
+        this.sdsUserList.InsertParameters[5].DefaultValue = "true";
+        this.sdsUserList.InsertParameters[6].DefaultValue = User.Identity.Name;
 
         DataSet ds = Common.DB.Select(Tables.t_User, Tables.t_User.usertype, Tables.t_User.parentPath)
                                             .Where(Tables.t_User.username == User.Identity.Name).ToDataSet();
@@ -42,14 +42,14 @@ public partial class Admin_UserMng : System.Web.UI.Page
         string[] pathArray = path.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
         string distributor = pathArray.Length > 1 ? pathArray[1] : User.Identity.Name;
 
-        this.SqlDataSource1.InsertParameters[7].DefaultValue = userType.ToString();
-        this.SqlDataSource1.InsertParameters[8].DefaultValue = userGroup;
-        this.SqlDataSource1.InsertParameters[9].DefaultValue = path;
-        this.SqlDataSource1.InsertParameters[10].DefaultValue = distributor;
+        this.sdsUserList.InsertParameters[7].DefaultValue = userType.ToString();
+        this.sdsUserList.InsertParameters[8].DefaultValue = userGroup;
+        this.sdsUserList.InsertParameters[9].DefaultValue = path;
+        this.sdsUserList.InsertParameters[10].DefaultValue = distributor;
 
         try
         {
-            this.SqlDataSource1.Insert();
+            this.sdsUserList.Insert();
         }
         catch(Exception ee)
         {

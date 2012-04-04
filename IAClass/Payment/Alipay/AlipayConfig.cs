@@ -48,11 +48,12 @@ namespace Com.Alipay
             //签约支付宝账号或卖家支付宝帐户
             seller_email = "pingback@qq.com";
 
+            string domain = HttpContext.Current.Request.Url.Host;
             //页面跳转同步返回页面文件路径 要用 http://格式的完整路径，不允许加?id=123这类自定义参数
-            return_url = "http://www.yoyoyn.cn/public/alipay_return.aspx";
+            return_url = "http://" + domain + "/public/alipay_return.aspx";
 
             //服务器通知的页面文件路径 要用 http://格式的完整路径，不允许加?id=123这类自定义参数
-            notify_url = "http://www.yoyoyn.cn/public/alipay_notify.aspx";
+            notify_url = "http://" + domain + "/public/alipay_notify.aspx";
 
 
             //↑↑↑↑↑↑↑↑↑↑请在这里配置您的基本信息↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

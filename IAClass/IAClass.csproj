@@ -103,6 +103,8 @@
     <Compile Include="Entity\PaymentEntity.cs" />
     <Compile Include="Entity\SMSEntity.cs" />
     <Compile Include="Entity\MessageEntity.cs" />
+    <Compile Include="Entity\UnityEntity.cs" />
+    <Compile Include="Payment\Alipay.cs" />
     <Compile Include="Payment\Alipay\AlipayConfig.cs" />
     <Compile Include="Payment\Alipay\AlipayCore.cs" />
     <Compile Include="Payment\Alipay\AlipayNotify.cs" />
@@ -129,7 +131,7 @@
     <Compile Include="Issuing\XiAnQiYi_ws.cs" />
     <Compile Include="Miscel\ActiveMQClient.cs" />
     <Compile Include="Miscel\SqlCommandSerializable.cs" />
-    <Compile Include="Miscel\Common.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="Entity\CommonEntity.cs" />
     <Compile Include="Entity\IssueEntity.cs" />
     <Compile Include="Entity\t_Case.cs" />
@@ -158,8 +160,9 @@
     <Compile Include="MyPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Payment\IPay.cs" />
-    <Compile Include="Payment\PayFacade.cs" />
+    <Compile Include="Payment\IBank.cs" />
+    <Compile Include="Payment\BankFacade.cs" />
+    <Compile Include="Payment\IPS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Bussiness\User.cs" />
     <Compile Include="SMS\ISMS.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="SMS\SMSFacade.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="Miscel\TimeOutSocket.cs" />
+    <Compile Include="Unity.cs" />
     <Compile Include="WebService\WebServiceClass.cs" />
     <Compile Include="WebService\WebServiceClassForExternal.cs" />
   </ItemGroup>

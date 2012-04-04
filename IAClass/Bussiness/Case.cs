@@ -293,16 +293,24 @@ ORDER BY count DESC";
             return ds;
         }
 
-        public static bool IsIssued(DateTime flightDate, string idNo)
+        /// <summary>
+        /// 判断是否重复打印,必须要有名字(销售点填错客人证件号码时有发生)
+        /// </summary>
+        /// <param name="flightDate"></param>
+        /// <param name="name"></param>
+        /// <param name="idNo"></param>
+        /// <returns></returns>
+        public static bool IsIssued(DateTime flightDate, string name, string idNo)
         {
             //这里非主键select虽然用readpast依然阻塞 使用with(nolock)来躲开其他线程的更新锁等，以避免阻塞
             string strSql = @"
 SELECT caseNo
   FROM t_Case with(nolock)
   where customerFlightDate = '{0}'
-  and customerID = '{1}'
+  and customerName = '{1}'
+  and customerID = '{2}'
   and enabled = 1";
-            strSql = string.Format(strSql, flightDate, idNo);
+            strSql = string.Format(strSql, flightDate, name, idNo);
             DataSet dsSerial = new DataSet();
             using (SqlConnection cnn = new SqlConnection(Common.ConnectionString))
             {
@@ -310,7 +318,7 @@ SELECT caseNo
                 SqlDataAdapter sda = new SqlDataAdapter(cmm);
                 sda.Fill(dsSerial);
             }
-
+            //Common.LogIt(strSql);
             if (dsSerial.Tables[0].Rows.Count > 0)
                 return true;
             else
@@ -458,14 +466,15 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
                                 .Where(Tables.t_Case.caseNo == caseNo)
                                 .Execute();
 
-                string[] parentArray = dr["ParentPath"].ToString().Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-                if (parentArray.Length > 1)//形如：/admin/tianzhi/bcaaa/bcaaa0150/
-                {
-                    Common.DB.Update(Tables.t_User)
-                            .AddColumn(Tables.t_User.balance, Tables.t_User.balance + Tables.t_User.price)
-                            .Where(Tables.t_User.username == parentArray[1])
-                            .Execute();
-                }
+                //小郝:作废暂不返还余额(留待线下进行补偿结算)
+                //string[] parentArray = dr["ParentPath"].ToString().Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+                //if (parentArray.Length > 1)//形如：/admin/tianzhi/bcaaa/bcaaa0150/
+                //{
+                //    Common.DB.Update(Tables.t_User)
+                //            .AddColumn(Tables.t_User.balance, Tables.t_User.balance + Tables.t_User.price)
+                //            .Where(Tables.t_User.username == parentArray[1])
+                //            .Execute();
+                //}
 
                 //不要求完全精确，无需事务处理
                 Common.DB.Update(Tables.t_User)

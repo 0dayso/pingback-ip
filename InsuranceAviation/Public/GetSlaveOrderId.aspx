@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="GetSlaveOrderId.aspx.cs" Inherits="Public_GetSlaveOrderId" %>

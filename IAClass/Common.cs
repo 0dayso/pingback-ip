@@ -13,6 +13,8 @@ using System.Runtime.Serialization.Formatters.Soap;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using log4net;
 
 //namespace IAClass
@@ -22,27 +24,10 @@ using log4net;
     /// </summary>
     public class Common
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(Common));
-        /// <summary>
-        /// 投保队列名称
-        /// </summary>
-        public static string Queue_Issuing = ConfigurationManager.AppSettings["Queue.Issuing"];
-        /// <summary>
-        /// 短信队列名称
-        /// </summary>
-        public static string Queue_SMS = ConfigurationManager.AppSettings["Queue.SMS"];
-        /// <summary>
-        /// 退保队列名称
-        /// </summary>
-        public static string Queue_Withdraw = ConfigurationManager.AppSettings["Queue.Withdraw"];
         /// <summary>
         /// 是否调试模式 true/false
         /// </summary>
         public static readonly bool Debug = bool.Parse(ConfigurationManager.AppSettings["Debug"]);
-        /// <summary>
-        /// 是否可以重复下单 true/false
-        /// </summary>
-        public static readonly bool IsDuplicable = bool.Parse(ConfigurationManager.AppSettings["IsDuplicable"]);
         /// <summary>
         /// 最晚投保时间限制：起飞前前x分钟
         /// </summary>
@@ -52,10 +37,15 @@ using log4net;
         /// </summary>
         public static readonly string ConfigRequestTimeFrom = ConfigurationManager.AppSettings["RequestTimeFrom"];
 
-        public static NBearLite.Database DB = new NBearLite.Database("InsuranceAviation");
         public static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["InsuranceAviation"].ConnectionString;
+        //public static readonly string PaymentDomainName = ConfigurationManager.AppSettings["PaymentDomainName"];
         public static readonly string BaseDirectory = System.AppDomain.CurrentDomain.BaseDirectory;//HttpContext.Current.Server.MapPath("~");
-        public static IAClass.ActiveMQClient MessageQ = new IAClass.ActiveMQClient(Queue_Issuing, 1);
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(Common));
+        public static NBearLite.Database DB = new NBearLite.Database("InsuranceAviation");  
+        public static IAClass.ActiveMQClient AQ_Issuing = new IAClass.ActiveMQClient(ConfigurationManager.AppSettings["Queue.Issuing"], 1);
+        public static IAClass.ActiveMQClient AQ_Payment = new IAClass.ActiveMQClient(ConfigurationManager.AppSettings["Queue.Payment"], 1);
+
 
         public static bool CheckIfSystemFailed(PurchaseResponseEntity response)
         {
@@ -69,6 +59,76 @@ using log4net;
             }
             else
                 return false;
+        }
+
+        /// <summary>
+        /// 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
+        /// </summary>
+        /// <param name="sArray">需要拼接的数组</param>
+        /// <returns>拼接完成以后的字符串</returns>
+        private static string CreateLinkString(SortedDictionary<string, string> dicArray)
+        {
+            StringBuilder prestr = new StringBuilder();
+            foreach (KeyValuePair<string, string> temp in dicArray)
+            {
+                prestr.Append(temp.Key + "=" + temp.Value + "&");
+            }
+
+            //去掉最後一個&字符
+            int nLen = prestr.Length;
+            prestr.Remove(nLen - 1, 1);
+
+            return prestr.ToString();
+        }
+
+        /// <summary>
+        /// 获取支付宝GET过来通知消息，并以“a=1&b=2”的形式组成字符串
+        /// </summary>
+        /// <returns>request回来的信息组成的数组</returns>
+        public static string GetRequestGet()
+        {
+            int i = 0;
+            SortedDictionary<string, string> sArray = new SortedDictionary<string, string>();
+            NameValueCollection coll;
+            //Load Form variables into NameValueCollection variable.
+            coll = HttpContext.Current.Request.QueryString;
+
+            // Get names of all forms into a string array.
+            String[] requestItem = coll.AllKeys;
+
+            for (i = 0; i < requestItem.Length; i++)
+            {
+                if (requestItem[i].ToLower() != "aspxautodetectcookiesupport")
+                {
+                    string value = HttpContext.Current.Request.QueryString[requestItem[i]];
+                    sArray.Add(requestItem[i], HttpUtility.UrlEncode(value));
+                }
+            }
+
+            return CreateLinkString(sArray);
+        }
+
+        /// <summary>
+        /// 获取POST过来通知消息，并以“a=1&b=2”的形式组成字符串
+        /// </summary>
+        /// <returns>request回来的信息组成的数组</returns>
+        public static string GetRequestPost()
+        {
+            int i = 0;
+            SortedDictionary<string, string> sArray = new SortedDictionary<string, string>();
+            NameValueCollection coll;
+            //Load Form variables into NameValueCollection variable.
+            coll = HttpContext.Current.Request.Form;
+
+            // Get names of all forms into a string array.
+            String[] requestItem = coll.AllKeys;
+
+            for (i = 0; i < requestItem.Length; i++)
+            {
+                sArray.Add(requestItem[i], HttpContext.Current.Request.Form[requestItem[i]]);
+            }
+
+            return CreateLinkString(sArray);
         }
 
         public static bool IsValidIPv4(string strIP)
@@ -382,6 +442,22 @@ using log4net;
         public static string InterceptNumber(string source)
         {
             Regex regex = new Regex(@"(-?\d+)(\.\d+)?");
+            Match match = regex.Match(source);
+
+            if (match.Success)
+                return match.Value;
+            else
+                return string.Empty;
+        }
+
+        /// <summary>
+        /// 截取字符串中的汉字部分
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string InterceptChinese(string source)
+        {
+            Regex regex = new Regex(@"[\u4e00-\u9fa5]+");
             Match match = regex.Match(source);
 
             if (match.Success)

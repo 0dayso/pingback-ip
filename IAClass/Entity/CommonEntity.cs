@@ -5,6 +5,11 @@ using System.Text;
 
 namespace IAClass.Entity
 {
+    public enum PaymentStatus
+    {
+        等待付款 = 1, 交易完成 = 9
+    }
+
     /// <summary>
     /// 性别
     /// </summary>

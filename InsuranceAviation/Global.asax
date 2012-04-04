@@ -5,6 +5,18 @@
     void Application_Start(object sender, EventArgs e) 
     {
         //在应用程序启动时运行的代码
+        if (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["EnableMessageQueue"]))
+        {
+            Common.LogIt("Application Start...");
+            try
+            {
+                Common.AQ_Payment.Start();
+            }
+            catch (Exception ee)
+            {
+                Common.LogIt(ee.ToString());
+            }
+        }
     }
     
     void Application_End(object sender, EventArgs e) 

@@ -14,7 +14,7 @@ public partial class t : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        Response.Write(HttpContext.Current.Request.Url.Host);
+        Response.Write(Request.ServerVariables["HTTP_HOST"] + "<br>" + Request.ServerVariables["SCRIPT_NAME"]);
     }
     protected void Button1_Click(object sender, EventArgs e)
     {
@@ -51,7 +51,7 @@ public partial class t : System.Web.UI.Page
             entity.CaseNo = "PIC" + i.ToString().PadLeft(25, '0');
             //entity.CaseId = "1234239";
             entity.IOC_Class_Alias = txtIOC.Text.Trim();
-            Common.MessageQ.EnqueueObject(entity);
+            Common.AQ_Issuing.EnqueueObject(entity);
         }
     }
     protected void Button3_Click(object sender, EventArgs e)
