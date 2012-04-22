@@ -30,6 +30,15 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.colEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colDatetime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCustomerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFlightNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFlightDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCaseNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPolicyNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colproductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.补打PToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.作废DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,15 +49,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dtpEndDate = new System.Windows.Forms.DateTimePicker();
-            this.colEnabled = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colDatetime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCustomerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCustomerId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFlightNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFlightDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCaseNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPolicyNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colproductName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLoading)).BeginInit();
@@ -84,6 +84,78 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(646, 336);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // colEnabled
+            // 
+            this.colEnabled.DataPropertyName = "enabled";
+            this.colEnabled.HeaderText = "有效 ";
+            this.colEnabled.Name = "colEnabled";
+            this.colEnabled.ReadOnly = true;
+            this.colEnabled.Width = 37;
+            // 
+            // colDatetime
+            // 
+            this.colDatetime.DataPropertyName = "datetime";
+            this.colDatetime.HeaderText = "出单时间";
+            this.colDatetime.Name = "colDatetime";
+            this.colDatetime.ReadOnly = true;
+            this.colDatetime.Width = 78;
+            // 
+            // colCustomerName
+            // 
+            this.colCustomerName.DataPropertyName = "customerName";
+            this.colCustomerName.HeaderText = "姓名";
+            this.colCustomerName.Name = "colCustomerName";
+            this.colCustomerName.ReadOnly = true;
+            this.colCustomerName.Width = 54;
+            // 
+            // colCustomerId
+            // 
+            this.colCustomerId.DataPropertyName = "customerId";
+            this.colCustomerId.HeaderText = "证件号码";
+            this.colCustomerId.Name = "colCustomerId";
+            this.colCustomerId.ReadOnly = true;
+            this.colCustomerId.Width = 78;
+            // 
+            // colFlightNo
+            // 
+            this.colFlightNo.DataPropertyName = "customerFlightNo";
+            this.colFlightNo.HeaderText = "航班号";
+            this.colFlightNo.Name = "colFlightNo";
+            this.colFlightNo.ReadOnly = true;
+            this.colFlightNo.Width = 66;
+            // 
+            // colFlightDate
+            // 
+            this.colFlightDate.DataPropertyName = "customerFlightDate";
+            this.colFlightDate.HeaderText = "乘机时间";
+            this.colFlightDate.Name = "colFlightDate";
+            this.colFlightDate.ReadOnly = true;
+            this.colFlightDate.Width = 78;
+            // 
+            // colCaseNo
+            // 
+            this.colCaseNo.DataPropertyName = "caseNo";
+            this.colCaseNo.HeaderText = "电子单号";
+            this.colCaseNo.Name = "colCaseNo";
+            this.colCaseNo.ReadOnly = true;
+            this.colCaseNo.Width = 78;
+            // 
+            // colPolicyNo
+            // 
+            this.colPolicyNo.DataPropertyName = "certNo";
+            this.colPolicyNo.HeaderText = "保单号";
+            this.colPolicyNo.Name = "colPolicyNo";
+            this.colPolicyNo.ReadOnly = true;
+            this.colPolicyNo.Width = 66;
+            // 
+            // colproductName
+            // 
+            this.colproductName.DataPropertyName = "productName";
+            this.colproductName.HeaderText = "单证类型";
+            this.colproductName.Name = "colproductName";
+            this.colproductName.ReadOnly = true;
+            this.colproductName.Width = 78;
             // 
             // contextMenuStrip1
             // 
@@ -178,78 +250,6 @@
             this.dtpEndDate.Name = "dtpEndDate";
             this.dtpEndDate.Size = new System.Drawing.Size(101, 21);
             this.dtpEndDate.TabIndex = 11;
-            // 
-            // colEnabled
-            // 
-            this.colEnabled.DataPropertyName = "enabled";
-            this.colEnabled.HeaderText = "有效 ";
-            this.colEnabled.Name = "colEnabled";
-            this.colEnabled.ReadOnly = true;
-            this.colEnabled.Width = 37;
-            // 
-            // colDatetime
-            // 
-            this.colDatetime.DataPropertyName = "datetime";
-            this.colDatetime.HeaderText = "出单时间";
-            this.colDatetime.Name = "colDatetime";
-            this.colDatetime.ReadOnly = true;
-            this.colDatetime.Width = 78;
-            // 
-            // colCustomerName
-            // 
-            this.colCustomerName.DataPropertyName = "customerName";
-            this.colCustomerName.HeaderText = "姓名";
-            this.colCustomerName.Name = "colCustomerName";
-            this.colCustomerName.ReadOnly = true;
-            this.colCustomerName.Width = 54;
-            // 
-            // colCustomerId
-            // 
-            this.colCustomerId.DataPropertyName = "customerId";
-            this.colCustomerId.HeaderText = "证件号码";
-            this.colCustomerId.Name = "colCustomerId";
-            this.colCustomerId.ReadOnly = true;
-            this.colCustomerId.Width = 78;
-            // 
-            // colFlightNo
-            // 
-            this.colFlightNo.DataPropertyName = "customerFlightNo";
-            this.colFlightNo.HeaderText = "航班号";
-            this.colFlightNo.Name = "colFlightNo";
-            this.colFlightNo.ReadOnly = true;
-            this.colFlightNo.Width = 66;
-            // 
-            // colFlightDate
-            // 
-            this.colFlightDate.DataPropertyName = "customerFlightDate";
-            this.colFlightDate.HeaderText = "乘机时间";
-            this.colFlightDate.Name = "colFlightDate";
-            this.colFlightDate.ReadOnly = true;
-            this.colFlightDate.Width = 78;
-            // 
-            // colCaseNo
-            // 
-            this.colCaseNo.DataPropertyName = "caseNo";
-            this.colCaseNo.HeaderText = "电子单号";
-            this.colCaseNo.Name = "colCaseNo";
-            this.colCaseNo.ReadOnly = true;
-            this.colCaseNo.Width = 78;
-            // 
-            // colPolicyNo
-            // 
-            this.colPolicyNo.DataPropertyName = "certNo";
-            this.colPolicyNo.HeaderText = "保单号";
-            this.colPolicyNo.Name = "colPolicyNo";
-            this.colPolicyNo.ReadOnly = true;
-            this.colPolicyNo.Width = 66;
-            // 
-            // colproductName
-            // 
-            this.colproductName.DataPropertyName = "productName";
-            this.colproductName.HeaderText = "单证类型";
-            this.colproductName.Name = "colproductName";
-            this.colproductName.ReadOnly = true;
-            this.colproductName.Width = 78;
             // 
             // FrmInsuranceList
             // 

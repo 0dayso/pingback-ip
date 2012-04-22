@@ -88,6 +88,9 @@
     <Compile Include="BlackWindowHotKeySetup.Designer.cs">
       <DependentUpon>BlackWindowHotKeySetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="AutoSizeTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\ProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>

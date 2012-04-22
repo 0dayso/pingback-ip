@@ -46,6 +46,7 @@ public partial class Admin_SMS_Send : System.Web.UI.Page
             }
             catch (Exception ee)
             {
+                Common.LogIt(ee.ToString());
                 this.lblResult.Text = ee.ToString();
             }
         }

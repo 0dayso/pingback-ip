@@ -303,8 +303,8 @@ namespace IAClass.WebService
                             return response;
                         }
                     }
-                    
-                    object interface_Id = drProduct["interface_Id"];
+
+                    object interface_Id = isIssuingRequired ? drProduct["interface_Id"] : 0;//若非对接产品,接口ID置为0,以免影响接口出单统计
                     object caseSupplier = drProduct["productSupplier"];
                     int caseDuration = Convert.ToInt32(drProduct["productDuration"]);
                     object productName = drProduct["productName"];
@@ -431,7 +431,8 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                     entity.IDType = request.customerIDType;
                                     entity.Gender = request.customerGender;
                                     entity.Birthday = request.customerBirth;
-                                    entity.EffectiveDate = request.flightDate;
+                                    //如果是今天之后的乘机日期,则时间部分置为0
+                                    entity.EffectiveDate = request.flightDate.Date > DateTime.Today ? request.flightDate.Date : request.flightDate;
                                     entity.ExpiryDate = request.flightDate.AddDays(caseDuration - 1);
                                     entity.PhoneNumber = request.customerPhone;
                                     entity.FlightNo = request.flightNo;
@@ -461,6 +462,10 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                             {
                                                 response.SerialNo = result.PolicyNo;//暂借用该SerialNo字段
                                                 response.PolicyNo = result.PolicyNo;
+                                                response.Insurer = result.Insurer;
+                                                response.AmountInsured = result.AmountInsured;
+                                                response.ValidationWebsite = result.Website;
+                                                response.ValidationPhoneNumber = result.CustomerService;
                                             }
                                             else
                                             {
@@ -476,7 +481,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                         response.Trace = validate;
                                         return response;
                                     }
-                                    
+
                                     #endregion
                                     if (Common.Debug)
                                     {
@@ -518,7 +523,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                             }
                         }
                     }
-#endregion
+                    #endregion
                     return response;
                 }
                 else

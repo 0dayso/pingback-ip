@@ -1008,7 +1008,7 @@ namespace EagleWebService
 
         private bool isIssuingRequiredField;
 
-        private string iOC_TypeNameField;
+        private string iOC_Class_AliasField;
 
         /// <remarks/>
         public int productID
@@ -1168,15 +1168,15 @@ namespace EagleWebService
         }
 
         /// <remarks/>
-        public string IOC_TypeName
+        public string IOC_Class_Alias
         {
             get
             {
-                return this.iOC_TypeNameField;
+                return this.iOC_Class_AliasField;
             }
             set
             {
-                this.iOC_TypeNameField = value;
+                this.iOC_Class_AliasField = value;
             }
         }
     }
@@ -1369,7 +1369,13 @@ namespace EagleWebService
 
         private string agentNameField;
 
+        private string insurerField;
+
+        private string amountInsuredField;
+
         private string validationPhoneNumberField;
+
+        private string validationWebsiteField;
 
         private TraceEntity traceField;
 
@@ -1426,6 +1432,32 @@ namespace EagleWebService
         }
 
         /// <remarks/>
+        public string Insurer
+        {
+            get
+            {
+                return this.insurerField;
+            }
+            set
+            {
+                this.insurerField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string AmountInsured
+        {
+            get
+            {
+                return this.amountInsuredField;
+            }
+            set
+            {
+                this.amountInsuredField = value;
+            }
+        }
+
+        /// <remarks/>
         public string ValidationPhoneNumber
         {
             get
@@ -1435,6 +1467,19 @@ namespace EagleWebService
             set
             {
                 this.validationPhoneNumberField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string ValidationWebsite
+        {
+            get
+            {
+                return this.validationWebsiteField;
+            }
+            set
+            {
+                this.validationWebsiteField = value;
             }
         }
 

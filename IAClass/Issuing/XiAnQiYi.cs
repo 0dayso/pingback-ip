@@ -28,11 +28,12 @@ namespace XiAnQiYi
             string birth = entity.Birthday.ToString("yyyy-MM-dd");
             string idType = GetIdType(entity.IDType);
             string gender = GetGender(entity.Gender);
+            string[] config = entity.IOC_Class_Parameters.Split(',');
 
             string ret = string.Empty;
             try
             {
-                ret = webService.alterableApproval("13888092959", "123456", birth, entity.ID, idType, entity.Name, gender, "",
+                ret = webService.alterableApproval(config[0], config[1], birth, entity.ID, idType, entity.Name, gender, "",
                                                     "", "", "",
                                                     entity.FlightNo, "302", birth, entity.ID, idType, entity.Name, gender,
                                                     entity.PhoneNumber, entity.EffectiveDate.ToString("yyyy-MM-dd HH:mm:ss"), "DZHK02_07");
@@ -68,11 +69,12 @@ namespace XiAnQiYi
         public TraceEntity Withdraw(WithdrawEntity entity)
         {
             TraceEntity result = new TraceEntity();
-
+            string[] config = entity.IOC_Class_Parameters.Split(',');
             string ret = string.Empty;
+
             try
             {
-                ret = webService.policyCancel("13888092959", "123456", entity.PolicyNo);
+                ret = webService.policyCancel(config[0], config[1], entity.PolicyNo);
 
                 if (string.IsNullOrEmpty(ret))
                     throw new Exception("西安奇易WebService返回为空！");
@@ -103,8 +105,6 @@ namespace XiAnQiYi
                     return "2";
                 case IdentityType.军官证:
                     return "1";
-                case IdentityType.港澳通行证:
-                    return "4";
                 default:
                     return "4";//其他
             }

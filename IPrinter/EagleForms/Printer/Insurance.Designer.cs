@@ -50,8 +50,6 @@
             this.txtCustomerPhone = new System.Windows.Forms.TextBox();
             this.lblCustomerPhone = new System.Windows.Forms.Label();
             this.dtpFlightDate = new System.Windows.Forms.DateTimePicker();
-            this.txtDest = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.btnGetCardNo = new System.Windows.Forms.Button();
             this.lb乘机日 = new System.Windows.Forms.Label();
             this.cmbCardType = new System.Windows.Forms.ComboBox();
@@ -62,7 +60,7 @@
             this.lb航班号 = new System.Windows.Forms.Label();
             this.pnlInsueInfo = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtServicePhone = new System.Windows.Forms.TextBox();
+            this.txtCustomerService = new System.Windows.Forms.TextBox();
             this.cmbDuration = new System.Windows.Forms.ComboBox();
             this.lb报案电话 = new System.Windows.Forms.Label();
             this.txtSign = new System.Windows.Forms.TextBox();
@@ -73,6 +71,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lb保险天数 = new System.Windows.Forms.Label();
+            this.txtDest = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.lblCode = new System.Windows.Forms.Label();
             this.dtpStopDate = new System.Windows.Forms.DateTimePicker();
@@ -106,6 +106,13 @@
             this.label7 = new System.Windows.Forms.Label();
             this.timerCommand = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtAmountInsured = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtWebsite = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtInsurer = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.autoSizeTextBox1 = new Hob.Toolbox.Controls.AutoSizeTextBox();
             this.GroupBox2.SuspendLayout();
             this.pnlTicket.SuspendLayout();
             this.pnlTitle.SuspendLayout();
@@ -125,7 +132,6 @@
             // GroupBox2
             // 
             this.GroupBox2.Controls.Add(this.btnGetPnr);
-            this.GroupBox2.Controls.Add(this.tbPnr);
             this.GroupBox2.Location = new System.Drawing.Point(0, 3);
             this.GroupBox2.Name = "GroupBox2";
             this.GroupBox2.Size = new System.Drawing.Size(182, 58);
@@ -149,7 +155,7 @@
             this.tbPnr.BackColor = System.Drawing.SystemColors.WindowText;
             this.tbPnr.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbPnr.ForeColor = System.Drawing.Color.Lime;
-            this.tbPnr.Location = new System.Drawing.Point(3, 22);
+            this.tbPnr.Location = new System.Drawing.Point(434, 94);
             this.tbPnr.Name = "tbPnr";
             this.tbPnr.Size = new System.Drawing.Size(176, 21);
             this.tbPnr.TabIndex = 3;
@@ -224,8 +230,6 @@
             this.pnlCustom.Controls.Add(this.txtCustomerPhone);
             this.pnlCustom.Controls.Add(this.lblCustomerPhone);
             this.pnlCustom.Controls.Add(this.dtpFlightDate);
-            this.pnlCustom.Controls.Add(this.txtDest);
-            this.pnlCustom.Controls.Add(this.label8);
             this.pnlCustom.Controls.Add(this.btnGetCardNo);
             this.pnlCustom.Controls.Add(this.lb乘机日);
             this.pnlCustom.Controls.Add(this.cmbCardType);
@@ -354,24 +358,6 @@
             this.dtpFlightDate.TabIndex = 38;
             this.dtpFlightDate.ValueChanged += new System.EventHandler(this.dtpFlightDate_ValueChanged);
             // 
-            // txtDest
-            // 
-            this.txtDest.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDest.Location = new System.Drawing.Point(313, 134);
-            this.txtDest.Name = "txtDest";
-            this.txtDest.Size = new System.Drawing.Size(118, 21);
-            this.txtDest.TabIndex = 37;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(269, 138);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
-            this.label8.TabIndex = 36;
-            this.label8.Text = "目的地";
-            // 
             // btnGetCardNo
             // 
             this.btnGetCardNo.BackColor = System.Drawing.SystemColors.Control;
@@ -459,7 +445,7 @@
             this.pnlInsueInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.pnlInsueInfo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlInsueInfo.Controls.Add(this.label9);
-            this.pnlInsueInfo.Controls.Add(this.txtServicePhone);
+            this.pnlInsueInfo.Controls.Add(this.txtCustomerService);
             this.pnlInsueInfo.Controls.Add(this.cmbDuration);
             this.pnlInsueInfo.Controls.Add(this.lb报案电话);
             this.pnlInsueInfo.Controls.Add(this.txtSign);
@@ -485,14 +471,14 @@
             this.label9.TabIndex = 50;
             this.label9.Text = "保 险 期";
             // 
-            // txtServicePhone
+            // txtCustomerService
             // 
-            this.txtServicePhone.BackColor = System.Drawing.SystemColors.Control;
-            this.txtServicePhone.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtServicePhone.Location = new System.Drawing.Point(58, 169);
-            this.txtServicePhone.Name = "txtServicePhone";
-            this.txtServicePhone.Size = new System.Drawing.Size(122, 21);
-            this.txtServicePhone.TabIndex = 6;
+            this.txtCustomerService.BackColor = System.Drawing.SystemColors.Control;
+            this.txtCustomerService.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtCustomerService.Location = new System.Drawing.Point(58, 169);
+            this.txtCustomerService.Name = "txtCustomerService";
+            this.txtCustomerService.Size = new System.Drawing.Size(122, 21);
+            this.txtCustomerService.TabIndex = 6;
             // 
             // cmbDuration
             // 
@@ -549,6 +535,7 @@
             this.txtENumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtENumber.Location = new System.Drawing.Point(58, 79);
             this.txtENumber.Name = "txtENumber";
+            this.txtENumber.ReadOnly = true;
             this.txtENumber.Size = new System.Drawing.Size(122, 21);
             this.txtENumber.TabIndex = 1;
             this.txtENumber.Text = "自动生成";
@@ -589,10 +576,28 @@
             this.lb保险天数.TabIndex = 17;
             this.lb保险天数.Text = "产品类型";
             // 
+            // txtDest
+            // 
+            this.txtDest.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDest.Location = new System.Drawing.Point(440, 52);
+            this.txtDest.Name = "txtDest";
+            this.txtDest.Size = new System.Drawing.Size(118, 21);
+            this.txtDest.TabIndex = 37;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(396, 56);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 12);
+            this.label8.TabIndex = 36;
+            this.label8.Text = "目的地";
+            // 
             // txtCode
             // 
             this.txtCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCode.Location = new System.Drawing.Point(258, 51);
+            this.txtCode.Location = new System.Drawing.Point(258, 52);
             this.txtCode.Name = "txtCode";
             this.txtCode.ReadOnly = true;
             this.txtCode.Size = new System.Drawing.Size(122, 21);
@@ -602,7 +607,7 @@
             // lblCode
             // 
             this.lblCode.AutoSize = true;
-            this.lblCode.Location = new System.Drawing.Point(205, 56);
+            this.lblCode.Location = new System.Drawing.Point(205, 57);
             this.lblCode.Name = "lblCode";
             this.lblCode.Size = new System.Drawing.Size(53, 12);
             this.lblCode.TabIndex = 4;
@@ -652,7 +657,7 @@
             // 
             this.txtPrintingNo.BackColor = System.Drawing.SystemColors.Control;
             this.txtPrintingNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPrintingNo.Location = new System.Drawing.Point(71, 55);
+            this.txtPrintingNo.Location = new System.Drawing.Point(71, 56);
             this.txtPrintingNo.Name = "txtPrintingNo";
             this.txtPrintingNo.Size = new System.Drawing.Size(122, 21);
             this.txtPrintingNo.TabIndex = 37;
@@ -661,7 +666,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(18, 60);
+            this.label5.Location = new System.Drawing.Point(18, 61);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 36;
@@ -929,7 +934,14 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.txtAmountInsured);
+            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.txtWebsite);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.txtInsurer);
+            this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.txtPrintingNo);
+            this.panel1.Controls.Add(this.tbPnr);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.txtDate);
             this.panel1.Controls.Add(this.dtpStopDate);
@@ -938,18 +950,95 @@
             this.panel1.Controls.Add(this.lb保险终止时间);
             this.panel1.Controls.Add(this.txtCode);
             this.panel1.Controls.Add(this.lb填开日期);
+            this.panel1.Controls.Add(this.txtDest);
+            this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.lblCode);
             this.panel1.Location = new System.Drawing.Point(8, 415);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(624, 92);
+            this.panel1.Size = new System.Drawing.Size(624, 127);
             this.panel1.TabIndex = 33;
+            // 
+            // txtAmountInsured
+            // 
+            this.txtAmountInsured.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAmountInsured.Location = new System.Drawing.Point(248, 79);
+            this.txtAmountInsured.Name = "txtAmountInsured";
+            this.txtAmountInsured.ReadOnly = true;
+            this.txtAmountInsured.Size = new System.Drawing.Size(122, 21);
+            this.txtAmountInsured.TabIndex = 42;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(195, 84);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 43;
+            this.label12.Text = "保险金额";
+            // 
+            // txtWebsite
+            // 
+            this.txtWebsite.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtWebsite.Location = new System.Drawing.Point(248, 98);
+            this.txtWebsite.Name = "txtWebsite";
+            this.txtWebsite.ReadOnly = true;
+            this.txtWebsite.Size = new System.Drawing.Size(122, 21);
+            this.txtWebsite.TabIndex = 40;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(195, 103);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(53, 12);
+            this.label11.TabIndex = 41;
+            this.label11.Text = "查询网址";
+            // 
+            // txtInsurer
+            // 
+            this.txtInsurer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtInsurer.Location = new System.Drawing.Point(61, 98);
+            this.txtInsurer.Name = "txtInsurer";
+            this.txtInsurer.ReadOnly = true;
+            this.txtInsurer.Size = new System.Drawing.Size(122, 21);
+            this.txtInsurer.TabIndex = 38;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 103);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(53, 12);
+            this.label10.TabIndex = 39;
+            this.label10.Text = "承保公司";
+            // 
+            // autoSizeTextBox1
+            // 
+            this.autoSizeTextBox1.BackColor = System.Drawing.Color.Black;
+            this.autoSizeTextBox1.BorderColor = System.Drawing.Color.Empty;
+            this.autoSizeTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.autoSizeTextBox1.ForeColor = System.Drawing.Color.Lime;
+            this.autoSizeTextBox1.Location = new System.Drawing.Point(3, 26);
+            this.autoSizeTextBox1.MaximumSize = new System.Drawing.Size(650, 350);
+            this.autoSizeTextBox1.MinimumSize = new System.Drawing.Size(152, 21);
+            this.autoSizeTextBox1.Multiline = true;
+            this.autoSizeTextBox1.Name = "autoSizeTextBox1";
+            this.autoSizeTextBox1.Size = new System.Drawing.Size(152, 21);
+            this.autoSizeTextBox1.TabIndex = 34;
+            this.autoSizeTextBox1.WaterMarkText = "粘贴票号、黑屏信息后回车";
+            this.autoSizeTextBox1.WaterMarkTextColor = System.Drawing.Color.DarkGray;
+            this.autoSizeTextBox1.WordWrap = false;
+            this.autoSizeTextBox1.Enter += new System.EventHandler(this.autoSizeTextBox1_Enter);
+            this.autoSizeTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.autoSizeTextBox1_KeyPress);
+            this.autoSizeTextBox1.Leave += new System.EventHandler(this.autoSizeTextBox1_Leave);
             // 
             // Insurance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
-            this.ClientSize = new System.Drawing.Size(656, 520);
+            this.ClientSize = new System.Drawing.Size(656, 546);
+            this.Controls.Add(this.autoSizeTextBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.pnlButton);
@@ -969,7 +1058,6 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Insurance_FormClosed);
             this.Load += new System.EventHandler(this.Insurance_Load);
             this.GroupBox2.ResumeLayout(false);
-            this.GroupBox2.PerformLayout();
             this.pnlTicket.ResumeLayout(false);
             this.pnlTitle.ResumeLayout(false);
             this.pnlTitle.PerformLayout();
@@ -1016,7 +1104,7 @@
         public System.Windows.Forms.Label lb填开日期;
         public System.Windows.Forms.TextBox txtSign;
         public System.Windows.Forms.Label lb经办人;
-        public System.Windows.Forms.TextBox txtServicePhone;
+        public System.Windows.Forms.TextBox txtCustomerService;
         public System.Windows.Forms.Label lb报案电话;
         private System.Windows.Forms.Panel pnlCustom;
         public System.Windows.Forms.ComboBox cbName;
@@ -1072,5 +1160,12 @@
         public System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cmbDuration;
         public System.Windows.Forms.ComboBox txtFlightNo;
+        private Hob.Toolbox.Controls.AutoSizeTextBox autoSizeTextBox1;
+        public System.Windows.Forms.TextBox txtWebsite;
+        public System.Windows.Forms.Label label11;
+        public System.Windows.Forms.TextBox txtInsurer;
+        public System.Windows.Forms.Label label10;
+        public System.Windows.Forms.TextBox txtAmountInsured;
+        public System.Windows.Forms.Label label12;
     }
 }

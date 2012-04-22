@@ -79,8 +79,8 @@ namespace IAClass.WebService
             /*请求参数
 <?xml version="1.0" encoding="utf-16"?>
 <WithdrawRequest>
-  <Username>feng</username>
-  <Password>123456</password>
+  <Username>feng</Username>
+  <Password>123456</Password>
   <PolicyNo>PC00013234234</PolicyNo>
 </WithdrawRequest>
              * 返回参数

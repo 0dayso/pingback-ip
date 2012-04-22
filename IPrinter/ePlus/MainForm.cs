@@ -260,7 +260,8 @@ namespace ePlus
             e.Editor.SelectionChanged += new EventHandler(Editor_SelectionChanged);
             if (e.Editor.IsHandleCreated)
             {
-                SetButtonPasteEnable(e.Editor.CanPaste(DataFormats.GetFormat(DataFormats.Text)));
+                //为何该语句和下面的语句一起出现的时候,会导致粘贴快捷键失效!?
+                //SetButtonPasteEnable(e.Editor.CanPaste(DataFormats.GetFormat(DataFormats.Text)));
             }
         }
 
@@ -272,7 +273,8 @@ namespace ePlus
 
             if (editor.IsHandleCreated)
             {
-                SetButtonPasteEnable(editor.CanPaste(DataFormats.GetFormat(DataFormats.Text)));   
+                //为何该语句和上面的语句一起出现的时候,会导致粘贴快捷键失效!?
+                //SetButtonPasteEnable(editor.CanPaste(DataFormats.GetFormat(DataFormats.Text)));   
             }
 
         }

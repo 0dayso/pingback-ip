@@ -135,9 +135,21 @@ namespace IAClass.Entity
         /// </summary>
         public string AgentName;
         /// <summary>
-        /// 用于真伪查询的电话号码
+        /// 承保公司名称
+        /// </summary>
+        public string Insurer;
+        /// <summary>
+        /// 保险金额
+        /// </summary>
+        public string AmountInsured;
+        /// <summary>
+        /// 用于查询真伪的电话号码
         /// </summary>
         public string ValidationPhoneNumber;
+        /// <summary>
+        /// 用于查询真伪的网址
+        /// </summary>
+        public string ValidationWebsite;
         /// <summary>
         /// 异常追踪
         /// </summary>

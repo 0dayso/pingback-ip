@@ -63,4 +63,13 @@ public partial class Admin_InsurerMng : System.Web.UI.Page
     {
         return Case.CountConsumedIncludingChild(contextKey).ToString();
     }
+
+    public object GetInterfaceStatus(object isIssuingRequired, object name)
+    {
+        bool required = Convert.ToBoolean(isIssuingRequired);
+        if (required)
+            return name;
+        else
+            return "<DEL>" + name + "</DEL>";
+    }
 }

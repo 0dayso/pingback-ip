@@ -361,24 +361,25 @@ and enabled = 1";
         {
             TraceEntity response = new TraceEntity();
 
-            string strSql = @"
+            string strSqlBak = @"
 SELECT caseID, caseNo, customerFlightDate, CertNo,
 		b.IsIssuingRequired, c.IOC_Class_Alias, c.IOC_Class_Parameters, WithdrawRatio, caseOwner, ParentPath
   FROM [t_Case] a with(nolock)
   INNER JOIN t_Product b on a.productID = b.productID
   LEFT JOIN t_Interface c on a.interface_id = c.id
   where {0} = '{1}'";
-            strSql = string.Format(strSql, "caseNo", serialNo);
+            string strSql = string.Format(strSqlBak, "caseNo", serialNo);
             DataSet ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
 
             if (ds.Tables[0].Rows.Count == 0)
             {
-                strSql = string.Format(strSql, "certNo", serialNo);//若是第三方调用撤单接口,则传入参数是正式保单号
+                strSql = string.Format(strSqlBak, "certNo", serialNo);//若是第三方调用撤单接口,则传入参数是正式保单号
                 ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
 
                 if (ds.Tables[0].Rows.Count == 0)
                 {
                     response.ErrorMsg = "单证号不存在！";
+                    Common.LogIt("单证号不存在" + strSql);
                     return response;
                 }
             }

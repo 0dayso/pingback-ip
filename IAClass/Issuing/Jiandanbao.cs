@@ -55,7 +55,7 @@ namespace Jiandanbao
 
             if (entity.EffectiveDate.Date == DateTime.Today)
             {//该产品不支持当日投保.留待手工处理
-                result.PolicyNo = "Z";
+                result.PolicyNo = entity.CaseNo;
                 return result;
             }
 
@@ -106,7 +106,13 @@ namespace Jiandanbao
                     result.Trace.ErrorMsg = ret;
                 }
                 else
+                {
                     result.PolicyNo = ret;
+                    result.Insurer = "昆仑健康保险股份有限公司";
+                    result.AmountInsured = "";
+                    result.Website = "http://www.kunlunhealth.com";
+                    result.CustomerService = "400-811-8899";
+                }
 
                 return result;
             }
@@ -116,7 +122,11 @@ namespace Jiandanbao
                 msg = string.Format(msg, entity.ID, entity.PhoneNumber);
                 Common.LogIt(msg);
                 //result.Trace.ErrorMsg = msg;
-                result.PolicyNo = "Z";
+                result.PolicyNo = entity.CaseNo;//留待手工投保平安团单
+                result.Insurer = "中国平安";
+                result.AmountInsured = "";
+                result.Website = "http://www.pingan.com/";
+                result.CustomerService = "95511";
                 return result;
                 //entity.IOC_Class_Alias = "chinalife_bj";
                 //string msg = "jiandanbao_all核保未通过：id={0}, phone={1}  转入其他接口：{2}";
@@ -272,7 +282,7 @@ namespace Jiandanbao
                     msg = string.Format(msg, entity.ID, entity.PhoneNumber);
                     Common.LogIt(msg);
                     //result.Trace.ErrorMsg = msg;
-                    result.PolicyNo = "Z";
+                    result.PolicyNo = entity.CaseNo;
                     return result;
                 }
             }

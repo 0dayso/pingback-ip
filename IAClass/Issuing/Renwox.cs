@@ -37,6 +37,10 @@ namespace Renwox
             if (string.IsNullOrEmpty(resp.Trace.ErrorMsg))
             {
                 result.PolicyNo = result.Trace.Detail = resp.PolicyNo;
+                result.Insurer = resp.Insurer;
+                result.AmountInsured = resp.AmountInsured;
+                result.Website = resp.ValidationWebsite;
+                result.CustomerService = resp.ValidationPhoneNumber;
             }
             else
             {

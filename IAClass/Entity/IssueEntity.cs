@@ -57,6 +57,22 @@ namespace IAClass.Entity
         /// 第三方平台/中间商/的保单/订单号
         /// </summary>
         public string AgentOrderNo;
+        /// <summary>
+        /// 承保公司名称
+        /// </summary>
+        public string Insurer;
+        /// <summary>
+        /// 保险金额
+        /// </summary>
+        public string AmountInsured;
+        /// <summary>
+        /// 承保公司查询网址
+        /// </summary>
+        public string Website;
+        /// <summary>
+        /// 查询服务电话
+        /// </summary>
+        public string CustomerService;
         public TraceEntity Trace;
     }
 

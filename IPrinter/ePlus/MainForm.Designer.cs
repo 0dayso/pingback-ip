@@ -729,7 +729,7 @@ namespace ePlus
             this.交通意外伤害保险单ToolStripMenuItem});
             this.华安ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("华安ToolStripMenuItem.Image")));
             this.华安ToolStripMenuItem.Name = "华安ToolStripMenuItem";
-            this.华安ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.华安ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.华安ToolStripMenuItem.Text = "华安";
             // 
             // 交通意外伤害保险单ToolStripMenuItem
@@ -746,7 +746,7 @@ namespace ePlus
             this.航空意外保险单2008ToolStripMenuItem});
             this.人寿ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("人寿ToolStripMenuItem.Image")));
             this.人寿ToolStripMenuItem.Name = "人寿ToolStripMenuItem";
-            this.人寿ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.人寿ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.人寿ToolStripMenuItem.Text = "人寿";
             // 
             // 航空旅客人身意外伤害保险单ToolStripMenuItem
@@ -771,7 +771,7 @@ namespace ePlus
             this.出行乐ToolStripMenuItem});
             this.都邦ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("都邦ToolStripMenuItem.Image")));
             this.都邦ToolStripMenuItem.Name = "都邦ToolStripMenuItem";
-            this.都邦ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.都邦ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.都邦ToolStripMenuItem.Text = "都邦";
             // 
             // 出行无忧ToolStripMenuItem
@@ -800,7 +800,7 @@ namespace ePlus
             this.平安ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.周游列国});
             this.平安ToolStripMenuItem.Name = "平安ToolStripMenuItem";
-            this.平安ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.平安ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.平安ToolStripMenuItem.Text = "平安";
             // 
             // 周游列国
@@ -816,7 +816,7 @@ namespace ePlus
             this.SunShineToolStripMenuItem});
             this.阳光ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("阳光ToolStripMenuItem.Image")));
             this.阳光ToolStripMenuItem.Name = "阳光ToolStripMenuItem";
-            this.阳光ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.阳光ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.阳光ToolStripMenuItem.Text = "阳光";
             // 
             // SunShineToolStripMenuItem
@@ -832,7 +832,7 @@ namespace ePlus
             this.航翼网会员保险卡ToolStripMenuItem});
             this.航翼网ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("航翼网ToolStripMenuItem.Image")));
             this.航翼网ToolStripMenuItem.Name = "航翼网ToolStripMenuItem";
-            this.航翼网ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.航翼网ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.航翼网ToolStripMenuItem.Text = "航翼网";
             // 
             // 航翼网会员保险卡ToolStripMenuItem
@@ -850,7 +850,7 @@ namespace ePlus
             this.pICCToolStripMenuItem});
             this.易格网ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("易格网ToolStripMenuItem.Image")));
             this.易格网ToolStripMenuItem.Name = "易格网ToolStripMenuItem";
-            this.易格网ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.易格网ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.易格网ToolStripMenuItem.Text = "易格网";
             // 
             // 新华人寿ToolStripMenuItem
@@ -880,7 +880,7 @@ namespace ePlus
             this.航空意外险ToolStripMenuItem});
             this.太平洋ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("太平洋ToolStripMenuItem.Image")));
             this.太平洋ToolStripMenuItem.Name = "太平洋ToolStripMenuItem";
-            this.太平洋ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.太平洋ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.太平洋ToolStripMenuItem.Text = "太平洋";
             // 
             // 航空意外险ToolStripMenuItem
@@ -945,7 +945,7 @@ namespace ePlus
             this.miCut.Image = global::ePlus.Properties.Resources.CutHS;
             this.miCut.Name = "miCut";
             this.miCut.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.miCut.Size = new System.Drawing.Size(145, 22);
+            this.miCut.Size = new System.Drawing.Size(152, 22);
             this.miCut.Text = "剪切";
             this.miCut.Visible = false;
             this.miCut.Click += new System.EventHandler(this.btnCut_Click);
@@ -955,7 +955,7 @@ namespace ePlus
             this.miCopy.Image = global::ePlus.Properties.Resources.CopyHS;
             this.miCopy.Name = "miCopy";
             this.miCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.miCopy.Size = new System.Drawing.Size(145, 22);
+            this.miCopy.Size = new System.Drawing.Size(152, 22);
             this.miCopy.Text = "复制";
             this.miCopy.Visible = false;
             this.miCopy.Click += new System.EventHandler(this.btnCopy_Click);
@@ -965,7 +965,7 @@ namespace ePlus
             this.miPaste.Image = global::ePlus.Properties.Resources.PasteHS;
             this.miPaste.Name = "miPaste";
             this.miPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.miPaste.Size = new System.Drawing.Size(145, 22);
+            this.miPaste.Size = new System.Drawing.Size(152, 22);
             this.miPaste.Text = "粘贴";
             this.miPaste.Visible = false;
             this.miPaste.Click += new System.EventHandler(this.btnPaste_Click);
@@ -1413,7 +1413,7 @@ namespace ePlus
             this.webBrowserDaLianCTI.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowserDaLianCTI.Name = "webBrowserDaLianCTI";
             this.webBrowserDaLianCTI.ScrollBarsEnabled = false;
-            this.webBrowserDaLianCTI.Size = new System.Drawing.Size(1016, 71);
+            this.webBrowserDaLianCTI.Size = new System.Drawing.Size(150, 71);
             this.webBrowserDaLianCTI.TabIndex = 1;
             this.webBrowserDaLianCTI.Url = new System.Uri("", System.UriKind.Relative);
             // 

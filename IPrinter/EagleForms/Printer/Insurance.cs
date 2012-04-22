@@ -18,6 +18,10 @@ namespace EagleForms.Printer
     /// </summary>
     public partial class Insurance : Form
     {
+        /// <summary>
+        /// 票号/PNR/黑屏字符串
+        /// </summary>
+        string input;
         static public Insurance Instance = null;
         System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
         /// <summary>
@@ -156,8 +160,8 @@ namespace EagleForms.Printer
             CheckForIllegalCrossThreadCalls = false;
             try
             {
-                GetInsuranceSeq();
-                printHandle.Print(this);
+                if(GetInsuranceSeq())
+                    printHandle.Print(this);
             }
             catch (System.Drawing.Printing.InvalidPrinterException e)
             {
@@ -191,7 +195,7 @@ namespace EagleForms.Printer
                     }));
         }
 
-        void GetInsuranceSeq()
+        bool GetInsuranceSeq()
         {
             EagleWebService.wsInsurrance ws = new EagleWebService.wsInsurrance();
             EagleWebService.PurchaseResponseEntity ret;
@@ -225,7 +229,10 @@ namespace EagleForms.Printer
             //与此同时本机也由于长时间等待而超时，导致此处抛出异常（实际上服务器已出单，只是对接第三方失败）
 
             if (!string.IsNullOrEmpty(ret.Trace.ErrorMsg))
-                throw new Exception(ret.Trace.ErrorMsg);
+            {
+                MessageBox.Show(ret.Trace.ErrorMsg, "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
             else
             {
                 this.Invoke(new MethodInvoker(delegate()
@@ -239,17 +246,17 @@ namespace EagleForms.Printer
                         txtENumber.Text = ret.CaseNo;
                     if (!string.IsNullOrEmpty(ret.AgentName))
                         txtSign.Text = ret.AgentName;
-                    //if (!string.IsNullOrEmpty(ret.ValidationPhoneNumber))//验证保险真伪的电话号码(通常由保险公司提供)
-                    //{
-                    //    txtValidationPhoneNumber.Visible = true;
-                    //    txtValidationPhoneNumber.Text = ret.ValidationPhoneNumber;
-                    //}
-                    //else
-                    //{
-                    //    txtValidationPhoneNumber.Visible = false;
-                    //    txtValidationPhoneNumber.Text = "";
-                    //}
+                    if (!string.IsNullOrEmpty(ret.Insurer))//承保公司
+                        txtInsurer.Text = ret.Insurer;
+                    if (!string.IsNullOrEmpty(ret.AmountInsured))//保额
+                        txtAmountInsured.Text = ret.AmountInsured;
+                    if (!string.IsNullOrEmpty(ret.ValidationPhoneNumber))//查询电话
+                        txtCustomerService.Text = ret.ValidationPhoneNumber;
+                    if (!string.IsNullOrEmpty(ret.ValidationWebsite))//查询网址
+                        txtWebsite.Text = ret.ValidationWebsite;
                 }));
+
+                return true;
             }
         }
 
@@ -434,6 +441,8 @@ namespace EagleForms.Printer
             if (e.KeyValue == 13 && !IsQuerying)
             {
                 btnGetPnr_Click(sender, null);
+                e.Handled = true;
+                e.SuppressKeyPress = true;
             }
         }
 
@@ -691,8 +700,8 @@ namespace EagleForms.Printer
                 MessageBox.Show("尚在连接服务器，稍后重试……");
             else
             {
-                string txt = tbPnr.Text.Trim();
-                if (txt.Contains("输入"))
+                input = autoSizeTextBox1.Text.Trim();
+                if (input.Contains("输入"))
                     return;
 
                 this.picLoadName.Visible = true;
@@ -711,7 +720,7 @@ namespace EagleForms.Printer
             try
             {
                 string tktno = "";
-                string input = tbPnr.Text.Trim();
+
                 if (EagleString.BaseFunc.TicketNumberValidate(input, ref tktno))
                 {
                     LoadingStart();
@@ -751,7 +760,7 @@ namespace EagleForms.Printer
         private void QueryWebservice()
         {
             string tktno = "";
-            string input = tbPnr.Text.Trim();
+
             if (EagleString.BaseFunc.TicketNumberValidate(input, ref tktno))
             {
                 this.picLoadName.Visible = true;
@@ -1062,6 +1071,30 @@ namespace EagleForms.Printer
         {
             int index = txtFlightNo.SelectedIndex;
             dtpFlightDate.Text = lsFlight[index].Split('|')[1];
+        }
+
+        private void autoSizeTextBox1_Leave(object sender, EventArgs e)
+        {
+            autoSizeTextBox1.MiniSize();
+        }
+
+        private void autoSizeTextBox1_Enter(object sender, EventArgs e)
+        {
+            autoSizeTextBox1.AdjustSize();
+        }
+
+        private void autoSizeTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+
+                if (!IsQuerying)
+                {
+                    btnGetPnr.Focus();
+                    btnGetPnr_Click(sender, null);
+                }
+            }
         }
     }
 }

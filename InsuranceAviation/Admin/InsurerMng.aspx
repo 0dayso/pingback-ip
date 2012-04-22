@@ -104,7 +104,7 @@
                     <asp:SqlDataSource ID="sdsProductList" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
                         ProviderName="<%$ ConnectionStrings:InsuranceAviation.ProviderName %>" 
                         
-                        SelectCommand="SELECT a.Enabled, a.productID, a.productName, a.productDuration, b.interface_Name FROM t_Product AS a LEFT OUTER JOIN t_Interface AS b ON a.Interface_Id = b.Id WHERE (a.productSupplier = @productSupplier)">
+                        SelectCommand="SELECT a.Enabled, a.productID, a.productName, a.productDuration, a.IsIssuingRequired, b.interface_Name FROM t_Product AS a LEFT OUTER JOIN t_Interface AS b ON a.Interface_Id = b.Id WHERE (a.productSupplier = @productSupplier)">
                         <SelectParameters>
                             <asp:ControlParameter ControlID="gvInsurerList" Name="productSupplier" 
                                 PropertyName="SelectedValue" />
@@ -212,7 +212,11 @@
                                                                             <asp:BoundField DataField="productID" HeaderText="产品编号" />
                                                                             <asp:BoundField DataField="productName" HeaderText="产品名称" />
                                                                             <asp:BoundField DataField="productDuration" HeaderText="产品期限" />
-                                                                            <asp:BoundField DataField="interface_Name" HeaderText="数据接口" />
+                                                                            <asp:TemplateField HeaderText="数据接口">
+                                                                                <ItemTemplate>
+                                                                                    <asp:Label ID="Label1" runat="server" Text='<%# GetInterfaceStatus(Eval("IsIssuingRequired"), Eval("interface_Name")) %>'></asp:Label>
+                                                                                </ItemTemplate>
+                                                                            </asp:TemplateField>
                                                                         </Columns>
                                                                         <PagerStyle BackColor="#F7F7DE" ForeColor="Black" HorizontalAlign="Right" />
                                                                         <EmptyDataTemplate>
