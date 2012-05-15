@@ -116,7 +116,6 @@
                                                                         </abbr>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:BoundField DataField="userGroup" HeaderText="地区" />
                                                                 <asp:BoundField DataField="displayname" HeaderText="加盟商户" />
                                                                 <asp:TemplateField HeaderText="单证号">
                                                                     <ItemTemplate>
@@ -125,7 +124,10 @@
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:BoundField DataField="customerName" HeaderText="姓名" />
+                                                                <asp:BoundField DataField="customerGender" HeaderText="性别" />
                                                                 <asp:BoundField DataField="customerID" HeaderText="证件号码" />
+                                                                <asp:BoundField DataField="customerBirth" DataFormatString="{0:yyyy-MM-dd}" 
+                                                                    HeaderText="出生日期" />
                                                                 <asp:BoundField DataField="customerPhone" HeaderText="电话" />
                                                                 <asp:BoundField DataField="customerFlightNo" HeaderText="航班号" />
                                                                 <asp:BoundField DataField="customerFlightDate" 

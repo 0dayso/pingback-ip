@@ -24,19 +24,15 @@ public partial class Admin_InsurerMng : System.Web.UI.Page
         string username = ((TextBox)this.gvInsurerList.FooterRow.FindControl("txtUsername")).Text.Trim();
         string password = ((TextBox)this.gvInsurerList.FooterRow.FindControl("txtPassword")).Text.Trim();
         string displayname = ((TextBox)this.gvInsurerList.FooterRow.FindControl("txtDisplayname")).Text.Trim();
-        string address = ((TextBox)this.gvInsurerList.FooterRow.FindControl("txtAddress")).Text.Trim();
-        string phone = ((TextBox)this.gvInsurerList.FooterRow.FindControl("txtPhone")).Text.Trim();
 
         this.sdsInsurerList.InsertParameters[0].DefaultValue = username;
         this.sdsInsurerList.InsertParameters[1].DefaultValue = password;
         this.sdsInsurerList.InsertParameters[2].DefaultValue = displayname;
-        this.sdsInsurerList.InsertParameters[3].DefaultValue = address;
-        this.sdsInsurerList.InsertParameters[4].DefaultValue = phone;
-        this.sdsInsurerList.InsertParameters[5].DefaultValue = "true";
-        this.sdsInsurerList.InsertParameters[6].DefaultValue = User.Identity.Name;
+        this.sdsInsurerList.InsertParameters[3].DefaultValue = "true";
+        this.sdsInsurerList.InsertParameters[4].DefaultValue = User.Identity.Name;
 
-        this.sdsInsurerList.InsertParameters[7].DefaultValue = "99";//类型 99 代表是保险公司
-        this.sdsInsurerList.InsertParameters[8].DefaultValue = "/Admin/";//
+        this.sdsInsurerList.InsertParameters[5].DefaultValue = "99";//类型 99 代表是保险公司
+        this.sdsInsurerList.InsertParameters[6].DefaultValue = "/Admin/";//
         this.sdsInsurerList.Insert();
     }
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
