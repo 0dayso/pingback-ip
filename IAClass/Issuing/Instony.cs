@@ -10,10 +10,6 @@ namespace Instony
     public abstract class IssuingALL : IAClass.Issuing.IIssuing
     {
         static InstonyService ws = new InstonyService();
-        //public abstract string key
-        //{
-        //    get;
-        //}
 
         public TraceEntity Validate(IssueEntity entity)
         {
@@ -138,29 +134,12 @@ namespace Instony
 
     public class Issuing : IssuingALL
     {
-        //static string _key;
-        //public override string key
-        //{ 
-        //    get { 
-        //        if(string.IsNullOrEmpty(_key))
-        //            _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing"];
-        //        return _key;
-        //    }
-        //}
+
     }
 
     public class Issuing7 : IssuingALL
     {
-        //static string _key;
-        //public override string key
-        //{
-        //    get
-        //    {
-        //        if (string.IsNullOrEmpty(_key))
-        //            _key = System.Configuration.ConfigurationManager.AppSettings["InstonyIssuing7"];
-        //        return _key;
-        //    }
-        //}
+
     }
 
     class IssuingXML
