@@ -208,10 +208,9 @@ namespace IAMessageQ
         /// <param name="objEntity">消息实体</param>
         /// <param name="result">NormalWork的返回结果</param>
         /// <returns>反馈信息</returns>
-        string defaultFailureWork(object objEntity, TraceEntity result)
+        string defaultFailureWork(MessageEntity entity, TraceEntity result)
         {
             StringBuilder sb = new StringBuilder();
-            MessageEntity entity = objEntity as MessageEntity;
 
             if (entity.RedeliveryCount < entity.MaxRedelivery)
             {

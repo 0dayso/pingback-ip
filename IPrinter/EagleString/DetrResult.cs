@@ -140,6 +140,10 @@ namespace EagleString
             t = "PASSENGER:";
             t2 = "\n";
             m_passenger = egString.Between2String(m, t, t2);
+            //---added by king
+            if (string.IsNullOrEmpty(m_passenger))
+                m_passenger = egString.Between2String(m, "PASSENGER: ", "   ");
+            //---
 
             t = "EXCH:";
             t2 = "CONJ TKT:";
@@ -346,7 +350,7 @@ namespace EagleString
                 }
                 if (PNR.Length > 5) PNR = PNR.Substring(0, 5);
                 if (PNRBIG.Length > 5) PNRBIG = PNRBIG.Substring(0, 5);
-                TO = a[2].Substring(1).Trim();
+                TO = a[a.Length - 1].Substring(1).Trim();
             }
 
             public void ToTextBoxArrayLikeReceipt(System.Windows.Forms.TextBox[] tb)

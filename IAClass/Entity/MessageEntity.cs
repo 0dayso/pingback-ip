@@ -12,6 +12,10 @@ namespace IAClass.Entity
     public abstract class MessageEntity : UnityEntity
     {
         /// <summary>
+        /// 消息体名称
+        /// </summary>
+        public string Title;
+        /// <summary>
         /// 消息已被重发的次数
         /// </summary>
         public int RedeliveryCount;

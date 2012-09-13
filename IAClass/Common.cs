@@ -720,10 +720,20 @@ using log4net;
 
         public static string HttpPost(string url, byte[] data)
         {
-            return HttpPost(url, data, null);
+            return HttpPost(url, data, null, Encoding.UTF8);
+        }
+
+        public static string HttpPost(string url, byte[] data, Encoding encoding)
+        {
+            return HttpPost(url, data, null, encoding);
         }
 
         public static string HttpPost(string url, byte[] data, X509Certificate2 cert)
+        {
+            return HttpPost(url, data, cert, Encoding.UTF8);
+        }
+
+        public static string HttpPost(string url, byte[] data, X509Certificate2 cert, Encoding encoding)
         {
             string result = "";
             HttpWebRequest hwrequest = (HttpWebRequest)HttpWebRequest.Create(url);
@@ -752,7 +762,7 @@ using log4net;
                 //获取回应
                 using (HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse())
                 {
-                    StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
+                    StreamReader sr = new StreamReader(res.GetResponseStream(), encoding);
                     result = sr.ReadToEnd();
                     sr.Close();
                 }
@@ -768,6 +778,11 @@ using log4net;
 
         public static string HttpGet(string url)
         {
+            return HttpGet(url, Encoding.UTF8);
+        }
+
+        public static string HttpGet(string url, Encoding encoding)
+        {
             HttpWebRequest hwrequest = (HttpWebRequest)HttpWebRequest.Create(url);
             hwrequest.KeepAlive = true;
             hwrequest.ContentType = "text/xml";
@@ -777,7 +792,7 @@ using log4net;
             try
             {
                 HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse();
-                StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.UTF8);
+                StreamReader sr = new StreamReader(res.GetResponseStream(), encoding);
                 string result = sr.ReadToEnd();
                 res.Close();
                 sr.Close();

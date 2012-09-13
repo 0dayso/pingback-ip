@@ -6,6 +6,26 @@ using IAClass.Entity;
 
 namespace IAClass.Issuing
 {
+    /*
+    public class Issuing : IIssuing
+    {
+        public IssuingResultEntity Issue(IssueEntity entity)
+        {
+            return new IssuingResultEntity();
+        }
+
+        public TraceEntity Withdraw(WithdrawEntity entity)
+        {
+            return new TraceEntity();
+        }
+
+        public TraceEntity Validate(IssueEntity entity)
+        {
+            return new TraceEntity();
+        }
+    }
+     */
+
     /// <summary>
     /// 投保操作类接口定义
     /// </summary>

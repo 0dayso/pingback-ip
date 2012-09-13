@@ -106,6 +106,7 @@
     <Compile Include="Entity\UnityEntity.cs" />
     <Compile Include="Issuing\ziyoux_ws.cs" />
     <Compile Include="Issuing\ziyoux.cs" />
+    <Compile Include="Issuing\Zizaibao.cs" />
     <Compile Include="Payment\Alipay.cs" />
     <Compile Include="Payment\Alipay\AlipayConfig.cs" />
     <Compile Include="Payment\Alipay\AlipayCore.cs" />

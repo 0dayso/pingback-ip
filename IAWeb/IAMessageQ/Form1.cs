@@ -57,6 +57,7 @@ namespace IAMessageQ
             StringBuilder sb = new StringBuilder();
             sb.Append(DateTime.Now.ToLongTimeString());
             sb.Append(" : 线程"); sb.Append(Thread.CurrentThread.ManagedThreadId);
+            sb.Append(" "); sb.Append(message.Title);
             sb.Append(" "); sb.Append(entity.Name);
             sb.Append(" "); sb.Append(entity.ID);
             sb.Append(" "); sb.Append(entity.CaseNo);

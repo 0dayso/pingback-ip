@@ -35,7 +35,7 @@ namespace Instony
             xn.SelectSingleNode("Birthday").InnerText = entity.Birthday.ToString("yyyyMMdd");
             xn.SelectSingleNode("IDType").InnerText = GetIdType(entity.IDType);
             xn.SelectSingleNode("IDNum").InnerText = entity.ID;
-            xn.SelectSingleNode("Mobile").InnerText = string.IsNullOrEmpty(entity.PhoneNumber) ? "18611586620" : entity.PhoneNumber;
+            xn.SelectSingleNode("Mobile").InnerText = string.IsNullOrEmpty(entity.PhoneNumber) ? "18387195818" : entity.PhoneNumber;
 
             //被保人 内容同投保人节点，故用goto重复一次
             xn = xmlDoc.SelectSingleNode("Instony/Insureds/Insured");

@@ -50,7 +50,7 @@ namespace EagleForms.Printer
         /// </summary>
         /// <param name="para"></param>
         /// <returns></returns>
-        public static string GetResponse(string requestURL)
+        public static string GetResponse(string requestURL, Encoding encoding)
         {
             HttpWebRequest hwrequest = (HttpWebRequest)System.Net.HttpWebRequest.Create(requestURL);
             hwrequest.KeepAlive = true;
@@ -61,7 +61,7 @@ namespace EagleForms.Printer
             try
             {
                 HttpWebResponse res = (HttpWebResponse)hwrequest.GetResponse();
-                StreamReader sr = new StreamReader(res.GetResponseStream(), Encoding.Default);
+                StreamReader sr = new StreamReader(res.GetResponseStream(), encoding);
                 string result = sr.ReadToEnd();
                 res.Close();
                 sr.Close();
@@ -72,6 +72,11 @@ namespace EagleForms.Printer
                 EagleString.EagleFileIO.LogWrite(requestURL);
                 throw;
             }
+        }
+
+        public static string GetResponse(string requestURL)
+        {
+            return GetResponse(requestURL, Encoding.Default);
         }
     }
 }

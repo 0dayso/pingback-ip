@@ -16,7 +16,7 @@ namespace XMLConfig
 
     public enum QueryType
     {
-        Eterm, WebService
+        Eterm, WebService, Zizaibao
     }
 
     public abstract class XMLConfig

@@ -268,11 +268,11 @@ namespace IAClass.WebService
                     //    return response;
                     //}
 
-                    if (Case.IsIssued(request.flightDate, request.customerName, request.customerID))
-                    {
-                        response.Trace.ErrorMsg = "该旅客信息已经入库，请勿重复打印！";
-                        return response;
-                    }
+                    //if (Case.IsIssued(request.flightDate, request.customerName, request.customerID))
+                    //{
+                    //    response.Trace.ErrorMsg = "该旅客信息已经入库，请勿重复打印！";
+                    //    return response;
+                    //}
 
                     DataSet dsProduct = Product.GetProduct(request.InsuranceCode);
 
@@ -303,8 +303,25 @@ namespace IAClass.WebService
                             return response;
                         }
                     }
+                    else if (!string.IsNullOrEmpty(request.customerPhone))
+                    {
+                        if (Regex.IsMatch(request.customerPhone, "^1[3458][0-9]{9}$"))
+                        {
+                            //处理销售点仅用一个手机号给所有乘客出保险的偷懒行为
+                            if (Case.CountMobile(request.customerPhone, request.username) > 5)
+                            {
+                                response.Trace.ErrorMsg = "该手机号已重复使用多次，请如实填写,或者不填！";
+                                return response;
+                            }
+                        }
+                        else
+                        {
+                            response.Trace.ErrorMsg = "请正确填写手机号,或者不填！";
+                            return response;
+                        }
+                    }
 
-                    object interface_Id = isIssuingRequired ? drProduct["interface_Id"] : 0;//若非对接产品,接口ID置为0,以免影响接口出单统计
+                    int interface_Id = isIssuingRequired ? Convert.ToInt32(drProduct["interface_Id"]) : 0;//若非对接产品,接口ID置为0,以免影响接口出单统计
                     object caseSupplier = drProduct["productSupplier"];
                     int caseDuration = Convert.ToInt32(drProduct["productDuration"]);
                     object productName = drProduct["productName"];
@@ -419,6 +436,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                 cmm.CommandText = strSql;
                                 int caseId = Convert.ToInt32(cmm.ExecuteScalar());//返回自增列id
                                 //cmm.ExecuteNonQuery();
+                                strSql = string.Empty;//清空SQL语句,以防干扰下面的语句合并
 
                                 if (isIssuingRequired)
                                 {
@@ -443,6 +461,8 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                     entity.IOC_Class_Parameters = IOC_Class_Parameters;
                                     entity.CaseNo = caseNo;
                                     entity.CaseId = caseId.ToString();
+                                    entity.InterfaceId = interface_Id;
+                                    entity.Title = productName.ToString();
 
                                     TraceEntity validate = Case.Validate(entity);
                                     if (string.IsNullOrEmpty(validate.ErrorMsg))
@@ -466,6 +486,12 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                                 response.AmountInsured = result.AmountInsured;
                                                 response.ValidationWebsite = result.Website;
                                                 response.ValidationPhoneNumber = result.CustomerService;
+                                                //如果中途转投了别的接口
+                                                if (entity.InterfaceId != interface_Id)
+                                                {
+                                                    strSql = "UPDATE [t_Case] SET [interface_Id] = {0} WHERE caseNo = '{1}'; ";
+                                                    strSql = string.Format(strSql, entity.InterfaceId, caseNo);
+                                                }
                                             }
                                             else
                                             {
@@ -490,7 +516,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                 }
 
                                 //修改出单量 主键更新 合并到下面的SQL语句一起执行
-                                strSql = "update t_user set CountConsumed = CountConsumed + 1 where username = '" + request.username + "'; ";
+                                strSql += "update t_user set CountConsumed = CountConsumed + 1 where username = '" + request.username + "'; ";
 
                                 #region 扣款
                                 string[] parentArray = parentPath.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);//形如：/admin/tianzhi/bcaaa/bcaaa0150/

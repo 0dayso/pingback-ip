@@ -105,7 +105,7 @@ namespace JinHang
 
                 return result;
             }
-            catch (Exception e)
+            catch
             {
                 Common.LogIt("投保参数：" + policy.OuterXml + System.Environment.NewLine + "金航网返回：" + ret);
                 throw;

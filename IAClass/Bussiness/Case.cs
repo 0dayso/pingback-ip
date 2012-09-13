@@ -79,6 +79,7 @@ using IAClass.Issuing;
             try
             {
                 IssueEntity entity = (IssueEntity)entityObj;
+                int interfaceId_bak = entity.InterfaceId;//暂存
                 t_Case policy = Case.Get(entity.CaseNo, entity.ConnectionString);
 
                 if (policy.enabled)
@@ -99,8 +100,15 @@ using IAClass.Issuing;
                         else
                         {
                             //主键更新,不会阻塞  保存返回的正式保单号
-                            strSql = "update t_case set certNo = '{0}', [isIssued] = 1 where caseNo = '{1}'";
-                            strSql = string.Format(strSql, result.PolicyNo, entity.CaseNo);
+                            strSql = "update t_case set certNo = '{0}', [isIssued] = 1 {1} where caseNo = '{2}'";
+
+                            if (entity.InterfaceId != interfaceId_bak)//如果中途转投了别的接口
+                            {
+                                strSql = string.Format(strSql, result.PolicyNo, ",[interface_Id] = " + entity.InterfaceId, entity.CaseNo);
+                            }
+                            else
+                                strSql = string.Format(strSql, result.PolicyNo, "", entity.CaseNo);
+
                             int eff = SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql);
                             if (eff == 0)
                                 Common.LogIt("ExecuteNonQuery影响行数为0 : " + strSql);
@@ -386,7 +394,7 @@ SELECT caseID, caseNo, customerFlightDate, CertNo,
 
             DataRow dr = ds.Tables[0].Rows[0];
             string caseOwner = dr["caseOwner"].ToString();
-            if (user.Username != caseOwner)
+            if (user.Username.ToUpper() != caseOwner.ToUpper())
             {
                 response.ErrorMsg = "单证号不属于该用户！";
                 return response;

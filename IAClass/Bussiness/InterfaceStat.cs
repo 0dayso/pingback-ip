@@ -11,6 +11,16 @@ using System.Data;
     /// </summary>
     public class InterfaceStat
     {
+        public static int GetId(string alias)
+        {
+            string strSql = @"
+Select id from t_Interface with(nolock)
+where IOC_Class_Alias = '{0}'";
+            strSql = string.Format(strSql, alias);
+            int id = Convert.ToInt32(SqlHelper.ExecuteScalar(Common.ConnectionString, CommandType.Text, strSql));
+            return id;
+        }
+
         /// <summary>
         /// 已投保
         /// </summary>

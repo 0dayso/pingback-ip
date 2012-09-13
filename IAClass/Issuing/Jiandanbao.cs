@@ -434,26 +434,27 @@ namespace Jiandanbao
                     if (string.IsNullOrEmpty(ret))
                         throw new Exception("简单保WebService返回为空！");
                 }
-                catch (Exception e)
+                catch
                 {
-                    Common.LogIt(ws.Url + System.Environment.NewLine + e.ToString());
-                    result.Trace.ErrorMsg = e.Message;
-                    return result;
+                    Common.LogIt(ws.Url);
+                    throw;
                 }
 
                 ret = ret.ToUpper();
-                if (!ret.StartsWith("Z"))
+                if (ret.StartsWith("Z") || ret.Contains("RESEND"))
                 {
-                    Common.LogIt("投保参数" + xmlString + System.Environment.NewLine + "简单保返回：" + ret);
-                    result.Trace.ErrorMsg = ret;
-                }
-                else
-                {
-                    result.PolicyNo = ret;
+                    result.PolicyNo = result.Trace.Detail = ret;
                     result.Insurer = "昆仑健康保险股份有限公司";
                     result.AmountInsured = "";
                     result.Website = "http://www.kunlunhealth.com";
                     result.CustomerService = "400-811-8899";
+                }
+                else
+                {
+                    Common.LogIt("投保参数" + xmlString + System.Environment.NewLine + "简单保返回：" + ret);
+                    //result.Trace.ErrorMsg = ret;
+                    result.PolicyNo = entity.CaseNo;
+                    result.Trace.Detail = ret;
                 }
 
                 return result;

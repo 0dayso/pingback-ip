@@ -81,7 +81,7 @@ SELECT a.usertype, a.displayname, a.offsetX, a.offsetY, a.userID, a.parentPath, 
 
                 if (!enabled_Issuing)
                 {
-                    ret.Trace.ErrorMsg = "该账号没有出单权限！";
+                    ret.Trace.ErrorMsg = "该账户余额不足,请联系相关业务人员.";// "该账号没有出单权限！";
                     return ret;
                 }
                 else if (password != passwordOri)

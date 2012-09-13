@@ -10,6 +10,7 @@ using EagleWebService;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Xml;
+using Newtonsoft.Json;
 
 namespace EagleForms.Printer
 {
@@ -215,7 +216,7 @@ namespace EagleForms.Printer
                         req.InsuranceCode = productID;
                         req.password = printHandle.m_pInfo.m_password;
                         req.username = printHandle.m_pInfo.m_username;
-                        req.PNR = tbPnr.Text.Trim();
+                        req.PNR = autoSizeTextBox1.Text.Trim();
                         //req.Reserved = txtPrintingNo.Text.Trim();
                         req.customerIDType = (EagleWebService.IdentityType)Enum.Parse(typeof(EagleWebService.IdentityType), cmbCardType.Text);
                         req.customerGender = rbMale.Checked ? EagleWebService.Gender.Male : EagleWebService.Gender.Female;
@@ -295,7 +296,7 @@ namespace EagleForms.Printer
                 stopwatch.Stop();
                 FeedbackEntity feedback;
                 feedback.elapsedMilliseconds = stopwatch.ElapsedMilliseconds;
-                feedback.etermString = this.tbPnr.Text.Trim();
+                feedback.etermString = this.autoSizeTextBox1.Text.Trim();
                 System.Threading.Thread th = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(Feedback.PnrTimer));
                 th.Start(feedback);
             }
@@ -331,6 +332,9 @@ namespace EagleForms.Printer
                         string timeBoarding = dr.LS_SEG_DETR[0].TIME.ToString().PadLeft(4, '0');
                         timeBoarding = timeBoarding.Substring(0, 2) + ":" + timeBoarding.Substring(2, 2);
                         dtpFlightDate.Text = dr.LS_SEG_DETR[0].DATE.ToString("yyyy-M-d") + " " + timeBoarding;
+                        txtDest.Text = EagleString.EagleFileIO.CityCnName(dr.TO);
+                        if (string.IsNullOrEmpty(txtDest.Text))
+                            txtDest.Text = "国内";
                     }
 
                     //if (this.Visible)
@@ -421,6 +425,8 @@ namespace EagleForms.Printer
                 txtCardNo.Text = lsCard[0];
                 txtFlightNo.Text = string.Join(",", rtres.FLIGHTS);
                 txtDest.Text = EagleString.EagleFileIO.CityCnName(rtres.CITYPAIRS[0].Substring(3, 3));
+                if (string.IsNullOrEmpty(txtDest.Text))
+                    txtDest.Text = "国内";
 
                 if (lsTktNo.Count > 0)//根据电子客票号取身份证号
                     btnGetCardNo.Enabled = true;
@@ -453,6 +459,10 @@ namespace EagleForms.Printer
                 this.picLoadID.Visible = true;
                 if (Options.GlobalVar.QueryType == XMLConfig.QueryType.Eterm)
                 {
+                    LoadingWebServiceStart();
+                    new Thread(QueryZizaibaoForNI).Start(lsTktNo[selectIndex]);
+                    return;
+
                     LoadingStart();
                     //string cmd = m_cmdpool.HandleCommand("detr:tn/" + lsTktNo[selectIndex] + ",f");
                     //m_socket.SendCommand(cmd, EagleProtocal.TypeOfCommand.Multi);
@@ -461,10 +471,15 @@ namespace EagleForms.Printer
                     m_cmdpool.SetCommandType(cmd);
                     m_socket.SendCommand(cmd, EagleProtocal.TypeOfCommand.Multi);
                 }
-                else
+                else if (Options.GlobalVar.QueryType == XMLConfig.QueryType.WebService)
                 {
                     LoadingWebServiceStart();
                     new Thread(QueryWebserviceForNI).Start(lsTktNo[selectIndex]);
+                }
+                else
+                {
+                    LoadingWebServiceStart();
+                    new Thread(QueryZizaibaoForNI).Start(lsTktNo[selectIndex]);
                 }
             }
         }
@@ -504,7 +519,7 @@ namespace EagleForms.Printer
             dtpFlightDate.Value = policy.customerFlightDate;
             txtENumber.Text = policy.caseNo;
             txtCode.Text = policy.CertNo;
-            txtDest.Text = string.Empty;
+            txtDest.Text = "国内";
             txtCustomerPhone.Text = policy.customerPhone;
             txtDate.Text = policy.datetime.ToString("yyyy-MM-dd HH:mm:ss");
             txtSign.Text = policy.caseOwnerDisplay;
@@ -706,9 +721,11 @@ namespace EagleForms.Printer
 
                 this.picLoadName.Visible = true;
                 if (Options.GlobalVar.QueryType == XMLConfig.QueryType.Eterm)
-                    QueryEterm();
-                else
+                    QueryZizaibao();//QueryEterm();
+                else if (Options.GlobalVar.QueryType == XMLConfig.QueryType.WebService)
                     QueryWebservice();
+                else
+                    QueryZizaibao();
             }
         }
 
@@ -752,7 +769,7 @@ namespace EagleForms.Printer
             catch (Exception ee)
             {
                 LoadingEnd();
-                MessageBox.Show("1. 暂无法提取编码，请手工输入单证信息进行打印。" + System.Environment.NewLine + System.Environment.NewLine + "2. 手工输入信息同样具有合法性", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("暂无法提取，请手工输入乘客姓名、证件号码等信息亦可出单。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 EagleString.EagleFileIO.LogWrite(ee.ToString());
             }
         }
@@ -772,6 +789,28 @@ namespace EagleForms.Printer
                 this.picLoadName.Visible = true;
                 LoadingWebServiceStart();
                 new Thread(QueryWebserviceForPNR).Start(input);
+            }
+            else
+            {
+                MessageBox.Show("输入错误！");
+            }
+        }
+
+        private void QueryZizaibao()
+        {
+            string tktno = "";
+
+            if (EagleString.BaseFunc.TicketNumberValidate(input, ref tktno))
+            {
+                this.picLoadName.Visible = true;
+                LoadingWebServiceStart();
+                new Thread(QueryZizaibaoForTicket).Start(input);
+            }
+            else if (EagleString.BaseFunc.PnrValidate(input))
+            {
+                this.picLoadName.Visible = true;
+                LoadingWebServiceStart();
+                new Thread(QueryZizaibaoForTicket).Start(input);
             }
             else
             {
@@ -854,7 +893,7 @@ namespace EagleForms.Printer
                 this.BeginInvoke(new MethodInvoker(delegate
                     {
                         LoadingEnd();
-                        MessageBox.Show("1. 暂无法提取编码，请手工输入单证信息进行打印。" + System.Environment.NewLine + System.Environment.NewLine + "2. 手工输入信息同样具有合法性", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("暂无法提取，请手工输入乘客姓名、证件号码等信息亦可出单。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }));
                 EagleString.EagleFileIO.LogWrite(ee.ToString());
             }
@@ -936,7 +975,7 @@ namespace EagleForms.Printer
                 this.BeginInvoke(new MethodInvoker(delegate
                 {
                     LoadingEnd();
-                    MessageBox.Show("1. 暂无法提取编码，请手工输入单证信息进行打印。" + System.Environment.NewLine + System.Environment.NewLine + "2. 手工输入信息同样具有合法性", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show("暂无法提取，请手工输入乘客姓名、证件号码等信息亦可出单。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }));
                 EagleString.EagleFileIO.LogWrite(ee.ToString());
             }
@@ -996,6 +1035,66 @@ namespace EagleForms.Printer
                 {
                     LoadingEnd();
                     MessageBox.Show("无法提取，请手工输入证件号码。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }));
+                EagleString.EagleFileIO.LogWrite(ee.ToString());
+            }
+        }
+
+        private void QueryZizaibaoForNI(object ticket)
+        {
+            try
+            {
+                string ticketStr = ticket.ToString();
+                string url = "http://www.zizaibao.com/API/AnalyzeTicket/?ticketCode={0}";
+                url = string.Format(url, ticketStr.Replace("-", string.Empty));
+                string ret = Common.GetResponse(url, System.Text.Encoding.UTF8);
+                EagleString.EagleFileIO.LogWrite(ret);
+                ret = ret.Replace("\\r\\n", "\r");
+                Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(ret);
+                ret = obj["Result"].ToString();
+
+                if (!ticketStr.Contains("-"))//格式化票号
+                    ticketStr = ticketStr.Substring(0, 3) + "-" + ticketStr.Substring(3, ticketStr.Length - 3);
+                //ret = ">DETR:TN/" + ticketStr + "\r" + ret + "\r>";
+                ret = ">" + ret + "\r>";
+                SetCardByDetrfResult(new EagleString.DetrFResult(ret));
+            }
+            catch (Exception ee)
+            {
+                this.BeginInvoke(new MethodInvoker(delegate
+                {
+                    LoadingEnd();
+                    MessageBox.Show("提取失败，请重新尝试，或手工输入乘客的证件号码。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }));
+                EagleString.EagleFileIO.LogWrite(ee.ToString());
+            }
+        }
+
+        private void QueryZizaibaoForTicket(object ticket)
+        {
+            try
+            {
+                string ticketStr = ticket.ToString();
+                string url = "http://www.zizaibao.com/API/AnalyzePNR/?pnrCode={0}";
+                url = string.Format(url, ticketStr.Replace("-", string.Empty));
+                string ret = Common.GetResponse(url, System.Text.Encoding.UTF8);
+                EagleString.EagleFileIO.LogWrite(ret);
+                ret = ret.Replace("\\r\\n", "\r");
+                Newtonsoft.Json.Linq.JObject obj = Newtonsoft.Json.Linq.JObject.Parse(ret);
+                ret = obj["PNR"].ToString();
+
+                if (!ticketStr.Contains("-"))//格式化票号
+                    ticketStr = ticketStr.Substring(0, 3) + "-" + ticketStr.Substring(3, ticketStr.Length - 3);
+                //ret = ">DETR:TN/" + ticketStr + "\r" + ret + "\r>";
+                ret = ">" + ret + "\r>";
+                SetControlsByDetrResult(new EagleString.DetrResult(ret));
+            }
+            catch (Exception ee)
+            {
+                this.BeginInvoke(new MethodInvoker(delegate
+                {
+                    LoadingEnd();
+                    MessageBox.Show("提取失败，请重新尝试，或手工输入乘客姓名、证件号码等信息亦可出单。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }));
                 EagleString.EagleFileIO.LogWrite(ee.ToString());
             }

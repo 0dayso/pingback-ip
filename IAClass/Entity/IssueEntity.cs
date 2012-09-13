@@ -41,6 +41,10 @@ namespace IAClass.Entity
         /// 本系统电子单号
         /// </summary>
         public string CaseNo;
+        /// <summary>
+        /// 当前投保所使用的接口编号
+        /// </summary>
+        public int InterfaceId;
     }
 
     /// <summary>
@@ -87,13 +91,5 @@ namespace IAClass.Entity
         /// 本系统电子单号
         /// </summary>
         public string CaseNo;
-        /// <summary>
-        /// IOC容器中注册的对象名称（name属性，非类名）
-        /// </summary>
-        public string IOC_Class_Alias;
-        /// <summary>
-        /// 接口类所需要的参数
-        /// </summary>
-        public string IOC_Class_Parameters;
     }
 }

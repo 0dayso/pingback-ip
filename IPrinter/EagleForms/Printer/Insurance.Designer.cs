@@ -1,4 +1,4 @@
-﻿namespace EagleForms.Printer
+﻿﻿namespace EagleForms.Printer
 {
     partial class Insurance
     {
@@ -235,6 +235,8 @@
             this.pnlCustom.Controls.Add(this.cmbCardType);
             this.pnlCustom.Controls.Add(this.txtCardNo);
             this.pnlCustom.Controls.Add(this.cbName);
+            this.pnlCustom.Controls.Add(this.txtDest);
+            this.pnlCustom.Controls.Add(this.label8);
             this.pnlCustom.Controls.Add(this.label3);
             this.pnlCustom.Controls.Add(this.lb被保险人姓名);
             this.pnlCustom.Controls.Add(this.lb航班号);
@@ -580,15 +582,16 @@
             // 
             this.txtDest.BackColor = System.Drawing.SystemColors.Control;
             this.txtDest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDest.Location = new System.Drawing.Point(440, 52);
+            this.txtDest.Location = new System.Drawing.Point(313, 135);
             this.txtDest.Name = "txtDest";
             this.txtDest.Size = new System.Drawing.Size(118, 21);
             this.txtDest.TabIndex = 37;
+            this.txtDest.Text = "国内";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(396, 56);
+            this.label8.Location = new System.Drawing.Point(269, 139);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(41, 12);
             this.label8.TabIndex = 36;
@@ -950,8 +953,6 @@
             this.panel1.Controls.Add(this.lb保险终止时间);
             this.panel1.Controls.Add(this.txtCode);
             this.panel1.Controls.Add(this.lb填开日期);
-            this.panel1.Controls.Add(this.txtDest);
-            this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.lblCode);
             this.panel1.Location = new System.Drawing.Point(8, 415);
             this.panel1.Name = "panel1";
