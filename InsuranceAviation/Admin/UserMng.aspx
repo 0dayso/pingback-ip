@@ -39,7 +39,8 @@
                             
                             
                             
-                            UpdateCommand="UPDATE t_User SET displayname = @displayname, phone = @phone, address = @address, enabled = @enabled, password = @password, userGroup = @userGroup, enabled_Issuing = @enabled_Issuing, price = @price WHERE (username = @username)">
+                            
+                            UpdateCommand="UPDATE t_User SET displayname = @displayname, phone = @phone, address = @address, enabled = @enabled, password = @password, userGroup = @userGroup, enabled_Issuing = @enabled_Issuing, price = @price, balance = @balance WHERE (username = @username)">
                             <SelectParameters>
                                 <asp:Parameter Name="parent" Type="String" />
                                 <asp:ControlParameter ControlID="txtKeyword" ConvertEmptyStringToNull="False" 
@@ -54,6 +55,8 @@
                                 <asp:Parameter Name="enabled" Type="Boolean" />
                                 <asp:Parameter Name="userGroup" />
                                 <asp:Parameter Name="price" DbType="Decimal" />
+                                <asp:Parameter Name="enabled_Issuing" />
+                                <asp:Parameter Name="balance" />
                             </UpdateParameters>
                             <InsertParameters>
                                 <asp:Parameter Name="username" Type="String" />

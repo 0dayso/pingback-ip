@@ -187,7 +187,15 @@ namespace XiAnQiYi
 </TranData>
  * */
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(ret);
+            try
+            {
+                doc.LoadXml(ret);
+            }
+            catch
+            {
+                Common.LogIt("西安奇易Issuing_HuaXia返回：" + ret);
+                throw;
+            }
 
             if (doc.SelectSingleNode("TranData/Head/Flag").InnerText == "0")
             {
@@ -195,7 +203,7 @@ namespace XiAnQiYi
             }
             else
             {
-                Common.LogIt("西安奇易Issue：" + ret);
+                Common.LogIt("西安奇易Issuing_HuaXia返回：" + ret);
                 result.Trace.ErrorMsg = ret;
             }
 

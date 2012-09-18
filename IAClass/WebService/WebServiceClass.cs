@@ -262,11 +262,14 @@ namespace IAClass.WebService
                         return response;
                     }
 
-                    //if (userLogin.Balance <= 0)
-                    //{
-                    //    response.Trace.ErrorMsg = "账户余额不足，请充值或联系您的上级用户！";
-                    //    return response;
-                    //}
+                    if (Common.PaymOnline)
+                    {
+                        if (userLogin.Balance <= 0)
+                        {
+                            response.Trace.ErrorMsg = "账户余额不足，请充值或联系您的上级用户！";
+                            return response;
+                        }
+                    }
 
                     //if (Case.IsIssued(request.flightDate, request.customerName, request.customerID))
                     //{

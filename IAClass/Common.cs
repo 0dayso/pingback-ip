@@ -29,6 +29,10 @@ using log4net;
         /// </summary>
         public static readonly bool Debug = bool.Parse(ConfigurationManager.AppSettings["Debug"]);
         /// <summary>
+        /// 是否启用在线充值 true/false
+        /// </summary>
+        public static readonly bool PaymOnline = bool.Parse(ConfigurationManager.AppSettings["PaymOnline"]);
+        /// <summary>
         /// 最晚投保时间限制：起飞前前x分钟
         /// </summary>
         public static readonly int IssuingDeadline = int.Parse(ConfigurationManager.AppSettings["IssuingDeadline"]);
@@ -59,6 +63,14 @@ using log4net;
             }
             else
                 return false;
+        }
+
+        public static string GetPayStatus(object obj)
+        {
+            PaymentStatus status = (PaymentStatus)Enum.Parse(typeof(PaymentStatus), obj.ToString());
+            //if (status == PaymentStatus.交易完成)
+            //    return "<font style='color:red'>" + status.ToString() + "</font>";
+            return status.ToString();
         }
 
         /// <summary>

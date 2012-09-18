@@ -75,7 +75,7 @@ SELECT a.usertype, a.displayname, a.offsetX, a.offsetY, a.userID, a.parentPath, 
             else
             {
                 DataRow dr = ds.Tables[0].Rows[0];
-                ret.Balance = Convert.ToDecimal(dr["balance"]);
+                ret.Balance = Convert.ToDecimal(dr["balance"]);//此处的余额是该用户所属的一级经销商的余额
                 string passwordOri = dr["password"].ToString();
                 bool enabled_Issuing = Convert.ToBoolean(dr["enabled_Issuing"]);
 

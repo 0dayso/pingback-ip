@@ -67,12 +67,4 @@ public partial class Public_Pay : System.Web.UI.Page
         //else
         //    Payment.TransferByMasterSite(entity);
     }
-
-    public string GetStatus(object obj)
-    {
-        PaymentStatus status = (PaymentStatus)Enum.Parse(typeof(PaymentStatus), obj.ToString());
-        if (status == PaymentStatus.交易完成)
-            return "<font style='color:red'>" + status.ToString() + "</font>";
-        return status.ToString();
-    }
 }

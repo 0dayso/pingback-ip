@@ -40,7 +40,7 @@ public partial class Admin_UserMng : System.Web.UI.Page
         int userType = Convert.ToInt32(parentUserType) + 1;
         string path = parentPath.ToString() + User.Identity.Name + "/";
         string[] pathArray = path.Split(new string[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
-        string distributor = pathArray.Length > 1 ? pathArray[1] : User.Identity.Name;
+        string distributor = pathArray.Length > 1 ? pathArray[1] : username;//如果路径分组长度小于1,则表示当下是管理员在创建用户,则经销商就是该用户自己.
 
         this.sdsUserList.InsertParameters[7].DefaultValue = userType.ToString();
         this.sdsUserList.InsertParameters[8].DefaultValue = userGroup;

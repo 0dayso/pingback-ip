@@ -20,7 +20,7 @@ namespace IPS
 
         public void Transfer(PaymentEntity entity)
         {
-            string form_url = "https://pay.ips.net.cn/ipayment.aspx";
+            string form_url = "https://pay.ips.com.cn/ipayment.aspx";
             //商户号
             string Mer_code = config[0];
 
@@ -58,16 +58,18 @@ namespace IPS
             string DispAmount = Amount;
 
             //订单支付接口加密方式 md5
-            string OrderEncodeType = "2";
+            string OrderEncodeType = "5";
 
             //交易返回接口加密方式 md5
-            string RetEncodeType = "12";
+            string RetEncodeType = "17";
 
             //返回方式 有Server to Server方式
             string Rettype = "1";
 
-            //订单支付接口的Md5摘要，原文=订单号+金额+日期+支付币种+商户证书 
-            string SignMD5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(Billno + Amount + BillDate + Currency_Type + Mer_key, "MD5").ToLower();
+            //订单支付接口的Md5摘要，原文="billno{订单编号}currencytype{支付币种}amount{金额}date{日期}orderencodetype{支付接口加密方式}{IPS证书}"
+            string toBeSigned = "billno{0}currencytype{1}amount{2}date{3}orderencodetype{4}{5}";
+            toBeSigned = string.Format(toBeSigned, Billno, Currency_Type, Amount, BillDate, OrderEncodeType, Mer_key);
+            string SignMD5 = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(toBeSigned, "MD5").ToLower();
 
             string postForm = "<form name=\"frm1\" id=\"frm1\" method=\"post\" action=\"" + form_url + "\">";
 
