@@ -130,7 +130,7 @@ namespace AutoUpdate
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(64, 24);
             this.btnExit.TabIndex = 5;
-            this.btnExit.Text = "退出";
+            this.btnExit.Text = "下次再试";
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // rbDianx

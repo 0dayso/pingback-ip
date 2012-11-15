@@ -63,7 +63,7 @@
                 <img alt="" src="../images/info.gif" />
             </td>
             <td align="left" style="height: 21px">
-                <a href="../UpdateFiles/dotnetfx2.exe">下载插件</a>（如果无法安装打印客户端，请先下载并安装该插件）
+                <a href="http://download.microsoft.com/download/c/6/e/c6e88215-0178-4c6c-b5f3-158ff77b1f38/NetFx20SP2_x86.exe">下载插件</a>（如果无法安装打印客户端，请先下载并安装该插件）
             </td>
             <td align="left" style="height: 21px">
                 &nbsp;

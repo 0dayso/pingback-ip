@@ -24,6 +24,10 @@ values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', 1)";
             return obj.ToString();
         }
 
+        /// <summary>
+        /// 转入支付网关页面
+        /// </summary>
+        /// <param name="entity"></param>
         public static void Transfer(PaymentEntity entity)
         {
             new BankFacade().Transfer(entity);
@@ -41,7 +45,27 @@ values ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', 1)";
             HttpContext.Current.Response.Redirect(urlPay);
         }
 
-        public static bool Callback(string orderId, string payer_tradeNo)
+        public static void Callback_Return(string payingGateway)
+        {
+            PayingCallbackEntity entity = new PayingCallbackEntity();
+            entity.IOC_Class_Alias = payingGateway;
+            new BankFacade().Callback_Return(entity);
+        }
+
+        public static void Callback_Notify(string payingGateway)
+        {
+            PayingCallbackEntity entity = new PayingCallbackEntity();
+            entity.IOC_Class_Alias = payingGateway;
+            new BankFacade().Callback_Return(entity);
+        }
+
+        /// <summary>
+        /// 确认订单已支付
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="payer_tradeNo"></param>
+        /// <returns></returns>
+        public static bool CheckIn(string orderId, string payer_tradeNo)
         {
             //if (HttpContext.Current.Request.Url.Host == Common.PaymentDomainName)//若是主站
             {

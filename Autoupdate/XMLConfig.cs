@@ -14,7 +14,7 @@ namespace AutoUpdate
 
     public enum QueryType
     {
-        Eterm, WebService
+        Eterm, WebService, Zizaibao
     }
 
     /// <summary>

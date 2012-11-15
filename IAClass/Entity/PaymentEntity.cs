@@ -5,7 +5,7 @@ using System.Text;
 
 namespace IAClass.Entity
 {
-    public class PaymentEntity : MessageEntity
+    public class PaymentEntity : UnityEntity
     {
         public string Gateway;
         public string Website;
@@ -30,5 +30,13 @@ namespace IAClass.Entity
         /// 附属站点的回调地址
         /// </summary>
         public string URL_Callback_Slave = "";
+    }
+
+    public class PayingCallbackEntity : UnityEntity
+    {
+        ///// <summary>
+        ///// 回调参数
+        ///// </summary>
+        //public System.Web.HttpRequest HttpRequest;
     }
 }

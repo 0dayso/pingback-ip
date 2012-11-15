@@ -13,5 +13,9 @@ namespace IAClass.Payment
     interface IBank
     {
         void Transfer(PaymentEntity entity);
+
+        void Callback_Return(PayingCallbackEntity entity);
+
+        void Callback_Notify(PayingCallbackEntity entity);
     }
 }

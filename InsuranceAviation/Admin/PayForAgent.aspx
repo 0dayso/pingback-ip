@@ -259,7 +259,7 @@ ul,ol{
                         SortExpression="amount" />
                     <asp:TemplateField HeaderText="交易状态" SortExpression="status">
                         <ItemTemplate>
-                            <asp:Label ID="Label1" runat="server" Text='<%# GetStatus(Eval("status")) %>'></asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text='<%# Common.GetPayStatus(Eval("status")) %>'></asp:Label>
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>
