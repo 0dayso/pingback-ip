@@ -103,6 +103,7 @@
     <Compile Include="Entity\PaymentEntity.cs" />
     <Compile Include="Entity\SMSEntity.cs" />
     <Compile Include="Entity\MessageEntity.cs" />
+    <Compile Include="Entity\t_Interface.cs" />
     <Compile Include="Entity\UnityEntity.cs" />
     <Compile Include="Issuing\ziyoux_ws.cs" />
     <Compile Include="Issuing\ziyoux.cs" />

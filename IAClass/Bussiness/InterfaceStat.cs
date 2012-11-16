@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using IAClass.Entity;
 
 //namespace IAClass.Bussiness
 //{
@@ -11,14 +12,20 @@ using System.Data;
     /// </summary>
     public class InterfaceStat
     {
-        public static int GetId(string alias)
+        public static t_Interface Get(string alias)
         {
             string strSql = @"
-Select id from t_Interface with(nolock)
-where IOC_Class_Alias = '{0}'";
+Select Id, Interface_Name, IOC_Class_Alias ,IOC_Class_Parameters ,Description from t_Interface with(nolock) where IOC_Class_Alias = '{0}'";
             strSql = string.Format(strSql, alias);
-            int id = Convert.ToInt32(SqlHelper.ExecuteScalar(Common.ConnectionString, CommandType.Text, strSql));
-            return id;
+            DataSet ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strSql);
+
+            if (ds.Tables[0].Rows.Count == 0)
+                throw new Exception(string.Format("未能找到名为 {0} 的数据接口.", alias));
+            else
+            {
+                t_Interface inter = NBear.Mapping.ObjectConvertor.ToObject<t_Interface>(ds.Tables[0].Rows[0]);
+                return inter;
+            }
         }
 
         /// <summary>
