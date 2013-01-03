@@ -183,6 +183,12 @@
     <Compile Include="Printer\FrmInsuranceList.Designer.cs">
       <DependentUpon>FrmInsuranceList.cs</DependentUpon>
     </Compile>
+    <Compile Include="Printer\FrmPolicyHolder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Printer\FrmPolicyHolder.Designer.cs">
+      <DependentUpon>FrmPolicyHolder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Printer\Insurance.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -301,6 +307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Printer\FrmInsuranceList.resx">
       <DependentUpon>FrmInsuranceList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Printer\FrmPolicyHolder.resx">
+      <DependentUpon>FrmPolicyHolder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Printer\Insurance.resx">
       <SubType>Designer</SubType>

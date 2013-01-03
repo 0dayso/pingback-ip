@@ -1113,7 +1113,7 @@ namespace EagleForms.Printer
             {
                 rbFemale.Enabled = true;
                 rbMale.Enabled = true;
-                dtpBirth.Enabled = true;
+                //dtpBirth.Enabled = true;
             }
         }
 
@@ -1132,7 +1132,7 @@ namespace EagleForms.Printer
                     else
                         rbMale.Checked = true;
 
-                    dtpBirth.Value = bg.Birth;
+                    //dtpBirth.Value = bg.Birth;
                 }
                 catch
                 { }

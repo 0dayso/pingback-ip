@@ -142,37 +142,53 @@ namespace IAMessageQ
                 if (IsRunning)
                 {
                     //事务开始
-                    TraceEntity result = new TraceEntity();
-                    try
+                    //2012.12.27 专为处理人保无法承保大于一个月的起飞日期
+                    IssueEntity ientity = entity as IssueEntity;
+                    TimeSpan ts = ientity.EffectiveDate - DateTime.Today;
+                    int delayDay = 27;
+                    if (ts.Days > delayDay)
                     {
-                        result = NormalWork(entity);
-                    }
-                    catch(Exception e)
-                    {
-                        Common.LogIt(e.ToString());
-                        result.ErrorMsg = e.Message;
-                    }
-
-                    if (string.IsNullOrEmpty(result.ErrorMsg))
-                    {
-                        message.Acknowledge();//事务结束,出队列确认
-                        sb.Append(" 完成！");
-                        sb.AppendLine(result.Detail);//显示保单号
+                        //重发,并设置延迟时间为delayDay天后
+                        MQClient.EnqueueObject(entity, delayDay * 24 * 3600 * 1000L);
+                        //message.Acknowledge();//事务结束
+                        sb.Append(" 推迟:");
+                        sb.AppendLine(string.Format(" {0}天后重发!", delayDay));
+                        message.Acknowledge();//事务结束
                     }
                     else
                     {
-                        //if (IsRunning)
+                        TraceEntity result = new TraceEntity();
+                        try
                         {
-                            string fail = FailureWork(entity, result);
-                            message.Acknowledge();//事务结束
-                            sb.AppendLine(fail);
+                            result = NormalWork(entity);
                         }
-                        //else
-                        //{
-                        //    sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                        //    sb.AppendLine(" 回滚!");
-                        //    throw new Exception("rollback!");
-                        //}
+                        catch (Exception e)
+                        {
+                            Common.LogIt(e.ToString());
+                            result.ErrorMsg = e.Message;
+                        }
+
+                        if (string.IsNullOrEmpty(result.ErrorMsg))
+                        {
+                            message.Acknowledge();//事务结束,出队列确认
+                            sb.Append(" 完成！");
+                            sb.AppendLine(result.Detail);//显示保单号
+                        }
+                        else
+                        {
+                            //if (IsRunning)
+                            {
+                                string fail = FailureWork(entity, result);
+                                message.Acknowledge();//事务结束
+                                sb.AppendLine(fail);
+                            }
+                            //else
+                            //{
+                            //    sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
+                            //    sb.AppendLine(" 回滚!");
+                            //    throw new Exception("rollback!");
+                            //}
+                        }
                     }
                     //这里若用Invoke将导致一个非常隐秘的Bug
                     //现象：点击Stop按钮后，应用程序将挂起
@@ -216,7 +232,7 @@ namespace IAMessageQ
             {
                 //重发,并设置延迟时间,每次重发延迟时间加倍
                 entity.RedeliveryCount++;
-                MQClient.EnqueueObject(entity, 60 * 1000 * entity.MinDelayMinutes * entity.RedeliveryCount);
+                MQClient.EnqueueObject(entity, entity.MinDelayMinutes * entity.RedeliveryCount * 60 * 1000);
                 //message.Acknowledge();//事务结束
                 sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
                 sb.Append(string.Format(" {0}分钟后重发!", entity.MinDelayMinutes * entity.RedeliveryCount));

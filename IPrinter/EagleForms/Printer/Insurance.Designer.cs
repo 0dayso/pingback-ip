@@ -55,6 +55,8 @@
             this.cmbCardType = new System.Windows.Forms.ComboBox();
             this.txtCardNo = new System.Windows.Forms.TextBox();
             this.cbName = new System.Windows.Forms.ComboBox();
+            this.txtDest = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lb被保险人姓名 = new System.Windows.Forms.Label();
             this.lb航班号 = new System.Windows.Forms.Label();
@@ -71,8 +73,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lb保险天数 = new System.Windows.Forms.Label();
-            this.txtDest = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.txtCode = new System.Windows.Forms.TextBox();
             this.lblCode = new System.Windows.Forms.Label();
             this.dtpStopDate = new System.Windows.Forms.DateTimePicker();
@@ -291,6 +291,7 @@
             this.dtpBirth.Name = "dtpBirth";
             this.dtpBirth.Size = new System.Drawing.Size(118, 21);
             this.dtpBirth.TabIndex = 46;
+            this.dtpBirth.Value = new System.DateTime(1980, 12, 31, 0, 0, 0, 0);
             // 
             // label4
             // 
@@ -412,6 +413,25 @@
             this.cbName.Size = new System.Drawing.Size(137, 80);
             this.cbName.TabIndex = 0;
             this.cbName.SelectedValueChanged += new System.EventHandler(this.cbName_SelectedValueChanged);
+            // 
+            // txtDest
+            // 
+            this.txtDest.BackColor = System.Drawing.SystemColors.Control;
+            this.txtDest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDest.Location = new System.Drawing.Point(313, 135);
+            this.txtDest.Name = "txtDest";
+            this.txtDest.Size = new System.Drawing.Size(118, 21);
+            this.txtDest.TabIndex = 37;
+            this.txtDest.Text = "国内";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(269, 139);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 12);
+            this.label8.TabIndex = 36;
+            this.label8.Text = "目的地";
             // 
             // label3
             // 
@@ -577,25 +597,6 @@
             this.lb保险天数.Size = new System.Drawing.Size(53, 12);
             this.lb保险天数.TabIndex = 17;
             this.lb保险天数.Text = "产品类型";
-            // 
-            // txtDest
-            // 
-            this.txtDest.BackColor = System.Drawing.SystemColors.Control;
-            this.txtDest.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDest.Location = new System.Drawing.Point(313, 135);
-            this.txtDest.Name = "txtDest";
-            this.txtDest.Size = new System.Drawing.Size(118, 21);
-            this.txtDest.TabIndex = 37;
-            this.txtDest.Text = "国内";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(269, 139);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
-            this.label8.TabIndex = 36;
-            this.label8.Text = "目的地";
             // 
             // txtCode
             // 
