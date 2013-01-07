@@ -51,7 +51,7 @@ namespace XiAnQiYi
             //正常返回是：“投保成功！保单号：020471140216954”
             if (ret.Contains("投保成功"))
             {
-                result.PolicyNo = Common.InterceptNumber(ret);
+                result.PolicyNo = result.Trace.Detail = Common.InterceptNumber(ret);
             }
             else
             {

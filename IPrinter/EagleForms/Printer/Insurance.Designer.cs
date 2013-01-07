@@ -284,7 +284,6 @@
             // dtpBirth
             // 
             this.dtpBirth.CustomFormat = "yyyy-M-d";
-            this.dtpBirth.Enabled = false;
             this.dtpBirth.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpBirth.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.dtpBirth.Location = new System.Drawing.Point(313, 85);
