@@ -75,7 +75,7 @@ namespace XiAnQiYi
 
             try
             {
-                ret = webService.policyCancel_hx(config[0], config[1], entity.PolicyNo);
+                ret = webService.policyCancel(config[0], config[1], entity.PolicyNo);
 
                 if (string.IsNullOrEmpty(ret))
                     throw new Exception("西安奇易WebService返回为空！");
