@@ -56,7 +56,7 @@ namespace IAMessageQ
             IssueEntity entity = message as IssueEntity;
             StringBuilder sb = new StringBuilder();
             sb.Append(DateTime.Now.ToLongTimeString());
-            sb.Append(" : 线程"); sb.Append(Thread.CurrentThread.ManagedThreadId);
+            sb.Append(" :"); //sb.Append(Thread.CurrentThread.ManagedThreadId);
             sb.Append(" "); sb.Append(message.Title);
             sb.Append(" "); sb.Append(entity.Name);
             sb.Append(" "); sb.Append(entity.ID);

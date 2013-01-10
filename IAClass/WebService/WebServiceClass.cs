@@ -220,6 +220,8 @@ namespace IAClass.WebService
                     }
                     else
                     {
+                        request.customerID = request.customerID.ToUpper();
+
                         if (request.customerIDType == IdentityType.身份证 && !Common.CheckIDCard(request.customerID))
                         {
                             response.Trace.ErrorMsg = "身份证号码填写有误,请核对！";
@@ -475,7 +477,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                             //Thread th = new Thread(Case.IssueAsync);
                                             //th.Start(entity);
                                             entity.ConnectionString = Common.ConnectionString;
-                                            entity.MaxRedelivery = 3;
+                                            //entity.MaxRedelivery = 3;
                                             Common.AQ_Issuing.EnqueueObject(entity);
                                         }
                                         else

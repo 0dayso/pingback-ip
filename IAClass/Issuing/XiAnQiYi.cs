@@ -40,7 +40,7 @@ namespace XiAnQiYi
                                                     entity.PhoneNumber, entity.EffectiveDate.ToString("yyyy-MM-dd HH:mm:ss"), config[2]);
 
                 if (string.IsNullOrEmpty(ret))
-                    throw new Exception("西安奇易WebService返回为空！");
+                    throw new Exception("西安奇易alterableApproval返回为空！");
             }
             catch
             {
@@ -53,9 +53,14 @@ namespace XiAnQiYi
             {
                 result.PolicyNo = result.Trace.Detail = Common.InterceptNumber(ret);
             }
+            else if (ret.Contains("份数超限"))
+            {
+                result.PolicyNo = entity.CaseNo;
+                result.Trace.Detail = ret;
+            }
             else
             {
-                Common.LogIt("西安奇易Issue：" + ret);
+                Common.LogIt(entity.Title + "西安奇易Issue：" + ret);
                 result.Trace.ErrorMsg = ret;
             }
 
@@ -78,7 +83,7 @@ namespace XiAnQiYi
                 ret = webService.policyCancel(config[0], config[1], entity.PolicyNo);
 
                 if (string.IsNullOrEmpty(ret))
-                    throw new Exception("西安奇易WebService返回为空！");
+                    throw new Exception("西安奇易policyCancel返回为空！");
             }
             catch
             {
@@ -154,7 +159,7 @@ namespace XiAnQiYi
                                                     entity.PhoneNumber, entity.EffectiveDate.ToString("yyyy-MM-dd"), config[2]);
 
                 if (string.IsNullOrEmpty(ret))
-                    throw new Exception("西安奇易WebService返回为空！");
+                    throw new Exception("西安奇易alterableApproval_hx返回为空！");
             }
             catch
             {

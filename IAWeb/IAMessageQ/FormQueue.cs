@@ -142,54 +142,39 @@ namespace IAMessageQ
                 if (IsRunning)
                 {
                     //事务开始
-                    //2012.12.27 专为处理人保无法承保大于一个月的起飞日期
-                    IssueEntity ientity = entity as IssueEntity;
-                    TimeSpan ts = ientity.EffectiveDate - DateTime.Today;
-                    int delayDay = 27;
-                    if (ts.Days > delayDay)
+                    TraceEntity result = new TraceEntity();
+                    try
                     {
-                        //重发,并设置延迟时间为delayDay天后
-                        MQClient.EnqueueObject(entity, delayDay * 24 * 3600 * 1000L);
-                        //message.Acknowledge();//事务结束
-                        sb.Append(" 推迟:");
-                        sb.AppendLine(string.Format(" {0}天后重发!", delayDay));
-                        message.Acknowledge();//事务结束
+                        result = NormalWork(entity);
+                    }
+                    catch (Exception e)
+                    {
+                        Common.LogIt(e.ToString());
+                        result.ErrorMsg = e.Message;
+                    }
+
+                    if (string.IsNullOrEmpty(result.ErrorMsg))
+                    {
+                        message.Acknowledge();//事务结束,出队列确认
+                        sb.Append(" 完成！");
+                        sb.AppendLine(result.Detail);//显示保单号
                     }
                     else
                     {
-                        TraceEntity result = new TraceEntity();
-                        try
+                        //if (IsRunning)
                         {
-                            result = NormalWork(entity);
+                            string fail = FailureWork(entity, result);
+                            message.Acknowledge();//事务结束
+                            sb.AppendLine(fail);
                         }
-                        catch (Exception e)
-                        {
-                            Common.LogIt(e.ToString());
-                            result.ErrorMsg = e.Message;
-                        }
-
-                        if (string.IsNullOrEmpty(result.ErrorMsg))
-                        {
-                            message.Acknowledge();//事务结束,出队列确认
-                            sb.Append(" 完成！");
-                            sb.AppendLine(result.Detail);//显示保单号
-                        }
-                        else
-                        {
-                            //if (IsRunning)
-                            {
-                                string fail = FailureWork(entity, result);
-                                message.Acknowledge();//事务结束
-                                sb.AppendLine(fail);
-                            }
-                            //else
-                            //{
-                            //    sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
-                            //    sb.AppendLine(" 回滚!");
-                            //    throw new Exception("rollback!");
-                            //}
-                        }
+                        //else
+                        //{
+                        //    sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
+                        //    sb.AppendLine(" 回滚!");
+                        //    throw new Exception("rollback!");
+                        //}
                     }
+
                     //这里若用Invoke将导致一个非常隐秘的Bug
                     //现象：点击Stop按钮后，应用程序将挂起
                     //原因:A:主线程在Stop中因调用ActiveMQ session.close()而阻塞等待；
@@ -228,18 +213,31 @@ namespace IAMessageQ
         {
             StringBuilder sb = new StringBuilder();
 
+            if (result.ErrorMsg.ToLower().Contains("special redelivery"))
+            {
+                //自定义重发,并设置延迟时间为delayDay天后
+                int delayDay;
+                if (int.TryParse(result.Detail, out delayDay))
+                {
+                    MQClient.EnqueueObject(entity, delayDay * 24 * 3600 * 1000L);
+                    sb.Append(" 推迟:");
+                    sb.AppendLine(string.Format(" {0}天后重发!", delayDay));
+                    return sb.ToString();
+                }
+                else
+                    sb.AppendLine(" special redelivery 未指明延迟时间，尝试按默认机制重发！");
+            }
+
             if (entity.RedeliveryCount < entity.MaxRedelivery)
             {
-                //重发,并设置延迟时间,每次重发延迟时间加倍
+                //默认重发,每次重发延迟时间加倍
                 entity.RedeliveryCount++;
                 MQClient.EnqueueObject(entity, entity.MinDelayMinutes * entity.RedeliveryCount * 60 * 1000);
-                //message.Acknowledge();//事务结束
                 sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
                 sb.Append(string.Format(" {0}分钟后重发!", entity.MinDelayMinutes * entity.RedeliveryCount));
             }
             else
             {
-                //message.Acknowledge();//事务结束
                 sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
                 sb.Append(string.Format(" {0}次重发失败,放弃!", entity.MaxRedelivery));
                 Common.LogIt(sb.ToString());
@@ -282,6 +280,101 @@ namespace IAMessageQ
 
                 MQClient.Close();
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = !timer1.Enabled;
+            if (timer1.Enabled)
+                btnScan.Text = "Stop";
+            else
+                btnScan.Text = "Scan";
+        }
+
+        private void Scan()
+        {
+            DataSet ds;
+            string strsql = @"
+select * from t_Case a 
+ inner join t_interface b on a.interface_id = b.id
+ where CertNo is null and datetime > '2012-12-31'
+ and (interface_Id = 6 or interface_Id = 15)
+ and IssuingFailed is null
+ and customerFlightDate > '2013-1-10'
+";
+            ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strsql);
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            {
+                using (System.Data.SqlClient.SqlConnection cnn = new System.Data.SqlClient.SqlConnection(Common.ConnectionString))
+                {
+                    System.Data.SqlClient.SqlCommand cmm = new System.Data.SqlClient.SqlCommand("", cnn);
+                    cnn.Open();
+
+                    IssueEntity entity = new IssueEntity();
+                    entity.Name = dr["customerName"].ToString();
+                    entity.ID = dr["customerID"].ToString();
+                    entity.IDType = IdentityType.其他证件;
+                    entity.Gender = dr["customerGender"].ToString() == "男" ? Gender.Male : Gender.Female;
+                    entity.Birthday = DateTime.Parse(dr["customerBirth"].ToString());
+                    //如果是今天之后的乘机日期,则时间部分置为0
+                    DateTime dtf = DateTime.Parse(dr["customerFlightDate"].ToString());
+                    int caseDuration = Convert.ToInt32(dr["caseDuration"]);
+                    entity.EffectiveDate = dtf > DateTime.Today ? dtf.Date : dtf;
+                    entity.ExpiryDate = dtf.AddDays(caseDuration - 1);
+                    entity.PhoneNumber = dr["customerPhone"].ToString();
+                    entity.FlightNo = dr["customerFlightNo"].ToString();
+
+                    entity.IsLazyIssue = false;
+                    entity.DbCommand = cmm;
+                    entity.IOC_Class_Alias = dr["IOC_Class_Alias"].ToString();
+                    entity.IOC_Class_Parameters = dr["IOC_Class_Parameters"].ToString();
+                    entity.CaseNo = dr["caseNo"].ToString();
+                    entity.CaseId = dr["caseId"].ToString();
+                    entity.InterfaceId = Convert.ToInt32(dr["interface_Id"]);
+                    //entity.Title = productName.ToString();
+
+                    IssuingResultEntity result = new IssuingResultEntity();
+                    try
+                    {
+                        result = Case.Issue(entity);
+                    }
+                    catch (Exception ee)
+                    {
+                        result.Trace.ErrorMsg = ee.Message;
+                    }
+
+                    cnn.Close();
+
+                    if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
+                    {
+                        //strsql = @"update t_Case set CertNo = '{0}' where caseNo = '{1}'";
+                        //strsql = string.Format(strsql, result.PolicyNo, entity.CaseNo);
+                        //SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strsql);
+                        this.BeginInvoke(new MethodInvoker(delegate
+                            {
+                                txtLogInfo.AppendText(result.PolicyNo + Environment.NewLine);
+                            }));
+                    }
+                    else
+                        this.BeginInvoke(new MethodInvoker(delegate
+                            {
+                                txtLogInfo.AppendText(result.Trace.ErrorMsg + Environment.NewLine);
+                            }));
+                }
+
+            }
+
+            this.BeginInvoke(new MethodInvoker(delegate
+                {
+                    timer1.Enabled = true;
+                }));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            Thread td = new Thread(Scan);
+            td.Start();
         }
     }
 }

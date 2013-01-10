@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnIssueStop = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.nudThreads = new System.Windows.Forms.NumericUpDown();
@@ -35,6 +36,8 @@
             this.txtLogInfo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblCountIdle = new System.Windows.Forms.Label();
+            this.btnScan = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nudThreads)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,11 +118,27 @@
             this.lblCountIdle.TabIndex = 13;
             this.lblCountIdle.Text = "0";
             // 
+            // btnScan
+            // 
+            this.btnScan.Location = new System.Drawing.Point(342, 5);
+            this.btnScan.Name = "btnScan";
+            this.btnScan.Size = new System.Drawing.Size(75, 23);
+            this.btnScan.TabIndex = 14;
+            this.btnScan.Text = "Scan";
+            this.btnScan.UseVisualStyleBackColor = true;
+            this.btnScan.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 30000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // FormQueue
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(558, 308);
+            this.Controls.Add(this.btnScan);
             this.Controls.Add(this.lblCountIdle);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnIssueStop);
@@ -146,5 +165,7 @@
         private System.Windows.Forms.TextBox txtLogInfo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblCountIdle;
+        private System.Windows.Forms.Button btnScan;
+        private System.Windows.Forms.Timer timer1;
     }
 }
