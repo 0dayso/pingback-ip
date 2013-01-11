@@ -101,7 +101,7 @@ using IAClass.Issuing;
 
                     if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
                     {
-                        if (string.IsNullOrEmpty(result.PolicyNo))//没有保单号
+                        if (!string.IsNullOrEmpty(result.Trace.Detail))//有特殊情况
                         {
                             result.Trace.ErrorMsg = "投保失败，没有返回保单号！？";
                             strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
@@ -109,7 +109,8 @@ using IAClass.Issuing;
                                 new string[] { "@IssuingFailed", "@caseNo" },
                                 new object[] { result.Trace.ErrorMsg, entity.CaseNo });
                         }
-                        else
+                        
+                        if(!string.IsNullOrEmpty(result.PolicyNo))
                         {
                             //主键更新,不会阻塞  保存返回的正式保单号
                             strSql = "update t_case set certNo = '{0}', [isIssued] = 1 {1} where caseNo = '{2}'";
@@ -139,7 +140,7 @@ using IAClass.Issuing;
             }
             catch(Exception e)
             {
-                Common.LogIt(e.ToString());
+                //Common.LogIt(e.ToString());
                 throw;
             }
         }

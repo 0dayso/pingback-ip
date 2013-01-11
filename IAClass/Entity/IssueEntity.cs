@@ -23,8 +23,8 @@ namespace IAClass.Entity
         public string FlightNo;
         public string HolderName = "刘德华";
         public IdentityType HolderIDType = IdentityType.其他证件;
-        public string HolderID = "123456789";
-        public DateTime HolderBirth = DateTime.Parse("1982-1-1");
+        public string HolderID = "387846396091";
+        public DateTime HolderBirth = DateTime.Parse("1982-4-12");
         public Gender HolderGender;
         public string SMSContent;
         /// <summary>

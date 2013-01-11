@@ -149,7 +149,9 @@ namespace IAMessageQ
                     }
                     catch (Exception e)
                     {
-                        Common.LogIt(e.ToString());
+                        sb.AppendLine();
+                        sb.Append(e.ToString());
+                        Common.LogIt(sb.ToString());
                         result.ErrorMsg = e.Message;
                     }
 
@@ -282,8 +284,11 @@ namespace IAMessageQ
             }
         }
 
+        bool isScanning = false;
+
         private void button1_Click(object sender, EventArgs e)
         {
+            isScanning = !isScanning;
             timer1.Enabled = !timer1.Enabled;
             if (timer1.Enabled)
                 btnScan.Text = "Stop";
@@ -297,19 +302,22 @@ namespace IAMessageQ
             string strsql = @"
 select * from t_Case a 
  inner join t_interface b on a.interface_id = b.id
- where CertNo is null and datetime > '2012-12-31'
- and (interface_Id = 6 or interface_Id = 15)
- and IssuingFailed is null
- and customerFlightDate > '2013-1-10'
+ where (CertNo is null or caseNo = CertNo)
+ and (IssuingFailed is null or IssuingFailed not like '%份数超限%')
+ and customerFlightDate > GETDATE()
+ and enabled = 1
 ";
             ds = SqlHelper.ExecuteDataset(Common.ConnectionString, CommandType.Text, strsql);
-            foreach (DataRow dr in ds.Tables[0].Rows)
-            {
-                using (System.Data.SqlClient.SqlConnection cnn = new System.Data.SqlClient.SqlConnection(Common.ConnectionString))
-                {
-                    System.Data.SqlClient.SqlCommand cmm = new System.Data.SqlClient.SqlCommand("", cnn);
-                    cnn.Open();
 
+            using (System.Data.SqlClient.SqlConnection cnn = new System.Data.SqlClient.SqlConnection(Common.ConnectionString))
+            {
+                cnn.Open();
+                System.Data.SqlClient.SqlCommand cmm = new System.Data.SqlClient.SqlCommand("", cnn);
+
+                foreach (DataRow dr in ds.Tables[0].Rows)
+                {
+                    if (!isScanning)
+                        break;
                     IssueEntity entity = new IssueEntity();
                     entity.Name = dr["customerName"].ToString();
                     entity.ID = dr["customerID"].ToString();
@@ -333,6 +341,11 @@ select * from t_Case a
                     entity.InterfaceId = Convert.ToInt32(dr["interface_Id"]);
                     //entity.Title = productName.ToString();
 
+                    this.BeginInvoke(new MethodInvoker(delegate
+                    {
+                        txtLogInfo.AppendText(MessageToString(entity));
+                    }));
+
                     IssuingResultEntity result = new IssuingResultEntity();
                     try
                     {
@@ -343,8 +356,6 @@ select * from t_Case a
                         result.Trace.ErrorMsg = ee.Message;
                     }
 
-                    cnn.Close();
-
                     if (string.IsNullOrEmpty(result.Trace.ErrorMsg))
                     {
                         //strsql = @"update t_Case set CertNo = '{0}' where caseNo = '{1}'";
@@ -352,18 +363,20 @@ select * from t_Case a
                         //SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, strsql);
                         this.BeginInvoke(new MethodInvoker(delegate
                             {
-                                txtLogInfo.AppendText(result.PolicyNo + Environment.NewLine);
+                                txtLogInfo.AppendText(" " + result.PolicyNo + Environment.NewLine);
                             }));
                     }
                     else
                         this.BeginInvoke(new MethodInvoker(delegate
                             {
-                                txtLogInfo.AppendText(result.Trace.ErrorMsg + Environment.NewLine);
+                                txtLogInfo.AppendText(" " + result.Trace.ErrorMsg + Environment.NewLine);
                             }));
                 }
 
+                cnn.Close();
             }
 
+            isScanning = false;
             this.BeginInvoke(new MethodInvoker(delegate
                 {
                     timer1.Enabled = true;
