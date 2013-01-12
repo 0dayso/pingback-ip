@@ -149,9 +149,10 @@ namespace IAMessageQ
                     }
                     catch (Exception e)
                     {
-                        sb.AppendLine();
-                        sb.Append(e.ToString());
-                        Common.LogIt(sb.ToString());
+                        StringBuilder sb2 = new StringBuilder();
+                        sb2.AppendLine(sb.ToString());
+                        sb2.Append(e.ToString());
+                        Common.LogIt(sb2.ToString());
                         result.ErrorMsg = e.Message;
                     }
 

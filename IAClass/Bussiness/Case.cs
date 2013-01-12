@@ -103,11 +103,10 @@ using IAClass.Issuing;
                     {
                         if (!string.IsNullOrEmpty(result.Trace.Detail))//有特殊情况
                         {
-                            result.Trace.ErrorMsg = "投保失败，没有返回保单号！？";
                             strSql = "update t_case set IssuingFailed = @IssuingFailed where caseNo = @caseNo";
                             SqlHelper.ExecuteNonQuery(entity.ConnectionString, CommandType.Text, strSql,
                                 new string[] { "@IssuingFailed", "@caseNo" },
-                                new object[] { result.Trace.ErrorMsg, entity.CaseNo });
+                                new object[] { result.Trace.Detail, entity.CaseNo });
                         }
                         
                         if(!string.IsNullOrEmpty(result.PolicyNo))
