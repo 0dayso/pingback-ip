@@ -1121,11 +1121,11 @@ namespace EagleForms.Printer
         {
             if (cmbCardType.Text == "身份证")
             {
-                try
-                {
-                    string idno = txtCardNo.Text.Trim();
+                string idno = txtCardNo.Text.Trim();
                     idno = EagleString.egString.Full2Half(idno);
 
+                try
+                {
                     BirthAndGender bg = Common.GetBirthAndSex(idno);
                     if (bg.Gender == Gender.Female)
                         rbFemale.Checked = true;
@@ -1134,8 +1134,11 @@ namespace EagleForms.Printer
 
                     dtpBirth.Value = bg.Birth;
                 }
-                catch
-                { }
+                catch(Exception ee)
+                {
+                    EagleString.EagleFileIO.LogWrite(idno + "身份证格式有误？" + Environment.NewLine + ee.ToString());
+                    MessageBox.Show("身份证有误，请检查！");
+                }
             }
         }
 

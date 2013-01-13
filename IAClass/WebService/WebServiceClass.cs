@@ -501,6 +501,12 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                             else
                                             {
                                                 tran.Rollback();
+                                                
+                                                StringBuilder sbLog = new StringBuilder();
+                                                sbLog.AppendLine(Common.XmlSerialize<IssueEntity>(entity));
+                                                sbLog.Append(result.Trace.ErrorMsg);
+                                                Common.LogIt(sbLog.ToString());
+
                                                 response.Trace = result.Trace;
                                                 return response;
                                             }
@@ -547,9 +553,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                             catch
                             {
                                 tran.Rollback();
-                                string msg = "产品名称：{0}" + Environment.NewLine + "Last SQL：{1}";
-                                msg = string.Format(msg, productName, strSql);
-                                Common.LogIt(msg);
+                                Common.LogIt(strSql);
                                 throw;
                             }
                         }
@@ -565,7 +569,11 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
             }
             catch (System.Exception ex)
             {
-                Common.LogIt(ex.ToString());
+                StringBuilder sbLog = new StringBuilder();
+                sbLog.AppendLine(Common.XmlSerialize<PurchaseRequestEntity>(request));
+                sbLog.Append(ex.ToString());
+                Common.LogIt(sbLog.ToString());
+
                 response.Trace.ErrorMsg = "下单未成功，请稍后重试。";
                 return response;
             }

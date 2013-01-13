@@ -60,7 +60,7 @@ namespace XiAnQiYi
             }
             else
             {
-                Common.LogIt(entity.Title + "西安奇易Issue：" + ret);
+                //Common.LogIt(entity.Title + "西安奇易Issue：" + ret);
                 result.Trace.ErrorMsg = ret;
             }
 

@@ -149,10 +149,10 @@ namespace IAMessageQ
                     }
                     catch (Exception e)
                     {
-                        StringBuilder sb2 = new StringBuilder();
-                        sb2.AppendLine(sb.ToString());
-                        sb2.Append(e.ToString());
-                        Common.LogIt(sb2.ToString());
+                        StringBuilder sbLog = new StringBuilder();
+                        sbLog.AppendLine(sb.ToString());
+                        sbLog.Append(e.ToString());
+                        Common.LogIt(sbLog.ToString());
                         result.ErrorMsg = e.Message;
                     }
 
@@ -241,11 +241,15 @@ namespace IAMessageQ
             }
             else
             {
-                sb.Append(" 失败:"); sb.Append(result.ErrorMsg);
+                sb.Append(" 失败:");
+                sb.Append(result.ErrorMsg);
                 sb.Append(string.Format(" {0}次重发失败,放弃!", entity.MaxRedelivery));
-                Common.LogIt(sb.ToString());
             }
 
+            StringBuilder sbLog = new StringBuilder();
+            sbLog.Append(MessageToString(entity));
+            sbLog.Append(sb.ToString());
+            Common.LogIt(sbLog.ToString());
             return sb.ToString();
         }
 
