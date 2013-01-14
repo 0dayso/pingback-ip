@@ -127,7 +127,8 @@ namespace EagleForms.Printer
             }
 
             decimal years = DateTime.Today.Subtract(dtpBirth.Value.Date).Days/365m;
-            if(years >90 || years < 0)
+            double days = DateTime.Today.Subtract(dtpBirth.Value.Date).TotalDays;
+            if (years > 90 || years < 0 || days < 28)
             {
                 MessageBox.Show("出生日期有误，请检查！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
