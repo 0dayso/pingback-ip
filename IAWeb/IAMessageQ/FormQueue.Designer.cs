@@ -103,7 +103,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(457, 14);
+            this.label2.Location = new System.Drawing.Point(331, 14);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 12);
             this.label2.TabIndex = 12;
@@ -112,7 +112,7 @@
             // lblCountIdle
             // 
             this.lblCountIdle.AutoSize = true;
-            this.lblCountIdle.Location = new System.Drawing.Point(529, 14);
+            this.lblCountIdle.Location = new System.Drawing.Point(399, 14);
             this.lblCountIdle.Name = "lblCountIdle";
             this.lblCountIdle.Size = new System.Drawing.Size(11, 12);
             this.lblCountIdle.TabIndex = 13;
@@ -120,7 +120,7 @@
             // 
             // btnScan
             // 
-            this.btnScan.Location = new System.Drawing.Point(342, 5);
+            this.btnScan.Location = new System.Drawing.Point(471, 6);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(75, 23);
             this.btnScan.TabIndex = 14;

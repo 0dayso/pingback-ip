@@ -68,7 +68,7 @@ namespace AutoUpdate
             WebClient DownFile = new WebClient();
             try
             {
-                DownFile.DownloadFile(url, fileName);
+                DownFile.DownloadFile(url + "?" + DateTime.Now.Ticks, fileName);//使用URL后缀,禁止下载缓存
             }
             catch (ThreadAbortException)
             { }
@@ -139,7 +139,7 @@ namespace AutoUpdate
                     if (createFile(fileName))
                     {
                         WebClient DownFile = new WebClient();
-                        using (Stream str = DownFile.OpenRead(url))
+                        using (Stream str = DownFile.OpenRead(url + "?" + DateTime.Now.Ticks))//使用URL后缀,禁止下载缓存(该问题时有发生)
                         {
                             byte[] mbyte = new byte[1024];
                             int readL = str.Read(mbyte, 0, 1024);

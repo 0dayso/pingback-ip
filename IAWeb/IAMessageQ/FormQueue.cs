@@ -286,16 +286,22 @@ namespace IAMessageQ
             }
         }
 
-        bool isScanning = false;
+        bool stopScanning = true;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            isScanning = !isScanning;
-            timer1.Enabled = !timer1.Enabled;
-            if (timer1.Enabled)
-                btnScan.Text = "Stop";
-            else
+            stopScanning = !stopScanning;
+
+            if (stopScanning)
+            {
                 btnScan.Text = "Scan";
+                timer1.Enabled = false;
+            }
+            else
+            {
+                btnScan.Text = "Stop";
+                timer1.Enabled = true;
+            }
         }
 
         private void Scan()
@@ -318,7 +324,7 @@ select * from t_Case a
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
-                    if (!isScanning)
+                    if (stopScanning)
                         break;
                     IssueEntity entity = new IssueEntity();
                     entity.Name = dr["customerName"].ToString();
@@ -355,6 +361,10 @@ select * from t_Case a
                     }
                     catch (Exception ee)
                     {
+                        StringBuilder sbLog = new StringBuilder();
+                        sbLog.AppendLine(MessageToString(entity));
+                        sbLog.Append(ee.ToString());
+                        Common.LogIt( sbLog.ToString());
                         result.Trace.ErrorMsg = ee.Message;
                     }
 
@@ -378,11 +388,13 @@ select * from t_Case a
                 cnn.Close();
             }
 
-            isScanning = false;
-            this.BeginInvoke(new MethodInvoker(delegate
-                {
-                    timer1.Enabled = true;
-                }));
+            if (!stopScanning)
+            {
+                this.BeginInvoke(new MethodInvoker(delegate
+                    {
+                        timer1.Enabled = true;
+                    }));
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)

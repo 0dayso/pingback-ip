@@ -1046,7 +1046,8 @@ namespace EagleForms.Printer
             try
             {
                 string ticketStr = ticket.ToString();
-                string url = "http://www.zizaibao.com/API/AnalyzeTicket/?ticketCode={0}";
+                //string url = "http://www.zizaibao.com/API/AnalyzeTicket/?ticketCode={0}";
+                string url = "http://59.53.88.9:8080/API/AnalyzeTicket/?ticketCode={0}";
                 url = string.Format(url, ticketStr.Replace("-", string.Empty));
                 string ret = Common.GetResponse(url, System.Text.Encoding.UTF8);
                 EagleString.EagleFileIO.LogWrite(ret);
@@ -1076,7 +1077,8 @@ namespace EagleForms.Printer
             try
             {
                 string ticketStr = ticket.ToString();
-                string url = "http://www.zizaibao.com/API/AnalyzePNR/?pnrCode={0}";
+                //string url = "http://www.zizaibao.com/API/AnalyzePNR/?pnrCode={0}";
+                string url = "http://59.53.88.9:8080/API/AnalyzePNR/?pnrCode={0}";
                 url = string.Format(url, ticketStr.Replace("-", string.Empty));
                 string ret = Common.GetResponse(url, System.Text.Encoding.UTF8);
                 EagleString.EagleFileIO.LogWrite(ret);
@@ -1123,22 +1125,22 @@ namespace EagleForms.Printer
             if (cmbCardType.Text == "身份证")
             {
                 string idno = txtCardNo.Text.Trim();
-                    idno = EagleString.egString.Full2Half(idno);
+                idno = EagleString.egString.Full2Half(idno);
 
-                try
+                if (idno.Length == 18)
                 {
-                    BirthAndGender bg = Common.GetBirthAndSex(idno);
-                    if (bg.Gender == Gender.Female)
-                        rbFemale.Checked = true;
-                    else
-                        rbMale.Checked = true;
+                    try
+                    {
+                        BirthAndGender bg = Common.GetBirthAndSex(idno);
+                        if (bg.Gender == Gender.Female)
+                            rbFemale.Checked = true;
+                        else
+                            rbMale.Checked = true;
 
-                    dtpBirth.Value = bg.Birth;
-                }
-                catch(Exception ee)
-                {
-                    EagleString.EagleFileIO.LogWrite(idno + "身份证格式有误？" + Environment.NewLine + ee.ToString());
-                    MessageBox.Show("身份证有误，请检查！");
+                        dtpBirth.Value = bg.Birth;
+                    }
+                    catch{
+                    }
                 }
             }
         }

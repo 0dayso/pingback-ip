@@ -371,11 +371,13 @@ using log4net;
                 birthday = identityCard.Substring(6, 4) + "-" + identityCard.Substring(10, 2) + "-" + identityCard.Substring(12, 2);
                 genderStr = identityCard.Substring(14, 3);
             }
-            if (identityCard.Length == 15)
+            else if (identityCard.Length == 15)
             {
                 birthday = "19" + identityCard.Substring(6, 2) + "-" + identityCard.Substring(8, 2) + "-" + identityCard.Substring(10, 2);
                 genderStr = identityCard.Substring(12, 3);
             }
+            else
+                throw new Exception("身份证位数不正确！");
 
             if (int.Parse(genderStr) % 2 == 0)//性别代码为偶数是女性奇数为男性
             {
