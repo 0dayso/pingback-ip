@@ -295,13 +295,15 @@ namespace IAMessageQ
             if (stopScanning)
             {
                 btnScan.Text = "Scan";
-                timer1.Enabled = false;
+                //timerScan.Enabled = false;
             }
             else
             {
                 btnScan.Text = "Stop";
-                timer1.Enabled = true;
+                //timerScan.Enabled = true;
             }
+
+            timer1_Tick(sender, e);//直接运行,不用timer
         }
 
         private void Scan()
@@ -388,18 +390,25 @@ select * from t_Case a
                 cnn.Close();
             }
 
-            if (!stopScanning)
+            //if (!stopScanning)
+            //{
+            //    this.BeginInvoke(new MethodInvoker(delegate
+            //        {
+            //            timerScan.Enabled = true;
+            //        }));
+            //}
+
+            this.BeginInvoke(new MethodInvoker(delegate
             {
-                this.BeginInvoke(new MethodInvoker(delegate
-                    {
-                        timer1.Enabled = true;
-                    }));
-            }
+                txtLogInfo.AppendText("本次扫描结束!" + Environment.NewLine);
+                btnScan.Text = "Scan";
+                stopScanning = true;
+            }));
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            timer1.Enabled = false;
+            //timerScan.Enabled = false;
             Thread td = new Thread(Scan);
             td.Start();
         }

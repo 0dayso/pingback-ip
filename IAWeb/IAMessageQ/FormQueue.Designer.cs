@@ -37,7 +37,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lblCountIdle = new System.Windows.Forms.Label();
             this.btnScan = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerScan = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.nudThreads)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,10 +128,10 @@
             this.btnScan.UseVisualStyleBackColor = true;
             this.btnScan.Click += new System.EventHandler(this.button1_Click);
             // 
-            // timer1
+            // timerScan
             // 
-            this.timer1.Interval = 30000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerScan.Interval = 30000;
+            this.timerScan.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // FormQueue
             // 
@@ -166,6 +166,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblCountIdle;
         private System.Windows.Forms.Button btnScan;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerScan;
     }
 }
