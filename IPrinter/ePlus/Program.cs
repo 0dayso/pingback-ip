@@ -93,8 +93,11 @@ namespace ePlus
         [STAThread]
         static void Main()
         {
+            EagleString.EagleFileIO.LogWrite("Starting Mainform...");
+
             if (!mutex.WaitOne(5000, false)) //等待5秒, 如果有相同实例运行则给用户提示
             {
+                EagleString.EagleFileIO.LogWrite("已存在 Mainform 的运行实例.");
                 return;
             }
             try

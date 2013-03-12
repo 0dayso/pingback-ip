@@ -133,6 +133,7 @@
                                                                 <asp:BoundField DataField="customerFlightDate" 
                                                                     DataFormatString="{0:yyyy-MM-dd HH:mm}" HeaderText="乘机时间" HtmlEncode="False" />
                                                                 <asp:BoundField DataField="productName" HeaderText="产品" />
+                                                                <asp:BoundField DataField="CertNo" HeaderText="保单号" Visible="False" />
                                                             </Columns>
                                                             <RowStyle BackColor="#F7F7DE" />
                                                             <SelectedRowStyle BackColor="#CE5D5A" Font-Bold="True" ForeColor="White" />

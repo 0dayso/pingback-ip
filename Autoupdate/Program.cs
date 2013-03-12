@@ -15,9 +15,11 @@ namespace AutoUpdate
         [STAThread]
         static void Main()
         {
+            Common.LogWrite("Starting AutoUpdate...");
+
             if (!mutex.WaitOne(5000, false)) //等待5秒, 如果有相同实例运行则给用户提示
             {
-                //MessageBox.Show("程序已在运行，如果仍有问题，请检查是否已在系统进程中运行。");
+                Common.LogWrite("程序已存在运行中的实例。");
                 return;
             }
             try
