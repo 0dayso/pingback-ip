@@ -1,8 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InsuranceAviation", "http://localhost/InsuranceAviation", "{0B3F6BD1-7DCF-4C9A-8275-48D64DAEA7A5}"
 	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		ProjectReferences = "{CA03E30C-2335-4D80-A35D-A07830BE85C9}|IAClass.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/InsuranceAviation"
@@ -19,11 +20,12 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InsuranceAviation", "http:/
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\..\..\..\..\Projects\InsuranceAviation\"
+		SlnRelativePath = "..\InsuranceAviation\"
 	EndProjectSection
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "IAWebService", "http://localhost/IAWebService", "{BCFA846C-03F5-4665-9DCA-EC6659D2FDE5}"
 	ProjectSection(WebsiteProperties) = preProject
+		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		ProjectReferences = "{CA03E30C-2335-4D80-A35D-A07830BE85C9}|IAClass.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/IAWebService"
@@ -40,7 +42,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "IAWebService", "http://loca
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		SlnRelativePath = "..\..\..\..\..\..\Projects\IAWebService\"
+		SlnRelativePath = "..\IAWebService\"
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IAClass", "..\IAClass\IAClass.csproj", "{CA03E30C-2335-4D80-A35D-A07830BE85C9}"
