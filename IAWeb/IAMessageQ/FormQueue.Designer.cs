@@ -90,9 +90,9 @@
             // 
             // txtLogInfo
             // 
-            this.txtLogInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLogInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtLogInfo.Location = new System.Drawing.Point(0, 37);
             this.txtLogInfo.Multiline = true;
             this.txtLogInfo.Name = "txtLogInfo";
@@ -150,6 +150,7 @@
             this.Name = "FormQueue";
             this.Text = "FormQueue";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormQueue_FormClosing);
+            this.Load += new System.EventHandler(this.FormQueue_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nudThreads)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

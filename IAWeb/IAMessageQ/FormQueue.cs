@@ -328,6 +328,9 @@ select * from t_Case a
                 {
                     if (stopScanning)
                         break;
+
+                    Thread.Sleep(500);
+
                     IssueEntity entity = new IssueEntity();
                     entity.Name = dr["customerName"].ToString();
                     entity.ID = dr["customerID"].ToString();
@@ -411,6 +414,12 @@ select * from t_Case a
             //timerScan.Enabled = false;
             Thread td = new Thread(Scan);
             td.Start();
+        }
+
+        private void FormQueue_Load(object sender, EventArgs e)
+        {
+            Thread.Sleep(3000);
+            btnIssue_Click(sender, e);
         }
     }
 }

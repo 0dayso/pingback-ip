@@ -23,6 +23,8 @@ namespace IAMessageQ
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.Close();
+
             XMLConfigMQ configList = new XMLConfigMQ().Read() as XMLConfigMQ;
 
             foreach (var config in configList.MessageConfigList)

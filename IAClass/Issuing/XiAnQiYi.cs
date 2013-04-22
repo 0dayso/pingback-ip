@@ -95,7 +95,7 @@ namespace XiAnQiYi
                 return result;
             else
             {
-                Common.LogIt("西安奇易Withdraw：" + ret);
+                Common.LogIt("西安奇易policyCancel：" + ret);
                 result.ErrorMsg = ret;
                 return result;
             }
@@ -128,7 +128,7 @@ namespace XiAnQiYi
         }
     }
 
-    public class Issuing_HuaXia : IAClass.Issuing.IIssuing
+    public class Issuing_Xinhua : IAClass.Issuing.IIssuing
     {
         static Service webService = new Service();
 
@@ -147,19 +147,21 @@ namespace XiAnQiYi
             IssuingResultEntity result = new IssuingResultEntity();
 
             string birth = entity.Birthday.ToString("yyyy-MM-dd");
-            string idType = GetIdType(entity.IDType);
-            string gender = GetGender(entity.Gender);
+            string idType = "5";// GetIdType(entity.IDType);
+            string gender = entity.Gender == Gender.Female ? "0" : "1";
+            if (string.IsNullOrEmpty(entity.PhoneNumber))
+                entity.PhoneNumber = "13888092959";
             string[] config = entity.IOC_Class_Parameters.Split(',');
 
             string ret = string.Empty;
             try
             {
-                ret = webService.alterableApproval_hx(config[0], config[1], birth, entity.ID, idType, entity.Name, gender,
-                                                    entity.FlightNo, "", birth, entity.ID, idType, entity.Name, gender,
-                                                    entity.PhoneNumber, entity.EffectiveDate.ToString("yyyy-MM-dd"), config[2]);
+                ret = webService.alterableApproval_LB(config[0], config[1], birth, entity.ID, idType, entity.Name, gender,
+                                                    "", entity.ID, idType, entity.Name, entity.FlightNo, "01", birth, entity.ID, idType, entity.Name, gender,
+                                                    entity.PhoneNumber, entity.EffectiveDate.ToString("yyyy-MM-dd"), entity.ExpiryDate.ToString("yyyy-MM-dd"), config[2]);
 
                 if (string.IsNullOrEmpty(ret))
-                    throw new Exception("西安奇易alterableApproval_hx返回为空！");
+                    throw new Exception("西安奇易alterableApproval_LB返回为空！");
             }
             catch
             {
@@ -168,47 +170,21 @@ namespace XiAnQiYi
             }
 
             //正常返回是：
-/*
-<?xml version="1.0" encoding="UTF-8"?>
-<TranData>
-  <Head>
-    <TranCom>06</TranCom>
-    <FuncFlag>0101</FuncFlag>
-    <TranDate>2012-07-02</TranDate>
-    <TranTime>11:44:51</TranTime>
-    <TranNo>20120702114451</TranNo>
-    <BankCode>06</BankCode>
-    <TranSeq>ZZZZ</TranSeq>
-    <Flag>0</Flag>
-    <Desc />
-  </Head>
-  <Body>
-    <ContNo>21300000440168</ContNo>
-    <SignDate />
-    <SignTime />
-    <CValiDate>2012-08-29</CValiDate>
-    <CValiTime>00:00:00</CValiTime>
-  </Body>
-</TranData>
- * */
-            XmlDocument doc = new XmlDocument();
-            try
+            /*
+            投保成功！保单号：662206804374
+             * */
+            if (ret.Contains("投保成功"))
             {
-                doc.LoadXml(ret);
+                result.PolicyNo = result.Trace.Detail = Common.InterceptNumber(ret);
             }
-            catch
+            else if (ret.Contains("份数超限"))
             {
-                Common.LogIt("西安奇易Issuing_HuaXia返回：" + ret);
-                throw;
-            }
-
-            if (doc.SelectSingleNode("TranData/Head/Flag").InnerText == "0")
-            {
-                result.PolicyNo = result.Trace.Detail = doc.SelectSingleNode("TranData/Body/ContNo").InnerText;
+                result.PolicyNo = entity.CaseNo;
+                result.Trace.Detail = ret;
             }
             else
             {
-                Common.LogIt("西安奇易Issuing_HuaXia返回：" + ret);
+                Common.LogIt(entity.Title + "西安奇易alterableApproval_LB：" + ret);
                 result.Trace.ErrorMsg = ret;
             }
 
@@ -228,10 +204,10 @@ namespace XiAnQiYi
 
             try
             {
-                ret = webService.policyCancel_hx(config[0], config[1], entity.PolicyNo);
+                ret = webService.policyCancel_LB(config[0], config[1], entity.PolicyNo);
 
                 if (string.IsNullOrEmpty(ret))
-                    throw new Exception("西安奇易WebService返回为空！");
+                    throw new Exception("西安奇易policyCancel_LB返回为空！");
             }
             catch
             {
@@ -243,7 +219,7 @@ namespace XiAnQiYi
                 return result;
             else
             {
-                Common.LogIt("西安奇易Withdraw：" + ret);
+                Common.LogIt("西安奇易policyCancel_LB：" + ret);
                 result.ErrorMsg = ret;
                 return result;
             }
