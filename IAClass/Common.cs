@@ -818,5 +818,42 @@ using log4net;
                 throw;
             }
         }
+
+
+        /// <summary>
+        /// 加密字符串
+        /// </summary>
+        /// <param name="password">原始字符串</param>
+        /// <returns>返回字符串数组 { hash, salt }</returns>
+        public static string[] Encrypt(string password)
+        {
+            // random salt 
+            string salt = Guid.NewGuid().ToString();
+
+            // random salt 
+            // you can also use RNGCryptoServiceProvider class            
+            //System.Security.Cryptography.RNGCryptoServiceProvider rng = new System.Security.Cryptography.RNGCryptoServiceProvider(); 
+            //byte[] saltBytes = new byte[36]; 
+            //rng.GetBytes(saltBytes); 
+            //string salt = Convert.ToBase64String(saltBytes); 
+
+            string hashString = Encrypt(password, salt);
+
+            return new string[] { hashString, salt };
+        }
+
+        /// <summary>
+        /// 加密字符串
+        /// </summary>
+        /// <param name="password">原始字符串</param>
+        /// <param name="salt">盐</param>
+        /// <returns></returns>
+        public static string Encrypt(string password, string salt)
+        {
+            byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(password + salt);
+            byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
+            string hashString = Convert.ToBase64String(hashBytes);
+            return hashString;
+        }
     }
 //}

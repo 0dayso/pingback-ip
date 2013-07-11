@@ -35,12 +35,12 @@
                         
                         <asp:SqlDataSource ID="sdsUserList" runat="server" ConnectionString="<%$ ConnectionStrings:InsuranceAviation %>"
                             SelectCommand="SELECT username, password, displayname, address, phone, enabled, userGroup, enabled_Issuing, price, balance FROM t_User WITH (nolock) WHERE (parent = @parent) AND (usertype &lt;&gt; 99) AND (username LIKE '%' + @keyword + '%') OR (parent = @parent) AND (usertype &lt;&gt; 99) AND (displayname LIKE '%' + @keyword + '%') OR (username = @parent) ORDER BY usertype, datetime DESC"
-                            InsertCommand="INSERT INTO t_User(username, password, displayname, phone, address, enabled, parent, usertype, userGroup, parentPath, distributor, price) VALUES (@username, @password, @displayname, @phone, @address, @enabled, @parent, @usertype, @userGroup, @parentPath, @distributor, @price)"
+                            InsertCommand="INSERT INTO t_User(username, password, displayname, phone, address, enabled, parent, usertype, userGroup, parentPath, distributor, price, salt) VALUES (@username, @password, @displayname, @phone, @address, @enabled, @parent, @usertype, @userGroup, @parentPath, @distributor, @price, @salt)"
                             
                             
                             
                             
-                            UpdateCommand="UPDATE t_User SET displayname = @displayname, phone = @phone, address = @address, enabled = @enabled, password = @password, userGroup = @userGroup, enabled_Issuing = @enabled_Issuing, price = @price, balance = @balance WHERE (username = @username)">
+                            UpdateCommand="UPDATE t_User SET displayname = @displayname, phone = @phone, address = @address, enabled = @enabled, password = @password, userGroup = @userGroup, enabled_Issuing = @enabled_Issuing, price = @price, balance = @balance, salt = @salt WHERE (username = @username)">
                             <SelectParameters>
                                 <asp:Parameter Name="parent" Type="String" />
                                 <asp:ControlParameter ControlID="txtKeyword" ConvertEmptyStringToNull="False" 
@@ -71,6 +71,7 @@
                                 <asp:Parameter Name="parentPath" />
                                 <asp:Parameter Name="distributor" />
                                 <asp:Parameter Name="price" DbType="Decimal" DefaultValue="0" />
+                                <asp:Parameter Name="salt" />
                             </InsertParameters>
                         </asp:SqlDataSource>
                         <asp:ScriptManager ID="ScriptManager1" runat="server">

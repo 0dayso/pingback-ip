@@ -25,8 +25,11 @@ public partial class Admin_UserMng : System.Web.UI.Page
         string phone = ((TextBox)this.GridView1.FooterRow.FindControl("txtPhone")).Text.Trim();
         string userGroup = ((DropDownList)this.GridView1.FooterRow.FindControl("ddlUserCity")).SelectedItem.Text.Trim();
 
+        //password stuff
+        string[] hash = Common.Encrypt(password);
+
         this.sdsUserList.InsertParameters[0].DefaultValue = username;
-        this.sdsUserList.InsertParameters[1].DefaultValue = password;
+        this.sdsUserList.InsertParameters[1].DefaultValue = hash[0];
         this.sdsUserList.InsertParameters[2].DefaultValue = displayname;
         this.sdsUserList.InsertParameters[3].DefaultValue = address;
         this.sdsUserList.InsertParameters[4].DefaultValue = phone;
@@ -46,6 +49,7 @@ public partial class Admin_UserMng : System.Web.UI.Page
         this.sdsUserList.InsertParameters[8].DefaultValue = userGroup;
         this.sdsUserList.InsertParameters[9].DefaultValue = path;
         this.sdsUserList.InsertParameters[10].DefaultValue = distributor;
+        this.sdsUserList.InsertParameters[12].DefaultValue = hash[1];//salt
 
         try
         {
@@ -134,5 +138,10 @@ public partial class Admin_UserMng : System.Web.UI.Page
     {
         if (e.Keys[0].ToString().Equals(User.Identity.Name, StringComparison.CurrentCultureIgnoreCase))
             e.Cancel = true;
+
+        //pass stuff
+        string[] hash = Common.Encrypt(e.NewValues["password"].ToString());
+        e.NewValues["password"] = hash[0];
+        e.NewValues["salt"] = hash[1];
     }
 }
