@@ -6,7 +6,9 @@
 <head>
     <title>:::商务会员:::</title>
     <link href="../Css/Styles.css" type="text/css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../Css/nyroModal.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="../Script/jquery.min.js"></script>
+    <script type="text/javascript" src="../Script/jquery.nyroModal.custom.min.js"></script>
     <script>
         function FindHighLight(nWord) {
             if (nWord != '') {
@@ -22,7 +24,14 @@
             for (var i = 0; i < array.length; i++) {
                 FindHighLight(array[i]);
             }
-        } 
+        }
+        function modal() {
+            $('.nyroModal').nyroModal();
+        }
+        $(document).ready(function () {
+            modal();
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(modal);
+        });
     </script>
 </head>
 <body leftmargin="0" topmargin="0" bottommargin="0" rightmargin="0" onload="HighLight('<%= this.txtKeyword.Text.Trim() %>')">
@@ -157,14 +166,12 @@
                                                                     ValidationExpression="\w{4,20}"></asp:RegularExpressionValidator>
                                                             </FooterTemplate>
                                                             <ItemTemplate>
-                                                                <asp:Label ID="Label2" runat="server" Text='<%# Bind("username") %>'></asp:Label>
+                                                                <a class="nyroModal" href="ajax.aspx?func=FlashTopEverydayUser&user=<%# Eval("username") %>&dateStart=<%# DateTime.Today %>"><%# Eval("username") %></a>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                         <asp:TemplateField HeaderText="密码">
                                                             <EditItemTemplate>
-                                                                <%--<asp:TextBox ID="txtPasswword" runat="server" Text='<%# Bind("password") %>' 
-                                                                    Width="80px" TextMode="Password" value='<%# Eval("password") %>'></asp:TextBox>--%>
-                                                                    <asp:TextBox ID="txtPasswword" runat="server" Text='<%# Bind("password") %>' 
+                                                                <asp:TextBox ID="txtPasswword" runat="server" Text='<%# Bind("password") %>'
                                                                     Width="80px"></asp:TextBox>
                                                             </EditItemTemplate>
                                                             <FooterTemplate>

@@ -9,6 +9,7 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Text;
 using System.Data.SqlClient;
+using IAClass;
 
 //namespace IAClass.Bussiness
 //{
@@ -58,7 +59,7 @@ using System.Data.SqlClient;
             }
 
             int count = arrangedNumber.Length;
-            string strPipelineNumberStart = Common.InterceptNumber(pipelineStart);
+            string strPipelineNumberStart = StringHelper.InterceptNumber(pipelineStart);
             string strPipelinePrefix = pipelineStart.Replace(strPipelineNumberStart, string.Empty);
 
             /*2010.08.07
@@ -135,7 +136,7 @@ using System.Data.SqlClient;
                 throw new Exception("号段有误，请检查！");
             }
 
-            string strPipelineNumberStart = Common.InterceptNumber(pipelineStart);
+            string strPipelineNumberStart = StringHelper.InterceptNumber(pipelineStart);
             string strPipelinePrefix = pipelineStart.Replace(strPipelineNumberStart, string.Empty);
 
             StringBuilder sqlBatch = new StringBuilder("BEGIN TRANSACTION; ");
@@ -212,7 +213,7 @@ using System.Data.SqlClient;
             }
 
             int count = arrangedNumber.Length;
-            string strPipelineNumberStart = Common.InterceptNumber(pipelineStart);
+            string strPipelineNumberStart = StringHelper.InterceptNumber(pipelineStart);
             string strPipelinePrefix = pipelineStart.Replace(strPipelineNumberStart, string.Empty);
 
             StringBuilder sqlBatch = new StringBuilder("BEGIN TRANSACTION; ");

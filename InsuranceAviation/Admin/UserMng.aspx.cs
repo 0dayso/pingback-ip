@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
+using IAClass;
 
 public partial class Admin_UserMng : System.Web.UI.Page
 {
@@ -18,7 +19,7 @@ public partial class Admin_UserMng : System.Web.UI.Page
     protected void btnNewUser_Click(object sender, EventArgs e)
     {
         string username = ((TextBox)this.GridView1.FooterRow.FindControl("txtUsername")).Text.Trim();
-        username = Common.Full2Half(username);
+        username = StringHelper.Full2Half(username);
         string password = ((TextBox)this.GridView1.FooterRow.FindControl("txtPassword")).Text.Trim();
         string displayname = ((TextBox)this.GridView1.FooterRow.FindControl("txtDisplayname")).Text.Trim();
         string address = ((TextBox)this.GridView1.FooterRow.FindControl("txtAddress")).Text.Trim();
@@ -26,7 +27,7 @@ public partial class Admin_UserMng : System.Web.UI.Page
         string userGroup = ((DropDownList)this.GridView1.FooterRow.FindControl("ddlUserCity")).SelectedItem.Text.Trim();
 
         //password stuff
-        string[] hash = Common.Encrypt(password);
+        string[] hash = StringHelper.EncryptWithSalt(password);
 
         this.sdsUserList.InsertParameters[0].DefaultValue = username;
         this.sdsUserList.InsertParameters[1].DefaultValue = hash[0];
@@ -140,7 +141,7 @@ public partial class Admin_UserMng : System.Web.UI.Page
             e.Cancel = true;
 
         //pass stuff
-        string[] hash = Common.Encrypt(e.NewValues["password"].ToString());
+        string[] hash = StringHelper.EncryptWithSalt(e.NewValues["password"].ToString());
         e.NewValues["password"] = hash[0];
         e.NewValues["salt"] = hash[1];
     }

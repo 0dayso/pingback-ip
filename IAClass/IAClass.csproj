@@ -110,6 +110,7 @@
     <Compile Include="Issuing\Zizaibao.cs" />
     <Compile Include="Miscel\CaptchaImage.cs" />
     <Compile Include="Miscel\CaptchaOptions.cs" />
+    <Compile Include="Miscel\StringHelper.cs" />
     <Compile Include="Miscel\CPQuery.cs">
       <SubType>Code</SubType>
     </Compile>

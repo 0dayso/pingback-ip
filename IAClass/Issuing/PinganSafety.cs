@@ -18,6 +18,7 @@ using System.Xml.XPath;
 using System.Collections.Generic;
 using IAClass.Entity;
 using IAClass.Issuing;
+using IAClass;
 
 namespace Pingan
 {
@@ -296,7 +297,7 @@ namespace Pingan
         //若是中文名,去除*CHD等字样
         private string GetChineseName(string source)
         {
-            string cname = Common.InterceptChinese(source);
+            string cname = StringHelper.InterceptChinese(source);
             if (string.IsNullOrEmpty(cname))
                 return source;//英文名字
             else

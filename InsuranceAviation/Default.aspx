@@ -119,7 +119,7 @@
                                             </tr>
                                             <tr>
                                                 <td align="left" class="style7">
-                                                    证件号码：
+                                                    会员验证：
                                                 </td>
                                                 <td align="left">
                                                     <asp:TextBox ID="txtQuery1" runat="server" CssClass="input2"></asp:TextBox>

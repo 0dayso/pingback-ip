@@ -15,7 +15,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Web.Configuration;
 using log4net;
+using IAClass;
 
 //namespace IAClass
 //{
@@ -41,12 +43,22 @@ using log4net;
         /// </summary>
         public static readonly string ConfigRequestTimeFrom = ConfigurationManager.AppSettings["RequestTimeFrom"];
 
-        public static readonly string ConnectionString = ConfigurationManager.ConnectionStrings["InsuranceAviation"].ConnectionString;
+        public static string ConnectionString
+        {
+            get
+            {
+                string conn = ConfigurationManager.ConnectionStrings["InsuranceAviation"].ConnectionString;
+                //conn= StringHelper.Decrpyt(conn);
+                return conn;
+            }
+        }
+
         //public static readonly string PaymentDomainName = ConfigurationManager.AppSettings["PaymentDomainName"];
         public static readonly string BaseDirectory = System.AppDomain.CurrentDomain.BaseDirectory;//HttpContext.Current.Server.MapPath("~");
 
         private static readonly ILog log = LogManager.GetLogger(typeof(Common));
-        public static NBearLite.Database DB = new NBearLite.Database("InsuranceAviation");  
+        public static NBearLite.Database DB = new NBearLite.Database("InsuranceAviation");
+        //public static NBearLite.Database DB = new NBearLite.Database(NBearLite.DatabaseType.SqlServer, ConnectionString);
         public static IAClass.ActiveMQClient AQ_Issuing = new IAClass.ActiveMQClient(ConfigurationManager.AppSettings["Queue.Issuing"], 1);
         public static IAClass.ActiveMQClient AQ_Payment = new IAClass.ActiveMQClient(ConfigurationManager.AppSettings["Queue.Payment"], 1);
 
@@ -141,36 +153,6 @@ using log4net;
             }
 
             return CreateLinkString(sArray);
-        }
-
-        public static bool IsValidIPv4(string strIP)
-        {
-            if (System.Text.RegularExpressions.Regex.IsMatch(strIP, "[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}"))
-            {
-                string[] ip_ = strIP.Split('.');
-
-                if (ip_.Length == 4 || ip_.Length == 6)
-                {
-                    if (System.Int32.Parse(ip_[0]) < 256 && System.Int32.Parse(ip_[1]) < 256 & System.Int32.Parse(ip_[2]) < 256 & System.Int32.Parse(ip_[3]) < 256) return true;
-                    else return false;
-                }
-                else return false;
-            }
-            else return false;
-        }
-
-        public static bool IsNumeric(string str)
-        {
-            if(string.IsNullOrEmpty(str))
-                return false;
-            foreach (char c in str)
-            {
-                if (!Char.IsNumber(c))
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         public enum DateType
@@ -405,8 +387,8 @@ using log4net;
                 return new string[] { start };
             }
 
-            string strPipelineNumberStart = Common.InterceptNumber(start);
-            string strPipelineNumberEnd = Common.InterceptNumber(end);
+            string strPipelineNumberStart = StringHelper.InterceptNumber(start);
+            string strPipelineNumberEnd = StringHelper.InterceptNumber(end);
             string strPipelinePrefix = start.Replace(strPipelineNumberStart, string.Empty).ToUpper();
             string strPipelinePrefix2 = end.Replace(strPipelineNumberEnd, string.Empty).ToUpper();
 
@@ -446,38 +428,6 @@ using log4net;
             }
 
             return arrange;
-        }
-
-        /// <summary>
-        /// 截取字符串中的数字部分
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static string InterceptNumber(string source)
-        {
-            Regex regex = new Regex(@"(-?\d+)(\.\d+)?");
-            Match match = regex.Match(source);
-
-            if (match.Success)
-                return match.Value;
-            else
-                return string.Empty;
-        }
-
-        /// <summary>
-        /// 截取字符串中的汉字部分
-        /// </summary>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        public static string InterceptChinese(string source)
-        {
-            Regex regex = new Regex(@"[\u4e00-\u9fa5]+");
-            Match match = regex.Match(source);
-
-            if (match.Success)
-                return match.Value;
-            else
-                return string.Empty;
         }
 
         public static void ExportExcelFromGridView(System.Web.UI.WebControls.GridView gv)
@@ -598,23 +548,6 @@ using log4net;
             //}
             //catch { }
             log.Debug(obj);
-        }
-
-        /// <summary>
-        /// 若字串中有全角则替换成半角
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public static string Full2Half(string text)
-        {
-            string 全角 = "１２３４５６７８９０ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ，　－（）＿＋＝！＠＃￥％＾＆＊｛｝。＜＞？";
-            string 半角 = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ, -()_+=!@#$%^&*{}.<>?";
-            for (int i = 0; i < 全角.Length; i++)
-            {
-                text = text.Replace(全角[i], 半角[i]);
-            }
-            string ret = text;
-            return ret;
         }
 
         /// <summary>
@@ -817,43 +750,6 @@ using log4net;
                 Common.LogIt(url);
                 throw;
             }
-        }
-
-
-        /// <summary>
-        /// 加密字符串
-        /// </summary>
-        /// <param name="password">原始字符串</param>
-        /// <returns>返回字符串数组 { hash, salt }</returns>
-        public static string[] Encrypt(string password)
-        {
-            // random salt 
-            string salt = Guid.NewGuid().ToString();
-
-            // random salt 
-            // you can also use RNGCryptoServiceProvider class            
-            //System.Security.Cryptography.RNGCryptoServiceProvider rng = new System.Security.Cryptography.RNGCryptoServiceProvider(); 
-            //byte[] saltBytes = new byte[36]; 
-            //rng.GetBytes(saltBytes); 
-            //string salt = Convert.ToBase64String(saltBytes); 
-
-            string hashString = Encrypt(password, salt);
-
-            return new string[] { hashString, salt };
-        }
-
-        /// <summary>
-        /// 加密字符串
-        /// </summary>
-        /// <param name="password">原始字符串</param>
-        /// <param name="salt">盐</param>
-        /// <returns></returns>
-        public static string Encrypt(string password, string salt)
-        {
-            byte[] passwordAndSaltBytes = System.Text.Encoding.UTF8.GetBytes(password + salt);
-            byte[] hashBytes = new System.Security.Cryptography.SHA256Managed().ComputeHash(passwordAndSaltBytes);
-            string hashString = Convert.ToBase64String(hashBytes);
-            return hashString;
         }
     }
 //}

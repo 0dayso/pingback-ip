@@ -8,37 +8,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-    
-        <asp:TextBox ID="txtName" runat="server">张山</asp:TextBox>
+        <asp:TextBox ID="TextBox1" runat="server" Width="668px"></asp:TextBox>
         <br />
-        <asp:TextBox ID="txtMobile" runat="server">18607100437</asp:TextBox>
-        <br />
-    
-        <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Issue" 
-            style="height: 21px" />
-        <br />
-        <br />
-        <br />
-        <asp:TextBox ID="txtPlicyNo" runat="server"></asp:TextBox>
-        <asp:Button ID="Button4" runat="server" onclick="Button4_Click" 
-            Text="withdrawal" />
-        <br />
-        <br />
-        <asp:TextBox ID="txtItemCount" runat="server">1</asp:TextBox>
-        <asp:TextBox ID="txtIOC" runat="server">JinHang</asp:TextBox>
-        <br />
-        <asp:Button ID="Button2" runat="server" onclick="Button2_Click1" 
-            Text="Button" />
-        <br />
-        <asp:Button ID="Button3" runat="server" onclick="Button3_Click" Text="Button" />
-        <br />
-        <br />
-    
-    </div>
-    <asp:TextBox ID="txtIDCard" runat="server"></asp:TextBox>
-    <asp:Button ID="btnCheckIDCard" runat="server" onclick="btnCheckIDCard_Click" 
-        Text="Button" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Encrypt" />
     </form>
 </body>
 </html>

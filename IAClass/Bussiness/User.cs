@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Text;
 using IAClass.Entity;
+using IAClass;
 using System.Data.SqlClient;
 
 //namespace IAClass
@@ -90,7 +91,7 @@ SELECT a.usertype, a.displayname, a.offsetX, a.offsetY, a.userID, a.parentPath, 
                     //temp start
                     if (salt.Length < 21)
                     {
-                        string[] hash = Common.Encrypt(passwordOri);
+                        string[] hash = StringHelper.EncryptWithSalt(passwordOri);
                         passwordOri = hash[0];
                         salt = hash[1];//get salt
                         string sql = "update t_user set password = @password, salt = @salt where username = @username";
@@ -103,7 +104,7 @@ SELECT a.usertype, a.displayname, a.offsetX, a.offsetY, a.userID, a.parentPath, 
                     //temp end
 
                     //new
-                    string hashPass = Common.Encrypt(password, salt);
+                    string hashPass = StringHelper.EncryptWithSalt(password, salt);
 
                     if (hashPass != passwordOri)
                     {
@@ -180,7 +181,7 @@ SELECT usertype, displayname, offsetX, offsetY, userID, parentPath, password, en
                 //temp start
                 if (salt.Length < 21)
                 {
-                    string[] hash = Common.Encrypt(passwordOri);
+                    string[] hash = StringHelper.EncryptWithSalt(passwordOri);
                     passwordOri = hash[0];
                     salt = hash[1];//get salt
                     string sql = "update t_user set password = @password, salt = @salt where username = @username";
@@ -193,7 +194,7 @@ SELECT usertype, displayname, offsetX, offsetY, userID, parentPath, password, en
                 //temp end
 
                 //new
-                string hashPass = Common.Encrypt(password, salt);
+                string hashPass = StringHelper.EncryptWithSalt(password, salt);
 
                 bool enabled = Convert.ToBoolean(dr[7]);
 
