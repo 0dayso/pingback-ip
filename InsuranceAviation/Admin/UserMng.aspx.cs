@@ -16,10 +16,25 @@ public partial class Admin_UserMng : System.Web.UI.Page
     {
         this.sdsUserList.SelectParameters[0].DefaultValue = User.Identity.Name;
     }
+
+    public string Decrypt(string hash)
+    {
+        string pass = string.Empty;
+
+        try
+        {
+            pass = StringHelper.EncryptionHelper.Decrpyt(hash);
+        }
+        catch
+        { }
+
+        return pass;
+    }
+
     protected void btnNewUser_Click(object sender, EventArgs e)
     {
         string username = ((TextBox)this.GridView1.FooterRow.FindControl("txtUsername")).Text.Trim();
-        username = StringHelper.Full2Half(username);
+        username = StringHelper.MiscelHelper.Full2Half(username);
         string password = ((TextBox)this.GridView1.FooterRow.FindControl("txtPassword")).Text.Trim();
         string displayname = ((TextBox)this.GridView1.FooterRow.FindControl("txtDisplayname")).Text.Trim();
         string address = ((TextBox)this.GridView1.FooterRow.FindControl("txtAddress")).Text.Trim();
@@ -27,10 +42,10 @@ public partial class Admin_UserMng : System.Web.UI.Page
         string userGroup = ((DropDownList)this.GridView1.FooterRow.FindControl("ddlUserCity")).SelectedItem.Text.Trim();
 
         //password stuff
-        string[] hash = StringHelper.EncryptWithSalt(password);
+        //string[] hash = StringHelper.EncryptionHelper.EncryptWithSalt(password);
 
         this.sdsUserList.InsertParameters[0].DefaultValue = username;
-        this.sdsUserList.InsertParameters[1].DefaultValue = hash[0];
+        this.sdsUserList.InsertParameters[1].DefaultValue = StringHelper.EncryptionHelper.Encrypt(password);//hash[0];
         this.sdsUserList.InsertParameters[2].DefaultValue = displayname;
         this.sdsUserList.InsertParameters[3].DefaultValue = address;
         this.sdsUserList.InsertParameters[4].DefaultValue = phone;
@@ -50,7 +65,7 @@ public partial class Admin_UserMng : System.Web.UI.Page
         this.sdsUserList.InsertParameters[8].DefaultValue = userGroup;
         this.sdsUserList.InsertParameters[9].DefaultValue = path;
         this.sdsUserList.InsertParameters[10].DefaultValue = distributor;
-        this.sdsUserList.InsertParameters[12].DefaultValue = hash[1];//salt
+        this.sdsUserList.InsertParameters[12].DefaultValue = "";//hash[1];//salt
 
         try
         {
@@ -61,14 +76,29 @@ public partial class Admin_UserMng : System.Web.UI.Page
             this.lblError.Text = "添加失败，该用户名可能已经被占用！<span style='color:gray'>（详情：" + ee.Message + ")</span>";
         }
     }
+
     protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
     {
         if (e.Row.RowType == DataControlRowType.DataRow)
         {
             e.Row.Attributes.Add("onmouseover", "c=this.style.backgroundColor;this.style.backgroundColor='#ffd7d4'");
             e.Row.Attributes.Add("onmouseout", "this.style.backgroundColor=c");
+
+            //解密字符串
+            TextBox txtPass = e.Row.FindControl("txtPasswword") as TextBox;
+            if(txtPass != null && !string.IsNullOrEmpty(txtPass.Text.Trim()))
+                txtPass.Text = Decrypt(txtPass.Text);
         }
     }
+
+    protected void GridView1_DataBound(object sender, EventArgs e)
+    {
+        DropDownList ddlProvince = (DropDownList)this.GridView1.FooterRow.FindControl("ddlUserProvince");
+        DropDownList ddlCity = (DropDownList)this.GridView1.FooterRow.FindControl("ddlUserCity");
+        this.sdsCity.SelectParameters[0].DefaultValue = ddlProvince.SelectedValue;
+        ddlCity.DataBind();
+    }
+
     protected void btnDelete_Click(object sender, EventArgs e)
     {
         string arrayUsername = string.Empty;
@@ -116,14 +146,6 @@ public partial class Admin_UserMng : System.Web.UI.Page
             this.lblError.Text = "因仍拥有单证号记录，无法删除的账号：" + arrayUsernameFaild;
     }
 
-    protected void GridView1_DataBound(object sender, EventArgs e)
-    {
-        DropDownList ddlProvince = (DropDownList)this.GridView1.FooterRow.FindControl("ddlUserProvince");
-        DropDownList ddlCity = (DropDownList)this.GridView1.FooterRow.FindControl("ddlUserCity");
-        this.sdsCity.SelectParameters[0].DefaultValue = ddlProvince.SelectedValue;
-        ddlCity.DataBind();
-    }
-
     protected void ddlUserProvince_SelectedIndexChanged(object sender, EventArgs e)
     {
         DropDownList ddlProvince = (DropDownList)sender;
@@ -141,8 +163,9 @@ public partial class Admin_UserMng : System.Web.UI.Page
             e.Cancel = true;
 
         //pass stuff
-        string[] hash = StringHelper.EncryptWithSalt(e.NewValues["password"].ToString());
-        e.NewValues["password"] = hash[0];
-        e.NewValues["salt"] = hash[1];
+        string newPass = e.NewValues["password"].ToString();
+        //string[] hash = StringHelper.EncryptionHelper.EncryptWithSalt(newPass);
+        e.NewValues["password"] = StringHelper.EncryptionHelper.Encrypt(newPass);//hash[0];
+        e.NewValues["salt"] = "";// hash[1];
     }
 }

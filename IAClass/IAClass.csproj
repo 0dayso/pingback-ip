@@ -110,7 +110,8 @@
     <Compile Include="Issuing\Zizaibao.cs" />
     <Compile Include="Miscel\CaptchaImage.cs" />
     <Compile Include="Miscel\CaptchaOptions.cs" />
-    <Compile Include="Miscel\StringHelper.cs" />
+    <Compile Include="Miscel\StringHelper\MiscelHelper.cs" />
+    <Compile Include="Miscel\StringHelper\EncryptionHelper.cs" />
     <Compile Include="Miscel\CPQuery.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -179,7 +180,6 @@
     <Compile Include="SMS\ShangTong.cs" />
     <Compile Include="SMS\ShangTong_ws.cs" />
     <Compile Include="SMS\SMSFacade.cs" />
-    <Compile Include="Test.cs" />
     <Compile Include="Miscel\TimeOutSocket.cs" />
     <Compile Include="Unity.cs" />
     <Compile Include="WebService\WebServiceClass.cs" />

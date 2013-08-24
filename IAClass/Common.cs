@@ -387,8 +387,8 @@ using IAClass;
                 return new string[] { start };
             }
 
-            string strPipelineNumberStart = StringHelper.InterceptNumber(start);
-            string strPipelineNumberEnd = StringHelper.InterceptNumber(end);
+            string strPipelineNumberStart = StringHelper.MiscelHelper.InterceptNumber(start);
+            string strPipelineNumberEnd = StringHelper.MiscelHelper.InterceptNumber(end);
             string strPipelinePrefix = start.Replace(strPipelineNumberStart, string.Empty).ToUpper();
             string strPipelinePrefix2 = end.Replace(strPipelineNumberEnd, string.Empty).ToUpper();
 

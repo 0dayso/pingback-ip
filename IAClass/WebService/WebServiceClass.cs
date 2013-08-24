@@ -221,6 +221,7 @@ namespace IAClass.WebService
                     else
                     {
                         request.customerID = request.customerID.ToUpper();
+                        request.customerID = StringHelper.MiscelHelper.Full2Half(request.customerID);
 
                         if (request.customerIDType == IdentityType.身份证 && !Common.CheckIDCard(request.customerID))
                         {
@@ -522,7 +523,7 @@ values ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}
                                     #endregion
                                     if (Common.Debug)
                                     {
-                                        Test.TestIt(entity);
+                                        //Test.TestIt(entity);
                                     }
                                 }
 

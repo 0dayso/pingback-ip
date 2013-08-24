@@ -11,6 +11,7 @@ using System.Text;
 using IAClass.Entity;
 using IAClass;
 using System.Data.SqlClient;
+using StringHelper;
 
 //namespace IAClass
 //{
@@ -77,8 +78,9 @@ SELECT a.usertype, a.displayname, a.offsetX, a.offsetY, a.userID, a.parentPath, 
             {
                 DataRow dr = ds.Tables[0].Rows[0];
                 ret.Balance = Convert.ToDecimal(dr["balance"]);//此处的余额是该用户所属的一级经销商的余额
-                string passwordOri = dr["password"].ToString();
+                string passwordStored = dr["password"].ToString();
                 string salt = dr["salt"].ToString();
+                string hashPass;
                 bool enabled_Issuing = Convert.ToBoolean(dr["enabled_Issuing"]);
 
                 if (!enabled_Issuing)
@@ -88,31 +90,33 @@ SELECT a.usertype, a.displayname, a.offsetX, a.offsetY, a.userID, a.parentPath, 
                 }
                 else
                 {
-                    //temp start
-                    if (salt.Length < 21)
-                    {
-                        string[] hash = StringHelper.EncryptWithSalt(passwordOri);
-                        passwordOri = hash[0];
-                        salt = hash[1];//get salt
-                        string sql = "update t_user set password = @password, salt = @salt where username = @username";
-                        SqlParameter[] param2 = new SqlParameter[]{
-                                                    new SqlParameter("@password",hash[0]),
-                                                    new SqlParameter("@salt",hash[1]),
-                                                    new SqlParameter("@username",username)};
-                        SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, sql, param2);
-                    }
-                    //temp end
+                    if (salt.Trim().Length > 20)//temp
+                        hashPass = StringHelper.EncryptionHelper.EncryptWithSalt(password, salt);
+                    else if (passwordStored == password)//temp
+                        hashPass = passwordStored;
+                    else
+                        hashPass = StringHelper.EncryptionHelper.Encrypt(password);
 
-                    //new
-                    string hashPass = StringHelper.EncryptWithSalt(password, salt);
-
-                    if (hashPass != passwordOri)
+                    if (hashPass != passwordStored)
                     {
                         ret.Trace.ErrorMsg = "密码不正确，请重新输入！";
                         return ret;
                     }
                     else
                     {
+                        //temp start
+                        if (salt.Trim().Length > 20 || passwordStored == password)
+                        {
+                            string newPass = StringHelper.EncryptionHelper.Encrypt(password);
+                            string sql = "update t_user set password = @password, salt = @salt where username = @username";
+                            SqlParameter[] param2 = new SqlParameter[]{
+                                                    new SqlParameter("@password",newPass),
+                                                    new SqlParameter("@salt",string.Empty),
+                                                    new SqlParameter("@username",username)};
+                            SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, sql, param2);
+                        }
+                        //temp end
+
                         if (UserClass.IsParentIssuingDisabled(username))
                         {
                             ret.Trace.ErrorMsg = "您上级账号的出单权限已被冻结，所以您暂时无法出单，请联系您的上级单位！";
@@ -175,27 +179,9 @@ SELECT usertype, displayname, offsetX, offsetY, userID, parentPath, password, en
             else
             {
                 DataRow dr = ds.Tables[0].Rows[0];
-                string passwordOri = dr[6].ToString();
+                string passwordStored = dr[6].ToString();
                 string salt = dr[8].ToString();
-
-                //temp start
-                if (salt.Length < 21)
-                {
-                    string[] hash = StringHelper.EncryptWithSalt(passwordOri);
-                    passwordOri = hash[0];
-                    salt = hash[1];//get salt
-                    string sql = "update t_user set password = @password, salt = @salt where username = @username";
-                    SqlParameter[] param2 = new SqlParameter[]{
-                                                    new SqlParameter("@password",hash[0]),
-                                                    new SqlParameter("@salt",hash[1]),
-                                                    new SqlParameter("@username",username)};
-                    SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, sql, param2);
-                }
-                //temp end
-
-                //new
-                string hashPass = StringHelper.EncryptWithSalt(password, salt);
-
+                string hashPass;
                 bool enabled = Convert.ToBoolean(dr[7]);
 
                 if (!enabled)
@@ -203,39 +189,62 @@ SELECT usertype, displayname, offsetX, offsetY, userID, parentPath, password, en
                     ret.Trace.ErrorMsg = "该账号已被停用！";
                     return ret;
                 }
-                else if(hashPass != passwordOri)
-                {
-                    ret.Trace.ErrorMsg = "密码不正确！";
-                    return ret;
-                }
                 else
                 {
-                    if (UserClass.IsParentDisabled(username))
+                    if (salt.Trim().Length > 20)//temp
+                        hashPass = StringHelper.EncryptionHelper.EncryptWithSalt(password, salt);
+                    else if (passwordStored == password)//temp
+                        hashPass = passwordStored;
+                    else
+                        hashPass = StringHelper.EncryptionHelper.Encrypt(password);
+
+                    if (hashPass != passwordStored)
                     {
-                        ret.Trace.ErrorMsg = "您的上级账号已被停用，所以您暂时无法登录，请联系您的上级单位！";
+                        ret.Trace.ErrorMsg = "密码不正确！";
                         return ret;
                     }
                     else
                     {
-                        Common.DB.Update(Tables.t_User)
-                            .AddColumn(Tables.t_User.lastLoginIP, ip)
-                            .AddColumn(Tables.t_User.lastLoginDate, DateTime.Now)
-                            .AddColumn(Tables.t_User.loginCount, Tables.t_User.loginCount + 1)
-                            .Where(Tables.t_User.username == username)
-                            .Execute();
+                        //temp start
+                        if (salt.Trim().Length > 20 || passwordStored == password)
+                        {
+                            string newPass = StringHelper.EncryptionHelper.Encrypt(password);
+                            string sql = "update t_user set password = @password, salt = @salt where username = @username";
+                            SqlParameter[] param2 = new SqlParameter[]{
+                                                    new SqlParameter("@password",newPass),
+                                                    new SqlParameter("@salt",string.Empty),
+                                                    new SqlParameter("@username",username)};
+                            SqlHelper.ExecuteNonQuery(Common.ConnectionString, CommandType.Text, sql, param2);
+                        }
+                        //temp end
 
-                        int type = Convert.ToInt32(dr[0]);
-                        if (type > 1 && type < 99)
-                            type = 2;
+                        if (UserClass.IsParentDisabled(username))
+                        {
+                            ret.Trace.ErrorMsg = "您的上级账号已被停用，所以您暂时无法登录，请联系您的上级单位！";
+                            return ret;
+                        }
+                        else
+                        {
+                            Common.DB.Update(Tables.t_User)
+                                .AddColumn(Tables.t_User.lastLoginIP, ip)
+                                .AddColumn(Tables.t_User.lastLoginDate, DateTime.Now)
+                                .AddColumn(Tables.t_User.loginCount, Tables.t_User.loginCount + 1)
+                                .Where(Tables.t_User.username == username)
+                                .Execute();
 
-                        UserType userType = (UserType)(type);
-                        ret.Type = userType;
-                        ret.DisplayName = dr[1].ToString();
-                        ret.UserId = Convert.ToInt32(dr[4]);
-                        ret.ParentPath = dr[5].ToString();
-                        int.TryParse(dr[2].ToString(), out ret.OffsetX);
-                        int.TryParse(dr[3].ToString(), out ret.OffsetY);
-                        return ret;
+                            int type = Convert.ToInt32(dr[0]);
+                            if (type > 1 && type < 99)
+                                type = 2;
+
+                            UserType userType = (UserType)(type);
+                            ret.Type = userType;
+                            ret.DisplayName = dr[1].ToString();
+                            ret.UserId = Convert.ToInt32(dr[4]);
+                            ret.ParentPath = dr[5].ToString();
+                            int.TryParse(dr[2].ToString(), out ret.OffsetX);
+                            int.TryParse(dr[3].ToString(), out ret.OffsetY);
+                            return ret;
+                        }
                     }
                 }
             }

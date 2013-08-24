@@ -59,7 +59,7 @@ using IAClass;
             }
 
             int count = arrangedNumber.Length;
-            string strPipelineNumberStart = StringHelper.InterceptNumber(pipelineStart);
+            string strPipelineNumberStart = StringHelper.MiscelHelper.InterceptNumber(pipelineStart);
             string strPipelinePrefix = pipelineStart.Replace(strPipelineNumberStart, string.Empty);
 
             /*2010.08.07
@@ -136,7 +136,7 @@ using IAClass;
                 throw new Exception("号段有误，请检查！");
             }
 
-            string strPipelineNumberStart = StringHelper.InterceptNumber(pipelineStart);
+            string strPipelineNumberStart = StringHelper.MiscelHelper.InterceptNumber(pipelineStart);
             string strPipelinePrefix = pipelineStart.Replace(strPipelineNumberStart, string.Empty);
 
             StringBuilder sqlBatch = new StringBuilder("BEGIN TRANSACTION; ");
@@ -213,7 +213,7 @@ using IAClass;
             }
 
             int count = arrangedNumber.Length;
-            string strPipelineNumberStart = StringHelper.InterceptNumber(pipelineStart);
+            string strPipelineNumberStart = StringHelper.MiscelHelper.InterceptNumber(pipelineStart);
             string strPipelinePrefix = pipelineStart.Replace(strPipelineNumberStart, string.Empty);
 
             StringBuilder sqlBatch = new StringBuilder("BEGIN TRANSACTION; ");

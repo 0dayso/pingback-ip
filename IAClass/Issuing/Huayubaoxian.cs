@@ -61,7 +61,7 @@ namespace Huayubaoxian
             }
 
             //Common.LogIt("Huayubaoxian Issue：" + ret);
-            if (StringHelper.IsNumeric(ret))
+            if (StringHelper.MiscelHelper.IsNumeric(ret))
                 result.PolicyNo = ret;
             else
             {

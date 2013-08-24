@@ -11,6 +11,7 @@
         <asp:TextBox ID="TextBox1" runat="server" Width="668px"></asp:TextBox>
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Encrypt" />
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="Encrypt" />
     </form>
 </body>
 </html>

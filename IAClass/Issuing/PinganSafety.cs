@@ -297,7 +297,7 @@ namespace Pingan
         //若是中文名,去除*CHD等字样
         private string GetChineseName(string source)
         {
-            string cname = StringHelper.InterceptChinese(source);
+            string cname = StringHelper.MiscelHelper.InterceptChinese(source);
             if (string.IsNullOrEmpty(cname))
                 return source;//英文名字
             else
